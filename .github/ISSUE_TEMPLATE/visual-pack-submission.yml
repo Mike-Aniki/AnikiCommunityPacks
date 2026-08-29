@@ -1,6 +1,8 @@
 name: Visual Pack submission
 description: Submit a new Aniki Community Visual Pack or an update to an existing pack.
 title: "[Visual Pack] "
+labels:
+  - visual-pack-submission
 body:
   - type: markdown
     attributes:

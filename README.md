@@ -12,7 +12,9 @@ The catalog is designed to be read directly by **Aniki Helper**, allowing commun
 4. Click **Share Community Pack** in the Creator, or open a new **Visual Pack submission** issue in this repository.
 5. Attach the exported ZIP and one preview image to the issue.
 
-Submissions are reviewed before being added to `catalog.json`.
+Every submitted ZIP is automatically checked by GitHub Actions before review. The archive must contain exactly `visualpack.json` and the 14 image files produced by Aniki Visual Pack Creator. Missing, renamed, duplicated, nested or additional files make the validation fail.
+
+Submissions that pass this automatic package check are then reviewed before being added to `catalog.json`.
 
 ## Updating an existing pack
 
@@ -34,7 +36,7 @@ Each entry contains the permanent pack ID, name, author, version, description, p
 
 ## Moderation
 
-Community packs are reviewed before publication. A submission can be rejected or removed if it is broken, malicious, misleading, incompatible with Aniki ReMake, or creates a rights/safety issue.
+Community packs are reviewed before publication. GitHub first validates the ZIP structure automatically; passing that check does not mean the pack is automatically accepted. A submission can still be rejected or removed if it is broken, misleading, incompatible with Aniki ReMake, or creates a rights/safety issue.
 
 Submitters are responsible for the files they provide. Content may be removed when necessary, including following a valid rights-holder request.
 
@@ -45,9 +47,14 @@ AnikiCommunityVisualPacks/
 ├── catalog.json
 ├── catalog.schema.json
 ├── previews/
+├── scripts/
+│   ├── validate_catalog.py
+│   └── validate_submission.py
 └── .github/
-    └── ISSUE_TEMPLATE/
-        └── visual-pack-submission.yml
+    ├── ISSUE_TEMPLATE/
+    │   └── visual-pack-submission.yml
+    └── workflows/
+        └── validate-submission.yml
 ```
 
 The ZIP files do not need to live inside the Git repository. `catalog.json` only stores their download URLs, which keeps the catalog independent from the final hosting location.

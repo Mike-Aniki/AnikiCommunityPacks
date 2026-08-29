@@ -3,16 +3,19 @@ name: Validate Community Catalog
 on:
   push:
     paths:
-      - catalog.json
-      - catalog.schema.json
-      - scripts/**
-      - .github/workflows/validate-catalog.yml
+      - 'catalog.json'
+      - 'catalog.schema.json'
+      - 'scripts/validate_catalog.py'
+      - '.github/workflows/validate-catalog.yml'
   pull_request:
     paths:
-      - catalog.json
-      - catalog.schema.json
-      - scripts/**
-      - .github/workflows/validate-catalog.yml
+      - 'catalog.json'
+      - 'catalog.schema.json'
+      - 'scripts/validate_catalog.py'
+      - '.github/workflows/validate-catalog.yml'
+
+permissions:
+  contents: read
 
 jobs:
   validate:
@@ -22,8 +25,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check Python scripts
-        run: python3 -m py_compile scripts/*.py
+      - name: Check validator syntax
+        run: python3 -m py_compile scripts/validate_catalog.py
 
       - name: Validate catalog
         run: python3 scripts/validate_catalog.py

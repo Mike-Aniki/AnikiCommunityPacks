@@ -22,7 +22,7 @@ body:
     attributes:
       label: Author
       description: The author name that should be displayed in Aniki Helper.
-      placeholder: Galva
+      placeholder: Mike Aniki
     validations:
       required: true
 

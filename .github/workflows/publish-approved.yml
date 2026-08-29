@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event.label.name == 'approved' && startsWith(github.event.issue.title, '[Visual Pack]')
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'visual-pack-submission')
     runs-on: ubuntu-latest
 
     steps:

@@ -20,6 +20,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const wanted = [
+              { name: 'visual-pack-submission', color: '5319E7', description: 'Technical label identifying Visual Pack submission issues' },
               { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
               { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
               { name: 'published', color: '1D76DB', description: 'Published in the Aniki Community Visual Packs catalog' },

@@ -75,7 +75,7 @@ body:
     attributes:
       label: Confirmation
       options:
-        - label: I exported this ZIP with Aniki Visual Pack Creator and did not add executables or scripts to it.
+        - label: I confirm this ZIP was exported directly with Aniki Visual Pack Creator.
           required: true
         - label: I understand that updates must keep the permanent ID from the original `.avpc` project.
           required: true

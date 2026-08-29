@@ -1,0 +1,193 @@
+name: Publish Approved Visual Pack
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: aniki-community-visual-pack-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event.label.name == 'approved' && startsWith(github.event.issue.title, '[Visual Pack]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout latest catalog
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Refresh default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: git pull --ff-only origin "$DEFAULT_BRANCH"
+
+      - name: Prepare publication
+        id: prepare
+        continue-on-error: true
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python3 scripts/prepare_publication.py --report publication-report.txt
+
+      - name: Stop if publication checks failed
+        if: steps.prepare.outcome != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- aniki-publication-status -->';
+            const report = fs.existsSync('publication-report.txt')
+              ? fs.readFileSync('publication-report.txt', 'utf8').trim()
+              : 'Publication checks failed before a report could be generated.';
+            const body = `${marker}\n❌ **Publication blocked.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nFix the submission, then remove and re-apply the \`approved\` label.`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+            try {
+              await github.rest.issues.removeLabel({ owner, repo, issue_number, name: 'approved' });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+      - name: Reject blocked publication
+        if: steps.prepare.outcome != 'success'
+        run: exit 1
+
+      - name: Validate updated catalog
+        run: python3 scripts/validate_catalog.py
+
+      - name: Create GitHub Release and upload pack
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          TAG: ${{ steps.prepare.outputs.tag }}
+          RELEASE_TITLE: ${{ steps.prepare.outputs.release_title }}
+          PACKAGE_PATH: ${{ steps.prepare.outputs.package_path }}
+          RELEASE_NOTES_PATH: ${{ steps.prepare.outputs.release_notes_path }}
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            echo "A release already exists for $TAG" >&2
+            exit 1
+          fi
+          gh release create "$TAG" "$PACKAGE_PATH" \
+            --repo "$REPO" \
+            --target "$DEFAULT_BRANCH" \
+            --title "$RELEASE_TITLE" \
+            --notes-file "$RELEASE_NOTES_PATH" \
+            --latest=false
+
+      - name: Commit catalog and preview
+        id: publish_commit
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PACK_NAME: ${{ steps.prepare.outputs.name }}
+          PACK_VERSION: ${{ steps.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- catalog.json previews
+          if git diff --cached --quiet; then
+            echo "No catalog or preview changes were staged." >&2
+            exit 1
+          fi
+          git commit -m "Publish ${PACK_NAME} v${PACK_VERSION}"
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+
+      - name: Roll back release if repository publication failed
+        if: failure() && steps.prepare.outcome == 'success' && steps.release.outcome == 'success' && steps.publish_commit.outcome != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ steps.prepare.outputs.tag }}
+        run: gh release delete "$TAG" --repo "$REPO" --yes --cleanup-tag || true
+
+      - name: Report publication failure
+        if: failure() && steps.prepare.outcome == 'success' && steps.publish_commit.outcome != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- aniki-publication-status -->';
+            const report = fs.existsSync('publication-report.txt')
+              ? fs.readFileSync('publication-report.txt', 'utf8').trim()
+              : 'The automated publication failed after the submission passed its initial checks.';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `${marker}\n❌ **Automatic publication failed.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nThe Release was not kept if the repository update failed. Check the [workflow run](${runUrl}), fix the problem, then re-apply the \`approved\` label.`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+            try {
+              await github.rest.issues.removeLabel({ owner, repo, issue_number, name: 'approved' });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+      - name: Mark issue as published
+        if: success()
+        uses: actions/github-script@v7
+        env:
+          PACK_NAME: ${{ steps.prepare.outputs.name }}
+          PACK_VERSION: ${{ steps.prepare.outputs.version }}
+          TAG: ${{ steps.prepare.outputs.tag }}
+        with:
+          script: |
+            const marker = '<!-- aniki-publication-status -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const releaseUrl = `https://github.com/${owner}/${repo}/releases/tag/${encodeURIComponent(process.env.TAG)}`;
+            const body = `${marker}\n✅ **Visual Pack published.**\n\n**${process.env.PACK_NAME} v${process.env.PACK_VERSION}** is now in the community catalog.\n\n[Open the GitHub Release](${releaseUrl})`;
+
+            // Ensure the final status label exists.
+            try {
+              await github.rest.issues.getLabel({ owner, repo, name: 'published' });
+            } catch (error) {
+              if (error.status === 404) {
+                await github.rest.issues.createLabel({
+                  owner, repo, name: 'published', color: '1D76DB',
+                  description: 'Published in the Aniki Community Visual Packs catalog'
+                });
+              } else throw error;
+            }
+
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+            await github.rest.issues.addLabels({ owner, repo, issue_number, labels: ['published'] });
+            for (const label of ['approved', 'ready-for-review', 'validation-failed']) {
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+            }
+            await github.rest.issues.update({ owner, repo, issue_number, state: 'closed' });

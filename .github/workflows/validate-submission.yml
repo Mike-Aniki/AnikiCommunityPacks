@@ -2,7 +2,7 @@ name: Validate Visual Pack Submission
 
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
 
 permissions:
   contents: read
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   validate:
-    if: startsWith(github.event.issue.title, '[Visual Pack]')
+    if: contains(github.event.issue.labels.*.name, 'visual-pack-submission') && (github.event.action != 'labeled' || github.event.label.name == 'visual-pack-submission')
     runs-on: ubuntu-latest
 
     steps:

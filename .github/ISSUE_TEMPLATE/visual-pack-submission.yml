@@ -1,0 +1,83 @@
+name: Visual Pack submission
+description: Submit a new Aniki Community Visual Pack or an update to an existing pack.
+title: "[Visual Pack] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing a Visual Pack. Export the pack with Aniki Visual Pack Creator before filling out this form.
+
+        For updates, always use the same `.avpc` project so the permanent pack ID stays unchanged.
+
+  - type: input
+    id: pack-name
+    attributes:
+      label: Pack name
+      placeholder: Tekken 8
+    validations:
+      required: true
+
+  - type: input
+    id: author
+    attributes:
+      label: Author
+      description: The author name that should be displayed in Aniki Helper.
+      placeholder: Galva
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Use the exact semantic version exported by the Creator.
+      placeholder: 1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Optional short description shown in the Community Visual Packs browser.
+      placeholder: Visual Pack inspired by Tekken 8.
+
+  - type: textarea
+    id: zip
+    attributes:
+      label: Visual Pack ZIP
+      description: Drag and drop the ZIP exported by Aniki Visual Pack Creator here, or provide a direct download link.
+      placeholder: Attach the ZIP here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: preview
+    attributes:
+      label: Preview image
+      description: Drag and drop one representative JPG or PNG preview here.
+      placeholder: Attach the preview image here.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: submission-type
+    attributes:
+      label: Submission type
+      options:
+        - New pack
+        - Update to an existing pack
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I exported this ZIP with Aniki Visual Pack Creator and did not add executables or scripts to it.
+          required: true
+        - label: I understand that updates must keep the permanent ID from the original `.avpc` project.
+          required: true
+        - label: I am responsible for the content I submit and understand that a pack may be removed if necessary.
+          required: true

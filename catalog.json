@@ -1,5 +1,18 @@
 {
   "$schema": "./catalog.schema.json",
   "formatVersion": 1,
-  "packs": []
+  "packs": [
+    {
+      "id": "son-gohan-b1d5072b",
+      "name": "Son Gohan",
+      "author": "Mike Aniki",
+      "version": "1.0.0",
+      "description": "A Visual Pack Based on Son Gohan",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityVisualPacks/main/previews/son-gohan-b1d5072b.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityVisualPacks/releases/download/pack-son-gohan-b1d5072b-v1.0.0/son-gohan-b1d5072b-v1.0.0.zip",
+      "publishedAt": "2026-08-29",
+      "updatedAt": "2026-08-29",
+      "featured": false
+    }
+  ]
 }

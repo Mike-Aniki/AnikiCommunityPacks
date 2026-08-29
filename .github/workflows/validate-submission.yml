@@ -24,7 +24,7 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: python3 scripts/validate_submission.py --report submission-validation.txt
 
-      - name: Post validation result
+      - name: Post validation result and update status labels
         if: always()
         uses: actions/github-script@v7
         env:
@@ -40,34 +40,45 @@ jobs:
               report = fs.readFileSync('submission-validation.txt', 'utf8').trim();
             }
 
-            const body = `${marker}\n${ok ? '✅ **Automatic Visual Pack validation passed.**' : '❌ **Automatic Visual Pack validation failed.**'}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission can now be reviewed for publication.' : 'Replace or fix the ZIP in the submission, then edit the issue to run validation again.'}`;
-
+            const body = `${marker}\n${ok ? '✅ **Automatic Visual Pack validation passed.**' : '❌ **Automatic Visual Pack validation failed.**'}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission is ready for maintainer review.' : 'Replace or fix the ZIP in the submission, then edit the issue to run validation again.'}`;
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
 
-            const comments = await github.paginate(
-              github.rest.issues.listComments,
-              { owner, repo, issue_number, per_page: 100 }
-            );
+            const labels = [
+              { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
+              { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
+              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Visual Pack validation failed' },
+            ];
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: label.name });
+              } catch (error) {
+                if (error.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, ...label });
+                } else throw error;
+              }
+            }
 
-            const previous = comments.find(
-              comment => comment.user?.type === 'Bot' && comment.body?.includes(marker)
-            );
-
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
+            const previous = comments.find(comment => comment.user?.type === 'Bot' && comment.body?.includes(marker));
             if (previous) {
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: previous.id,
-                body
-              });
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
             } else {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number,
-                body
-              });
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+            if (ok) {
+              await github.rest.issues.addLabels({ owner, repo, issue_number, labels: ['ready-for-review'] });
+              for (const label of ['validation-failed']) {
+                try { await github.rest.issues.removeLabel({ owner, repo, issue_number, name: label }); }
+                catch (error) { if (error.status !== 404) throw error; }
+              }
+            } else {
+              await github.rest.issues.addLabels({ owner, repo, issue_number, labels: ['validation-failed'] });
+              for (const label of ['ready-for-review', 'approved']) {
+                try { await github.rest.issues.removeLabel({ owner, repo, issue_number, name: label }); }
+                catch (error) { if (error.status !== 404) throw error; }
+              }
             }
 
       - name: Reject invalid package

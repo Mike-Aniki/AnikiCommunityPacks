@@ -13,6 +13,18 @@
       "publishedAt": "2026-08-29",
       "updatedAt": "2026-08-29",
       "featured": false
+    },
+    {
+      "id": "testing-db3c53cd",
+      "name": "Testing",
+      "author": "Ammz",
+      "version": "1.0.0",
+      "description": "Works great!",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityVisualPacks/main/previews/testing-db3c53cd.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityVisualPacks/releases/download/pack-testing-db3c53cd-v1.0.0/testing-db3c53cd-v1.0.0.zip",
+      "publishedAt": "2026-08-29",
+      "updatedAt": "2026-08-29",
+      "featured": false
     }
   ]
 }

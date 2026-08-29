@@ -1,0 +1,5 @@
+{
+  "$schema": "./catalog.schema.json",
+  "formatVersion": 1,
+  "packs": []
+}

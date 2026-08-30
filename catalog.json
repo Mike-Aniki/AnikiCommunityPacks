@@ -3,6 +3,18 @@
   "formatVersion": 1,
   "packs": [
     {
+      "id": "project-reignition",
+      "name": "Project Reignition",
+      "author": "Ammz",
+      "version": "1.0.0",
+      "description": "A visual pack for the PC remake of Sonic and the Secret Rings",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityVisualPacks/main/previews/project-reignition.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityVisualPacks/releases/download/pack-project-reignition-v1.0.0/project-reignition-v1.0.0.zip",
+      "publishedAt": "2026-08-30",
+      "updatedAt": "2026-08-30",
+      "featured": false
+    },
+    {
       "id": "son-gohan-b1d5072b",
       "name": "Son Gohan",
       "author": "Mike Aniki",

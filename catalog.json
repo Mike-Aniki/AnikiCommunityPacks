@@ -3,6 +3,18 @@
   "formatVersion": 1,
   "packs": [
     {
+      "id": "japanese-street-night-81f9368e",
+      "name": "Japanese street night",
+      "author": "Mike Aniki",
+      "version": "1.0.0",
+      "description": "Visual pack themed around Japanese streets at night",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityVisualPacks/main/previews/japanese-street-night-81f9368e.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityVisualPacks/releases/download/pack-japanese-street-night-81f9368e-v1.0.0/japanese-street-night-81f9368e-v1.0.0.zip",
+      "publishedAt": "2026-08-31",
+      "updatedAt": "2026-08-31",
+      "featured": false
+    },
+    {
       "id": "project-reignition",
       "name": "Project Reignition",
       "author": "Ammz",

@@ -22,7 +22,7 @@ Each pack shows its name, creator, version and preview when available.
 
 Create your pack with **Aniki Pack Creator**, export it, then use the matching submission form in the **Issues** section of this repository.
 
-Visual Pack submissions are currently available. Submission forms for Color, Login, Sound and Complete Packs are being added as the Community Packs system is expanded.
+Choose the submission form that matches your pack: **Visual, Color, Login, Sound or Complete**.
 
 When submitting a pack:
 

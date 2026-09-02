@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare an approved Visual Pack submission for automatic publication.
-
-This script is intentionally conservative. It re-validates the submitted ZIP,
-requires exactly one GitHub-hosted JPG/PNG preview, checks new-pack/update
-semantics against catalog.json, stages the preview in previews/, and updates
-catalog.json. The GitHub Actions workflow creates the Release only after this
-preparation and catalog validation succeed.
-"""
+"""Prepare an approved Community Pack submission for automatic publication."""
 
 from __future__ import annotations
 
@@ -16,15 +9,21 @@ import os
 import re
 import shutil
 import sys
-import tempfile
 import urllib.parse
 import urllib.request
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Reuse the exact package validation rules used at submission time.
-from validate_submission import ValidationError, download as download_zip, extract_zip_url, validate_zip
+from validate_submission import (
+    PACK_DISPLAY,
+    PACK_TYPES,
+    ValidationError,
+    download as download_zip,
+    extract_zip_url,
+    resolve_pack_type,
+    validate_zip,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "catalog.json"
@@ -43,6 +42,13 @@ SEMVER = re.compile(
     r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)"
     r"(?:-([0-9A-Za-z.-]+))?(?:\+([0-9A-Za-z.-]+))?$"
 )
+MANIFEST_BY_TYPE = {
+    "visual": "visualpack.json",
+    "color": "colorpack.json",
+    "login": "loginpack.json",
+    "sound": "soundpack.json",
+    "complete": "completepack.json",
+}
 
 
 class PublishError(Exception):
@@ -94,10 +100,7 @@ def preview_url_from_issue(issue_body: str) -> str:
 
 
 def download_limited(url: str, destination: Path, max_bytes: int) -> None:
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": "AnikiCommunityPacks-Publisher/1.0"},
-    )
+    request = urllib.request.Request(url, headers={"User-Agent": "AnikiCommunityPacks-Publisher/2.0"})
     try:
         with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as output:
             total = 0
@@ -126,14 +129,20 @@ def detect_preview_extension(path: Path) -> str:
     raise AssertionError("unreachable")
 
 
-def read_manifest(zip_path: Path) -> dict:
+def read_manifest(zip_path: Path, pack_type: str) -> dict:
+    manifest_name = MANIFEST_BY_TYPE[pack_type]
     try:
         with zipfile.ZipFile(zip_path, "r") as archive:
-            manifest = json.loads(archive.read("visualpack.json").decode("utf-8-sig"))
+            matching = [entry for entry in archive.infolist() if entry.filename.casefold() == manifest_name.casefold()]
+            if len(matching) != 1:
+                fail(f"Could not find exactly one {manifest_name} after validation.")
+            manifest = json.loads(archive.read(matching[0]).decode("utf-8-sig"))
+    except PublishError:
+        raise
     except Exception as exc:
-        fail(f"Could not read visualpack.json after validation: {exc}")
+        fail(f"Could not read {manifest_name} after validation: {exc}")
     if not isinstance(manifest, dict):
-        fail("visualpack.json must contain a JSON object.")
+        fail(f"{manifest_name} must contain a JSON object.")
     return manifest
 
 
@@ -199,6 +208,7 @@ def write_github_output(values: dict[str, str]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--type", choices=("auto",) + PACK_TYPES, default="auto")
     parser.add_argument("--zip", type=Path, help="Use a local ZIP instead of the issue attachment (testing).")
     parser.add_argument("--preview", type=Path, help="Use a local preview instead of the issue attachment (testing).")
     parser.add_argument("--issue-body-file", type=Path, help="Read the issue body from a local file (testing).")
@@ -210,6 +220,9 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
+        pack_type = resolve_pack_type(args.type)
+        display = PACK_DISPLAY[pack_type]
+
         if args.issue_body_file:
             issue_body = args.issue_body_file.read_text(encoding="utf-8")
         else:
@@ -228,14 +241,14 @@ def main() -> int:
                 fail(f"ZIP not found: {args.zip}")
             source_zip = args.zip.resolve()
             package_name = args.zip.name
-            metadata = validate_zip(source_zip)
+            metadata = validate_zip(source_zip, pack_type)
         else:
-            package_name, zip_url = extract_zip_url(issue_body)
+            package_name, zip_url = extract_zip_url(issue_body, pack_type)
             source_zip = PUBLICATION_DIR / "submitted-pack.zip"
             download_zip(zip_url, source_zip)
-            metadata = validate_zip(source_zip)
+            metadata = validate_zip(source_zip, pack_type)
 
-        manifest = read_manifest(source_zip)
+        manifest = read_manifest(source_zip, pack_type)
         pack_id = metadata["id"]
         name = safe_text(metadata["name"], 120, "Pack name")
         author = safe_text(manifest.get("author", ""), 120, "Author", allow_empty=True)
@@ -246,7 +259,6 @@ def main() -> int:
         if not description:
             description = safe_text(issue_section(issue_body, "Description"), 300, "Description", allow_empty=True)
 
-        # Preview: always required for publication and always replaced on updates.
         temp_preview = PUBLICATION_DIR / "submitted-preview"
         if args.preview:
             if not args.preview.is_file():
@@ -275,6 +287,9 @@ def main() -> int:
             if submission_type != "Update to an existing pack":
                 fail(f"Pack ID '{pack_id}' already exists in the catalog, so this submission must be marked as an update.")
             existing = packs[existing_index]
+            existing_type = str(existing.get("type", "visual")).strip().lower()
+            if existing_type != pack_type:
+                fail(f"Pack ID '{pack_id}' is already published as a {PACK_DISPLAY.get(existing_type, existing_type)} and cannot change type.")
             previous_version = str(existing.get("version", ""))
             if compare_semver(version, previous_version) <= 0:
                 fail(f"Submitted version {version} must be newer than published version {previous_version}.")
@@ -282,7 +297,6 @@ def main() -> int:
             featured = bool(existing.get("featured", False))
             mode = "update"
 
-        # Use deterministic, URL-safe-ish release and asset names.
         tag = f"pack-{pack_id}-v{version}"
         asset_name = f"{pack_id}-v{version}.zip"
         package_path = PUBLICATION_DIR / asset_name
@@ -292,7 +306,6 @@ def main() -> int:
         PREVIEWS_DIR.mkdir(parents=True, exist_ok=True)
         preview_name = f"{pack_id}{preview_ext}"
         preview_path = PREVIEWS_DIR / preview_name
-        # Remove a previous preview with the other supported extension.
         for old_ext in (".jpg", ".png"):
             old_path = PREVIEWS_DIR / f"{pack_id}{old_ext}"
             if old_path != preview_path and old_path.exists():
@@ -302,10 +315,13 @@ def main() -> int:
         encoded_tag = urllib.parse.quote(tag, safe="-._~")
         encoded_asset = urllib.parse.quote(asset_name, safe="-._~")
         download_url = f"https://github.com/{args.repo}/releases/download/{encoded_tag}/{encoded_asset}"
-        preview_url = f"https://raw.githubusercontent.com/{args.repo}/{urllib.parse.quote(args.branch, safe='-._~/')}/previews/{urllib.parse.quote(preview_name, safe='-._~')}"
+        preview_url = (
+            f"https://raw.githubusercontent.com/{args.repo}/"
+            f"{urllib.parse.quote(args.branch, safe='-._~/')}/previews/{urllib.parse.quote(preview_name, safe='-._~')}"
+        )
 
         entry = {
-            "type": "visual",
+            "type": pack_type,
             "id": pack_id,
             "name": name,
             "author": author,
@@ -322,14 +338,21 @@ def main() -> int:
             packs.append(entry)
         else:
             packs[existing_index] = entry
-        packs.sort(key=lambda pack: (str(pack.get("name", "")).casefold(), str(pack.get("id", "")).casefold()))
+        packs.sort(
+            key=lambda pack: (
+                str(pack.get("type", "visual")).casefold(),
+                str(pack.get("name", "")).casefold(),
+                str(pack.get("id", "")).casefold(),
+            )
+        )
         CATALOG_PATH.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
         release_notes = [
             f"# {name} v{version}",
             "",
-            description or "Community Visual Pack for Aniki ReMake.",
+            description or f"Community {display} for Aniki ReMake.",
             "",
+            f"**Type:** {display}",
             f"**Author:** {author}",
             f"**Pack ID:** `{pack_id}`",
             f"**Submission:** #{args.issue_number}",
@@ -340,6 +363,7 @@ def main() -> int:
         metadata_path = PUBLICATION_DIR / "publication-metadata.json"
         publish_metadata = {
             "mode": mode,
+            "type": pack_type,
             "pack_id": pack_id,
             "name": name,
             "author": author,
@@ -358,7 +382,9 @@ def main() -> int:
 
         report = [
             "PUBLICATION READY",
+            f"Type: {display}",
             f"Mode: {'Update' if mode == 'update' else 'New pack'}",
+            f"Package: {package_name}",
             f"ID: {pack_id}",
             f"Name: {name}",
             f"Author: {author}",
@@ -366,28 +392,27 @@ def main() -> int:
         ]
         if previous_version:
             report.append(f"Previous version: {previous_version}")
-        report.extend([
-            f"Preview: {preview_name}",
-            f"Release tag: {tag}",
-            f"Release asset: {asset_name}",
-        ])
+        report.extend([f"Release tag: {tag}", f"Preview: previews/{preview_name}"])
         write_report(args.report, report)
         print("\n".join(report))
 
-        write_github_output({
-            "mode": mode,
-            "pack_id": pack_id,
-            "name": name,
-            "version": version,
-            "tag": tag,
-            "asset_name": asset_name,
-            "package_path": publish_metadata["package_path"],
-            "preview_path": publish_metadata["preview_path"],
-            "release_notes_path": publish_metadata["release_notes_path"],
-            "release_title": publish_metadata["release_title"],
-            "download_url": download_url,
-            "preview_url": preview_url,
-        })
+        write_github_output(
+            {
+                "pack_type": pack_type,
+                "pack_display": display,
+                "pack_id": pack_id,
+                "name": name,
+                "author": author,
+                "version": version,
+                "mode": mode,
+                "tag": tag,
+                "asset_name": asset_name,
+                "package_path": str(package_path.relative_to(ROOT)).replace("\\", "/"),
+                "preview_path": str(preview_path.relative_to(ROOT)).replace("\\", "/"),
+                "release_notes_path": str(notes_path.relative_to(ROOT)).replace("\\", "/"),
+                "release_title": f"{name} v{version}",
+            }
+        )
         return 0
 
     except (PublishError, ValidationError) as exc:

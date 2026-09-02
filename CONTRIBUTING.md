@@ -1,31 +1,22 @@
-# Contributing a Visual Pack
+# Sharing a Community Pack
 
-Use the **Visual Pack submission** issue template instead of opening a pull request for a new pack.
+Use the matching **Community Pack submission** form in the Issues section. You do not need to open a pull request or edit `catalog.json` yourself.
 
 Before submitting:
 
-- Export the ZIP with a current version of Aniki Visual Pack Creator.
-- Make sure all 14 required images are present.
-- Keep the `.avpc` project used to create the pack. Its permanent ID is required for future updates.
-- Use semantic versions such as `1.0.0`, `1.1.0` and `2.0.0`.
-- Attach exactly one representative JPG or PNG preview image.
-- Submit the ZIP exactly as exported by Aniki Visual Pack Creator. Do not add, remove or rename anything inside it.
-- The ZIP must contain exactly `visualpack.json` plus the 14 required JPG files. GitHub validates this automatically; any additional, missing, duplicated or nested file makes the submission fail.
+- Export the ZIP directly from **Aniki Pack Creator**.
+- Keep the original Creator project so future updates keep the same permanent pack ID.
+- Increase the version for every update (`1.0.0` → `1.1.0`, for example).
+- Attach the exported ZIP without changing anything inside it.
+- Attach one representative JPG or PNG preview image.
+- Choose **New pack** for a first release or **Update to an existing pack** for a newer version of an already published pack.
 
-For an update, submit the newly exported ZIP from the same `.avpc` project, increase the version number, and select **Update to an existing pack** in the submission form.
+## What happens after submission
 
-## Automatic validation
+GitHub automatically checks the ZIP for the selected pack type. Visual, Color, Login, Sound and Complete Packs each have their own validation rules. Complete Packs are also checked internally: every included sub-pack is validated before the submission can continue.
 
-When a Visual Pack submission issue is created or edited, GitHub Actions downloads the attached ZIP and validates it automatically. The check verifies the exact file list, flat archive structure, ZIP integrity, expected JPG dimensions, `visualpack.json`, permanent pack ID and semantic version.
+If the automatic check succeeds, the issue receives **ready-for-review**. A maintainer then reviews the submission.
 
-A successful validation adds the **ready-for-review** label. A failed validation adds **validation-failed** and must be corrected before publication.
+If approved, the maintainer applies **approved**. GitHub automatically creates the Release, stores the preview, updates the Community Packs catalog, marks the issue as **published**, and closes it.
 
-## Maintainer approval
-
-Automatic validation only verifies the package format. A maintainer reviews the preview and decides whether the pack should be published.
-
-If accepted, the maintainer applies the **approved** label. No manual Release or `catalog.json` edit is required after that.
-
-The publication workflow re-validates the package and then automatically creates the Release, stores the preview, updates and validates `catalog.json`, commits the result, marks the issue **published**, and closes it.
-
-If publication fails, the workflow removes **approved** and comments with the reason. Fix the issue and apply **approved** again when it is ready.
+If validation fails, edit the issue after replacing or fixing the ZIP. The automatic check will run again.

@@ -1,0 +1,89 @@
+name: Enforce issue title prefix
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+
+permissions:
+  issues: write
+
+jobs:
+  enforce-prefix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce pack type prefix
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            if (!issue) {
+              return;
+            }
+
+            const prefixByLabel = new Map([
+              ['visual-pack-submission', '[Visual Pack]'],
+              ['color-pack-submission', '[Color Pack]'],
+              ['login-pack-submission', '[Login Pack]'],
+              ['sound-pack-submission', '[Sound Pack]'],
+              ['complete-pack-submission', '[Complete Pack]']
+            ]);
+
+            const labels = (issue.labels || []).map(label =>
+              typeof label === 'string' ? label : label.name
+            );
+
+            const matchingLabels = labels.filter(label => prefixByLabel.has(label));
+            if (matchingLabels.length === 0) {
+              return;
+            }
+
+            // Issue forms add exactly one pack-type label. If a maintainer ever
+            // adds more than one by mistake, keep the first one from this list.
+            const labelPriority = [
+              'visual-pack-submission',
+              'color-pack-submission',
+              'login-pack-submission',
+              'sound-pack-submission',
+              'complete-pack-submission'
+            ];
+            const packLabel = labelPriority.find(label => matchingLabels.includes(label));
+            const requiredPrefix = prefixByLabel.get(packLabel);
+
+            const knownPrefixes = Array.from(prefixByLabel.values());
+            let cleanTitle = (issue.title || '').trim();
+
+            // Remove any existing pack prefix(es), including a wrong one.
+            let removedPrefix = true;
+            while (removedPrefix) {
+              removedPrefix = false;
+              for (const prefix of knownPrefixes) {
+                if (cleanTitle.toLowerCase().startsWith(prefix.toLowerCase())) {
+                  cleanTitle = cleanTitle.slice(prefix.length).trimStart();
+                  removedPrefix = true;
+                  break;
+                }
+              }
+            }
+
+            let newTitle = cleanTitle
+              ? `${requiredPrefix} ${cleanTitle}`
+              : requiredPrefix;
+
+            // GitHub issue titles are limited to 256 characters.
+            if (newTitle.length > 256) {
+              newTitle = newTitle.slice(0, 256).trimEnd();
+            }
+
+            if (newTitle === issue.title) {
+              return;
+            }
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              title: newTitle
+            });

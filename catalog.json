@@ -3,6 +3,19 @@
   "formatVersion": 1,
   "packs": [
     {
+      "type": "login",
+      "id": "buster-sword-login-b9319610",
+      "name": "Buster Sword Login",
+      "author": "Mike Aniki",
+      "version": "1.0.0",
+      "description": "An login background inspired by Final Fantasy VII, centered around Cloud’s iconic Buster Sword.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/buster-sword-login-b9319610.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-buster-sword-login-b9319610-v1.0.0/buster-sword-login-b9319610-v1.0.0.zip",
+      "publishedAt": "2026-09-02",
+      "updatedAt": "2026-09-02",
+      "featured": false
+    },
+    {
       "type": "visual",
       "id": "dishonored-bac2ddfb",
       "name": "Dishonored",

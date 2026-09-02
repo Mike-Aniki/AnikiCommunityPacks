@@ -1,13 +1,13 @@
-name: Visual Pack submission
-description: Share a new Visual Pack or publish an update to one of your existing Visual Packs.
-title: "[Visual Pack] "
+name: Color Pack submission
+description: Share a new Color Pack or publish an update to one of your existing Color Packs.
+title: "[Color Pack] "
 labels:
-  - visual-pack-submission
+  - color-pack-submission
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing your Visual Pack! Export the ZIP directly from **Aniki Pack Creator** and attach it below.
+        Thanks for sharing your Color Pack! Export the ZIP directly from **Aniki Pack Creator** and attach it below.
 
         If this is an update, reopen the same Creator project and increase its version so the permanent pack ID stays unchanged.
 
@@ -15,10 +15,9 @@ body:
     id: pack-name
     attributes:
       label: Pack name
-      placeholder: Tekken 8
+      placeholder: Midnight Purple
     validations:
       required: true
-
   - type: input
     id: author
     attributes:
@@ -27,7 +26,6 @@ body:
       placeholder: Mike Aniki
     validations:
       required: true
-
   - type: input
     id: version
     attributes:
@@ -36,32 +34,28 @@ body:
       placeholder: 1.0.0
     validations:
       required: true
-
   - type: textarea
     id: description
     attributes:
       label: Description
       description: Optional short description shown to users.
-      placeholder: Visual Pack inspired by Tekken 8.
-
+      placeholder: Dark purple color palette for Aniki ReMake.
   - type: textarea
     id: zip
     attributes:
-      label: Visual Pack ZIP
+      label: Color Pack ZIP
       description: Drag and drop the ZIP exported by Aniki Pack Creator here.
       placeholder: Attach the ZIP here.
     validations:
       required: true
-
   - type: textarea
     id: preview
     attributes:
       label: Preview image
-      description: Attach one representative JPG or PNG image that users will see in the Community browser.
+      description: Attach one representative JPG or PNG image showing the color style.
       placeholder: Attach the preview image here.
     validations:
       required: true
-
   - type: dropdown
     id: submission-type
     attributes:
@@ -71,7 +65,6 @@ body:
         - Update to an existing pack
     validations:
       required: true
-
   - type: checkboxes
     id: confirmations
     attributes:

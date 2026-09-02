@@ -1,4 +1,4 @@
-name: Publish Approved Visual Pack
+name: Publish Approved Community Pack
 
 on:
   issues:
@@ -9,12 +9,18 @@ permissions:
   issues: write
 
 concurrency:
-  group: aniki-community-visual-pack-publication
+  group: aniki-community-pack-publication
   cancel-in-progress: false
 
 jobs:
   publish:
-    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'visual-pack-submission')
+    if: >-
+      github.event.label.name == 'approved' &&
+      (contains(github.event.issue.labels.*.name, 'visual-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'color-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'login-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'sound-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'complete-pack-submission'))
     runs-on: ubuntu-latest
 
     steps:
@@ -34,6 +40,7 @@ jobs:
         continue-on-error: true
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: python3 scripts/prepare_publication.py --report publication-report.txt
@@ -100,6 +107,7 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PACK_NAME: ${{ steps.prepare.outputs.name }}
           PACK_VERSION: ${{ steps.prepare.outputs.version }}
+          PACK_DISPLAY: ${{ steps.prepare.outputs.pack_display }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -109,7 +117,7 @@ jobs:
             echo "No catalog or preview changes were staged." >&2
             exit 1
           fi
-          git commit -m "Publish ${PACK_NAME} v${PACK_VERSION}"
+          git commit -m "Publish ${PACK_DISPLAY}: ${PACK_NAME} v${PACK_VERSION}"
           git push origin "HEAD:${DEFAULT_BRANCH}"
 
       - name: Roll back release if repository publication failed
@@ -153,6 +161,7 @@ jobs:
         env:
           PACK_NAME: ${{ steps.prepare.outputs.name }}
           PACK_VERSION: ${{ steps.prepare.outputs.version }}
+          PACK_DISPLAY: ${{ steps.prepare.outputs.pack_display }}
           TAG: ${{ steps.prepare.outputs.tag }}
         with:
           script: |
@@ -160,16 +169,15 @@ jobs:
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
             const releaseUrl = `https://github.com/${owner}/${repo}/releases/tag/${encodeURIComponent(process.env.TAG)}`;
-            const body = `${marker}\n✅ **Visual Pack published.**\n\n**${process.env.PACK_NAME} v${process.env.PACK_VERSION}** is now in the community catalog.\n\n[Open the GitHub Release](${releaseUrl})`;
+            const body = `${marker}\n✅ **${process.env.PACK_DISPLAY} published.**\n\n**${process.env.PACK_NAME} v${process.env.PACK_VERSION}** is now in the Community Packs catalog.\n\n[Open the GitHub Release](${releaseUrl})`;
 
-            // Ensure the final status label exists.
             try {
               await github.rest.issues.getLabel({ owner, repo, name: 'published' });
             } catch (error) {
               if (error.status === 404) {
                 await github.rest.issues.createLabel({
                   owner, repo, name: 'published', color: '1D76DB',
-                  description: 'Published in the Aniki Community Visual Packs catalog'
+                  description: 'Published in the Aniki Community Packs catalog'
                 });
               } else throw error;
             }

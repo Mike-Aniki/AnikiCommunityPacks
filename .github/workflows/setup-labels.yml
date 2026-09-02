@@ -20,11 +20,15 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const wanted = [
-              { name: 'visual-pack-submission', color: '5319E7', description: 'Technical label identifying Visual Pack submission issues' },
+              { name: 'visual-pack-submission', color: '5319E7', description: 'Visual Pack submission' },
+              { name: 'color-pack-submission', color: 'B60205', description: 'Color Pack submission' },
+              { name: 'login-pack-submission', color: '0052CC', description: 'Login Pack submission' },
+              { name: 'sound-pack-submission', color: '0E8A16', description: 'Sound Pack submission' },
+              { name: 'complete-pack-submission', color: 'D4C5F9', description: 'Complete Pack submission' },
               { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
               { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
-              { name: 'published', color: '1D76DB', description: 'Published in the Aniki Community Visual Packs catalog' },
-              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Visual Pack validation failed' },
+              { name: 'published', color: '1D76DB', description: 'Published in the Aniki Community Packs catalog' },
+              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Community Pack validation failed' },
             ];
 
             for (const label of wanted) {

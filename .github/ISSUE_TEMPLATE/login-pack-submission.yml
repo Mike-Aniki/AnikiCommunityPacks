@@ -1,24 +1,23 @@
-name: Visual Pack submission
-description: Share a new Visual Pack or publish an update to one of your existing Visual Packs.
-title: "[Visual Pack] "
+name: Login Pack submission
+description: Share a new Login Pack or publish an update to one of your existing Login Packs.
+title: "[Login Pack] "
 labels:
-  - visual-pack-submission
+  - login-pack-submission
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing your Visual Pack! Export the ZIP directly from **Aniki Pack Creator** and attach it below.
+        Thanks for sharing your Login Pack! Export the ZIP directly from **Aniki Pack Creator** and attach it below.
 
-        If this is an update, reopen the same Creator project and increase its version so the permanent pack ID stays unchanged.
+        Login videos are automatically checked for the supported MP4 format and codec before review.
 
   - type: input
     id: pack-name
     attributes:
       label: Pack name
-      placeholder: Tekken 8
+      placeholder: Persona 5 Login
     validations:
       required: true
-
   - type: input
     id: author
     attributes:
@@ -27,7 +26,6 @@ body:
       placeholder: Mike Aniki
     validations:
       required: true
-
   - type: input
     id: version
     attributes:
@@ -36,32 +34,28 @@ body:
       placeholder: 1.0.0
     validations:
       required: true
-
   - type: textarea
     id: description
     attributes:
       label: Description
       description: Optional short description shown to users.
-      placeholder: Visual Pack inspired by Tekken 8.
-
+      placeholder: Animated login inspired by Persona 5.
   - type: textarea
     id: zip
     attributes:
-      label: Visual Pack ZIP
+      label: Login Pack ZIP
       description: Drag and drop the ZIP exported by Aniki Pack Creator here.
       placeholder: Attach the ZIP here.
     validations:
       required: true
-
   - type: textarea
     id: preview
     attributes:
       label: Preview image
-      description: Attach one representative JPG or PNG image that users will see in the Community browser.
+      description: Attach one representative JPG or PNG frame from the login video.
       placeholder: Attach the preview image here.
     validations:
       required: true
-
   - type: dropdown
     id: submission-type
     attributes:
@@ -71,7 +65,6 @@ body:
         - Update to an existing pack
     validations:
       required: true
-
   - type: checkboxes
     id: confirmations
     attributes:

@@ -1,4 +1,4 @@
-name: Validate Visual Pack Submission
+name: Validate Community Pack Submission
 
 on:
   issues:
@@ -10,18 +10,25 @@ permissions:
 
 jobs:
   validate:
-    if: contains(github.event.issue.labels.*.name, 'visual-pack-submission') && (github.event.action != 'labeled' || github.event.label.name == 'visual-pack-submission')
+    if: >-
+      (contains(github.event.issue.labels.*.name, 'visual-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'color-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'login-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'sound-pack-submission') ||
+       contains(github.event.issue.labels.*.name, 'complete-pack-submission')) &&
+      (github.event.action != 'labeled' || endsWith(github.event.label.name, '-pack-submission'))
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate submitted ZIP
+      - name: Validate submitted pack
         id: validate
         continue-on-error: true
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
         run: python3 scripts/validate_submission.py --report submission-validation.txt
 
       - name: Post validation result and update status labels
@@ -32,7 +39,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const marker = '<!-- aniki-visual-pack-validation -->';
+            const marker = '<!-- aniki-community-pack-validation -->';
             const ok = process.env.VALIDATION_OUTCOME === 'success';
 
             let report = 'Validation did not produce a report.';
@@ -40,14 +47,16 @@ jobs:
               report = fs.readFileSync('submission-validation.txt', 'utf8').trim();
             }
 
-            const body = `${marker}\n${ok ? '✅ **Automatic Visual Pack validation passed.**' : '❌ **Automatic Visual Pack validation failed.**'}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission is ready for maintainer review.' : 'Replace or fix the ZIP in the submission, then edit the issue to run validation again.'}`;
+            const typeLine = report.split('\n').find(line => line.startsWith('Type: '));
+            const packType = typeLine ? typeLine.substring('Type: '.length) : 'Community Pack';
+            const body = `${marker}\n${ok ? `✅ **Automatic ${packType} validation passed.**` : `❌ **Automatic ${packType} validation failed.**`}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission is ready for maintainer review.' : 'Replace or fix the ZIP in the submission, then edit the issue to run validation again.'}`;
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
 
             const labels = [
               { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
               { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
-              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Visual Pack validation failed' },
+              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Community Pack validation failed' },
             ];
             for (const label of labels) {
               try {

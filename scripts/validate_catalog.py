@@ -10,7 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "catalog.json"
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 PACK_ID = re.compile(r"^[A-Za-z0-9._-]+$")
+PACK_TYPES = {"visual", "color", "login", "sound", "complete"}
 REQUIRED = {
+    "type",
     "id",
     "name",
     "author",
@@ -63,6 +65,10 @@ def main() -> None:
         missing = REQUIRED - pack.keys()
         if missing:
             fail(f"{prefix} is missing: {', '.join(sorted(missing))}")
+
+        pack_type = str(pack["type"]).strip().lower()
+        if pack_type not in PACK_TYPES:
+            fail(f"{prefix}.type must be one of: {', '.join(sorted(PACK_TYPES))}")
 
         pack_id = str(pack["id"])
         if not PACK_ID.fullmatch(pack_id):

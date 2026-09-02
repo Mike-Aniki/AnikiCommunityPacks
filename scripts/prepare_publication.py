@@ -96,7 +96,7 @@ def preview_url_from_issue(issue_body: str) -> str:
 def download_limited(url: str, destination: Path, max_bytes: int) -> None:
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": "AnikiCommunityVisualPacks-Publisher/1.0"},
+        headers={"User-Agent": "AnikiCommunityPacks-Publisher/1.0"},
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as output:
@@ -203,7 +203,7 @@ def main() -> int:
     parser.add_argument("--preview", type=Path, help="Use a local preview instead of the issue attachment (testing).")
     parser.add_argument("--issue-body-file", type=Path, help="Read the issue body from a local file (testing).")
     parser.add_argument("--issue-body-env", default="ISSUE_BODY")
-    parser.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", "Mike-Aniki/AnikiCommunityVisualPacks"))
+    parser.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", "Mike-Aniki/AnikiCommunityPacks"))
     parser.add_argument("--branch", default=os.environ.get("DEFAULT_BRANCH", "main"))
     parser.add_argument("--issue-number", default=os.environ.get("ISSUE_NUMBER", "0"))
     parser.add_argument("--report", type=Path, default=ROOT / "publication-report.txt")
@@ -305,6 +305,7 @@ def main() -> int:
         preview_url = f"https://raw.githubusercontent.com/{args.repo}/{urllib.parse.quote(args.branch, safe='-._~/')}/previews/{urllib.parse.quote(preview_name, safe='-._~')}"
 
         entry = {
+            "type": "visual",
             "id": pack_id,
             "name": name,
             "author": author,

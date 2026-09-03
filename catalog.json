@@ -16,6 +16,19 @@
       "featured": false
     },
     {
+      "type": "complete",
+      "id": "mon-pack-complet-7ce53f65",
+      "name": "Ghost in the shell",
+      "author": "Mike Aniki",
+      "version": "1.0.0",
+      "description": "A complete Ghost in the Shell-themed pack",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-mon-pack-complet-7ce53f65-v1.0.0/mon-pack-complet-7ce53f65-v1.0.0.zip",
+      "publishedAt": "2026-09-03",
+      "updatedAt": "2026-09-03",
+      "featured": false
+    },
+    {
       "type": "login",
       "id": "buster-sword-login-b9319610",
       "name": "Buster Sword Login",

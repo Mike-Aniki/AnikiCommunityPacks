@@ -3,6 +3,19 @@
   "formatVersion": 1,
   "packs": [
     {
+      "type": "complete",
+      "id": "dishonored-3db37d23",
+      "name": "Dishonored",
+      "author": "Electro79",
+      "version": "1.1.0",
+      "description": "This pack contains a visual pack and a login screen from Dishonored franchise",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dishonored-3db37d23.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dishonored-3db37d23-v1.1.0/dishonored-3db37d23-v1.1.0.zip",
+      "publishedAt": "2026-09-03",
+      "updatedAt": "2026-09-03",
+      "featured": false
+    },
+    {
       "type": "login",
       "id": "buster-sword-login-b9319610",
       "name": "Buster Sword Login",

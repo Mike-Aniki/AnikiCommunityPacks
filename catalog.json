@@ -56,6 +56,19 @@
     },
     {
       "type": "visual",
+      "id": "hatsune-miku-deep-sea-e64585fb",
+      "name": "Hatsune Miku Deep Sea",
+      "author": "Zonny",
+      "version": "1.0.0",
+      "description": "A Hatsune Miku theme I made a few months ago, now it seems I can share it :D",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/hatsune-miku-deep-sea-e64585fb.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-hatsune-miku-deep-sea-e64585fb-v1.0.0/hatsune-miku-deep-sea-e64585fb-v1.0.0.zip",
+      "publishedAt": "2026-09-03",
+      "updatedAt": "2026-09-03",
+      "featured": false
+    },
+    {
+      "type": "visual",
       "id": "japanese-street-night-81f9368e",
       "name": "Japanese street night",
       "author": "Mike Aniki",

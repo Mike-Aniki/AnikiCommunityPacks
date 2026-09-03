@@ -20,16 +20,32 @@ Each pack shows its name, creator, version and preview when available.
 
 ## Share your own pack
 
-Create your pack with **Aniki Pack Creator**, export it, then use the matching submission form in the **Issues** section of this repository.
+Create your pack with **Aniki Pack Creator**, then use **Share Community Pack** inside the Creator. It prepares the exact file or files that need to be attached to the matching submission form in the **Issues** section of this repository.
 
 Choose the submission form that matches your pack: **Visual, Color, Login, Sound or Complete**.
 
 When submitting a pack:
 
-1. Export the pack directly from Aniki Pack Creator.
-2. Open the matching Community Pack submission form.
-3. Attach the exported ZIP and any requested preview.
-4. Wait for the automatic check and community review.
+1. Click **Share Community Pack** in Aniki Pack Creator.
+2. Choose where the prepared Community upload file(s) should be created.
+3. Open the matching submission form.
+4. Attach the prepared ZIP file(s) and the requested preview image.
+5. Wait for the automatic check and community review.
+
+### Large packs and multipart uploads
+
+GitHub limits individual ZIP attachments in Issues to **25 MB**. If a pack is too large, Aniki Pack Creator automatically splits the Community upload into several files such as:
+
+```text
+My Pack.part01-of-04.zip
+My Pack.part02-of-04.zip
+My Pack.part03-of-04.zip
+My Pack.part04-of-04.zip
+```
+
+Attach **all generated parts** to the Pack ZIP field. Do not rename, extract or modify them.
+
+The automatic validator verifies every part, reconstructs the original pack, checks its SHA-256 integrity, and then performs the normal pack validation. The final published GitHub Release still contains **one normal ZIP**; multipart files are only used to get the submission through GitHub Issues.
 
 If the pack passes validation and is approved, it will be published automatically and become available through the Community Packs catalog.
 
@@ -37,7 +53,7 @@ If the pack passes validation and is approved, it will be published automaticall
 
 Keep the original Aniki Pack Creator project after publishing a pack.
 
-To release an update, open that same project, increase its version (for example `1.0.0` → `1.1.0`), export it again and submit it as an update. Reusing the same project keeps the permanent pack ID, which lets Aniki Helper recognize the new version correctly.
+To release an update, open that same project, increase its version (for example `1.0.0` → `1.1.0`), use **Share Community Pack** again and submit it as an update. Reusing the same project keeps the permanent pack ID, which lets Aniki Helper recognize the new version correctly.
 
 ## Community guidelines
 

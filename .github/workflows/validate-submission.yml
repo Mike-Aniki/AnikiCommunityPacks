@@ -7,7 +7,6 @@ on:
 permissions:
   contents: read
   issues: write
-
 jobs:
   validate:
     if: >-
@@ -18,19 +17,24 @@ jobs:
        contains(github.event.issue.labels.*.name, 'complete-pack-submission')) &&
       (github.event.action != 'labeled' || endsWith(github.event.label.name, '-pack-submission'))
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate submitted pack
+      - name: Resolve and validate submitted pack
         id: validate
         continue-on-error: true
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
-        run: python3 scripts/validate_submission.py --report submission-validation.txt
-
+        run: |
+          set -euo pipefail
+          python3 scripts/resolve_submission_package.py \
+            --output resolved-submission/submitted-pack.zip \
+            --report submission-validation.txt
+          python3 scripts/validate_submission.py \
+            --zip resolved-submission/submitted-pack.zip \
+            --report submission-validation.txt
       - name: Post validation result and update status labels
         if: always()
         uses: actions/github-script@v7
@@ -41,18 +45,15 @@ jobs:
             const fs = require('fs');
             const marker = '<!-- aniki-community-pack-validation -->';
             const ok = process.env.VALIDATION_OUTCOME === 'success';
-
             let report = 'Validation did not produce a report.';
             if (fs.existsSync('submission-validation.txt')) {
               report = fs.readFileSync('submission-validation.txt', 'utf8').trim();
             }
-
             const typeLine = report.split('\n').find(line => line.startsWith('Type: '));
             const packType = typeLine ? typeLine.substring('Type: '.length) : 'Community Pack';
-            const body = `${marker}\n${ok ? `✅ **Automatic ${packType} validation passed.**` : `❌ **Automatic ${packType} validation failed.**`}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission is ready for maintainer review.' : 'Replace or fix the ZIP in the submission, then edit the issue to run validation again.'}`;
+            const body = `${marker}\n${ok ? `✅ **Automatic ${packType} validation passed.**` : `❌ **Automatic ${packType} validation failed.**`}\n\n\`\`\`text\n${report}\n\`\`\`\n\n${ok ? 'The package structure is valid. The submission is ready for maintainer review.' : 'Replace or fix the submitted ZIP / multipart files, then edit the issue to run validation again.'}`;
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
-
             const labels = [
               { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
               { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
@@ -67,7 +68,6 @@ jobs:
                 } else throw error;
               }
             }
-
             const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
             const previous = comments.find(comment => comment.user?.type === 'Bot' && comment.body?.includes(marker));
             if (previous) {
@@ -75,7 +75,6 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
-
             if (ok) {
               await github.rest.issues.addLabels({ owner, repo, issue_number, labels: ['ready-for-review'] });
               for (const label of ['validation-failed']) {
@@ -89,7 +88,6 @@ jobs:
                 catch (error) { if (error.status !== 404) throw error; }
               }
             }
-
       - name: Reject invalid package
         if: steps.validate.outcome != 'success'
         run: exit 1

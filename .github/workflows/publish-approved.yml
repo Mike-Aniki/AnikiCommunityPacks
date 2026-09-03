@@ -11,7 +11,6 @@ permissions:
 concurrency:
   group: aniki-community-pack-publication
   cancel-in-progress: false
-
 jobs:
   publish:
     if: >-
@@ -22,7 +21,6 @@ jobs:
        contains(github.event.issue.labels.*.name, 'sound-pack-submission') ||
        contains(github.event.issue.labels.*.name, 'complete-pack-submission'))
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout latest catalog
         uses: actions/checkout@v4
@@ -34,7 +32,6 @@ jobs:
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: git pull --ff-only origin "$DEFAULT_BRANCH"
-
       - name: Prepare publication
         id: prepare
         continue-on-error: true
@@ -43,8 +40,14 @@ jobs:
           ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-        run: python3 scripts/prepare_publication.py --report publication-report.txt
-
+        run: |
+          set -euo pipefail
+          python3 scripts/resolve_submission_package.py \
+            --output publication-input/submitted-pack.zip \
+            --report publication-report.txt
+          python3 scripts/prepare_publication.py \
+            --zip publication-input/submitted-pack.zip \
+            --report publication-report.txt
       - name: Stop if publication checks failed
         if: steps.prepare.outcome != 'success'
         uses: actions/github-script@v7
@@ -70,14 +73,12 @@ jobs:
             } catch (error) {
               if (error.status !== 404) throw error;
             }
-
       - name: Reject blocked publication
         if: steps.prepare.outcome != 'success'
         run: exit 1
 
       - name: Validate updated catalog
         run: python3 scripts/validate_catalog.py
-
       - name: Create GitHub Release and upload pack
         id: release
         env:
@@ -100,7 +101,6 @@ jobs:
             --title "$RELEASE_TITLE" \
             --notes-file "$RELEASE_NOTES_PATH" \
             --latest=false
-
       - name: Commit catalog and preview
         id: publish_commit
         env:
@@ -119,7 +119,6 @@ jobs:
           fi
           git commit -m "Publish ${PACK_DISPLAY}: ${PACK_NAME} v${PACK_VERSION}"
           git push origin "HEAD:${DEFAULT_BRANCH}"
-
       - name: Roll back release if repository publication failed
         if: failure() && steps.prepare.outcome == 'success' && steps.release.outcome == 'success' && steps.publish_commit.outcome != 'success'
         env:
@@ -127,7 +126,6 @@ jobs:
           REPO: ${{ github.repository }}
           TAG: ${{ steps.prepare.outputs.tag }}
         run: gh release delete "$TAG" --repo "$REPO" --yes --cleanup-tag || true
-
       - name: Report publication failure
         if: failure() && steps.prepare.outcome == 'success' && steps.publish_commit.outcome != 'success'
         uses: actions/github-script@v7
@@ -154,7 +152,6 @@ jobs:
             } catch (error) {
               if (error.status !== 404) throw error;
             }
-
       - name: Mark issue as published
         if: success()
         uses: actions/github-script@v7
@@ -170,7 +167,6 @@ jobs:
             const issue_number = context.issue.number;
             const releaseUrl = `https://github.com/${owner}/${repo}/releases/tag/${encodeURIComponent(process.env.TAG)}`;
             const body = `${marker}\n✅ **${process.env.PACK_DISPLAY} published.**\n\n**${process.env.PACK_NAME} v${process.env.PACK_VERSION}** is now in the Community Packs catalog.\n\n[Open the GitHub Release](${releaseUrl})`;
-
             try {
               await github.rest.issues.getLabel({ owner, repo, name: 'published' });
             } catch (error) {
@@ -181,7 +177,6 @@ jobs:
                 });
               } else throw error;
             }
-
             const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
             const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
             if (previous) {
@@ -189,7 +184,6 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
-
             await github.rest.issues.addLabels({ owner, repo, issue_number, labels: ['published'] });
             for (const label of ['approved', 'ready-for-review', 'validation-failed']) {
               try {

@@ -7,10 +7,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing your Sound Pack! Export the ZIP directly from **Aniki Pack Creator** and attach it below.
+        Thanks for sharing your Sound Pack! Use **Share Community Pack** in Aniki Pack Creator and attach the prepared file(s) below.
+
+        GitHub limits individual ZIP attachments to 25 MB. If your pack is too large, Aniki Pack Creator automatically creates several `.partXX-of-XX.zip` files. **Attach every generated part and do not rename or modify them.**
 
         Sound Packs can be partial: you do not need to replace every sound or music slot.
-
   - type: input
     id: pack-name
     attributes:
@@ -44,8 +45,8 @@ body:
     id: zip
     attributes:
       label: Sound Pack ZIP
-      description: Drag and drop the ZIP exported by Aniki Pack Creator here.
-      placeholder: Attach the ZIP here.
+      description: Attach the ZIP prepared by Aniki Pack Creator. If the Creator generated multipart ZIPs, attach ALL `.partXX-of-XX.zip` files here.
+      placeholder: Attach the ZIP, or all generated multipart ZIPs, here.
     validations:
       required: true
   - type: textarea
@@ -70,7 +71,7 @@ body:
     attributes:
       label: Confirmation
       options:
-        - label: I confirm this ZIP was exported directly with Aniki Pack Creator.
+        - label: I confirm the ZIP or multipart ZIPs were prepared directly with Aniki Pack Creator.
           required: true
         - label: I understand that updates must keep the permanent ID from the original Creator project.
           required: true

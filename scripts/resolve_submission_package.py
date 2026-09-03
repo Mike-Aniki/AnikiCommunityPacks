@@ -149,8 +149,16 @@ def safe_original_file_name(value: object) -> str:
     return name
 
 
+def manifest_value(manifest: dict, key: str, default=None):
+    """Read current camelCase keys and legacy PascalCase keys from Creator v1.1 multipart files."""
+    if key in manifest:
+        return manifest[key]
+    legacy_key = key[:1].upper() + key[1:] if key else key
+    return manifest.get(legacy_key, default)
+
+
 def require_int(manifest: dict, key: str) -> int:
-    value = manifest.get(key)
+    value = manifest_value(manifest, key)
     if isinstance(value, bool) or not isinstance(value, int):
         fail(f"multipart.json '{key}' must be an integer.")
     return value
@@ -219,21 +227,21 @@ def inspect_multipart_part(path: Path, source_name: str) -> MultipartPart | None
             if not isinstance(manifest, dict):
                 fail(f"'{source_name}' multipart.json must contain a JSON object.")
 
-            if manifest.get("formatVersion") != 1:
+            if manifest_value(manifest, "formatVersion") != 1:
                 fail(f"'{source_name}' multipart.json formatVersion must be 1.")
-            if str(manifest.get("type", "")).strip().casefold() != "aniki-community-multipart":
+            if str(manifest_value(manifest, "type", "")).strip().casefold() != "aniki-community-multipart":
                 fail(f"'{source_name}' is not an Aniki Community multipart file.")
 
-            submission_id = str(manifest.get("submissionId", "")).strip()
+            submission_id = str(manifest_value(manifest, "submissionId", "")).strip()
             if not SUBMISSION_ID_RE.fullmatch(submission_id):
                 fail(f"'{source_name}' contains an invalid submissionId.")
 
-            original_file_name = safe_original_file_name(manifest.get("originalFileName"))
+            original_file_name = safe_original_file_name(manifest_value(manifest, "originalFileName"))
             original_size = require_int(manifest, "originalSize")
             if original_size <= 0 or original_size > MAX_DOWNLOAD_BYTES:
                 fail(f"'{source_name}' contains an invalid originalSize (maximum 250 MB).")
 
-            original_sha256 = str(manifest.get("originalSha256", "")).strip().lower()
+            original_sha256 = str(manifest_value(manifest, "originalSha256", "")).strip().lower()
             if not SHA256_RE.fullmatch(original_sha256):
                 fail(f"'{source_name}' contains an invalid originalSha256.")
 
@@ -250,7 +258,7 @@ def inspect_multipart_part(path: Path, source_name: str) -> MultipartPart | None
             if chunk_size <= 0 or chunk_size > MAX_MULTIPART_CHUNK_BYTES:
                 fail(f"'{source_name}' contains an invalid chunkSize.")
 
-            chunk_sha256 = str(manifest.get("chunkSha256", "")).strip().lower()
+            chunk_sha256 = str(manifest_value(manifest, "chunkSha256", "")).strip().lower()
             if not SHA256_RE.fullmatch(chunk_sha256):
                 fail(f"'{source_name}' contains an invalid chunkSha256.")
 

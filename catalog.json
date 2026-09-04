@@ -68,6 +68,19 @@
       "featured": false
     },
     {
+      "type": "sound",
+      "id": "ps5-sound-pack-dbb6a658",
+      "name": "PS5 Sound Pack",
+      "author": "Luxas",
+      "version": "1.0.0",
+      "description": "Just a Sound Pack for now",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/ps5-sound-pack-dbb6a658.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-ps5-sound-pack-dbb6a658-v1.0.0/ps5-sound-pack-dbb6a658-v1.0.0.zip",
+      "publishedAt": "2026-09-04",
+      "updatedAt": "2026-09-04",
+      "featured": false
+    },
+    {
       "type": "visual",
       "id": "dishonored-bac2ddfb",
       "name": "Dishonored",

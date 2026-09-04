@@ -30,6 +30,19 @@
     },
     {
       "type": "login",
+      "id": "blood-of-dawnwalker-2d152efe",
+      "name": "Blood of Dawnwalker",
+      "author": "Luxas",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/blood-of-dawnwalker-2d152efe.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-blood-of-dawnwalker-2d152efe-v1.0.0/blood-of-dawnwalker-2d152efe-v1.0.0.zip",
+      "publishedAt": "2026-09-04",
+      "updatedAt": "2026-09-04",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "buster-sword-login-b9319610",
       "name": "Buster Sword Login",
       "author": "Mike Aniki",

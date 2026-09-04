@@ -28,7 +28,8 @@ jobs:
               ['color-pack-submission', '[Color Pack]'],
               ['login-pack-submission', '[Login Pack]'],
               ['sound-pack-submission', '[Sound Pack]'],
-              ['complete-pack-submission', '[Complete Pack]']
+              ['complete-pack-submission', '[Complete Pack]'],
+              ['unpublish-request', '[Unpublish]']
             ]);
 
             const labels = (issue.labels || []).map(label =>
@@ -47,7 +48,8 @@ jobs:
               'color-pack-submission',
               'login-pack-submission',
               'sound-pack-submission',
-              'complete-pack-submission'
+              'complete-pack-submission',
+              'unpublish-request'
             ];
             const packLabel = labelPriority.find(label => matchingLabels.includes(label));
             const requiredPrefix = prefixByLabel.get(packLabel);

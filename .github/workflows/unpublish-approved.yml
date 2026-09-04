@@ -1,0 +1,232 @@
+name: Unpublish Approved Community Pack
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: aniki-community-pack-publication
+  cancel-in-progress: false
+
+jobs:
+  unpublish:
+    if: >-
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'unpublish-request')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest catalog
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Refresh default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: git pull --ff-only origin "$DEFAULT_BRANCH"
+
+      - name: Prepare catalog removal
+        id: remove
+        continue-on-error: true
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          set -euo pipefail
+          python3 scripts/unpublish_pack.py             --apply             --report unpublish-report.txt
+
+      - name: Stop if removal checks failed
+        if: steps.remove.outcome != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- aniki-unpublish-status -->';
+            const report = fs.existsSync('unpublish-report.txt')
+              ? fs.readFileSync('unpublish-report.txt', 'utf8').trim()
+              : 'The unpublish request failed before a report could be generated.';
+            const body = `${marker}
+            ❌ **Unpublish blocked.**
+
+            \`\`\`text
+            ${report}
+            \`\`\`
+
+            Fix the request, then remove and re-apply the \`approved\` label.`;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
+            );
+            const previous = comments.find(
+              c => c.user?.type === 'Bot' && c.body?.includes(marker)
+            );
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: previous.id, body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body
+              });
+            }
+            try {
+              await github.rest.issues.removeLabel({
+                owner, repo, issue_number, name: 'approved'
+              });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+      - name: Reject blocked removal
+        if: steps.remove.outcome != 'success'
+        run: exit 1
+
+      - name: Validate updated catalog
+        run: python3 scripts/validate_catalog.py
+
+      - name: Commit catalog removal
+        id: remove_commit
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PACK_NAME: ${{ steps.remove.outputs.name }}
+          PACK_DISPLAY: ${{ steps.remove.outputs.pack_display }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- catalog.json previews
+          if git diff --cached --quiet; then
+            echo "No catalog or preview changes were staged." >&2
+            exit 1
+          fi
+          git commit -m "Unpublish ${PACK_DISPLAY}: ${PACK_NAME}"
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+
+      - name: Report removal failure
+        if: failure() && steps.remove.outcome == 'success' && steps.remove_commit.outcome != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- aniki-unpublish-status -->';
+            const report = fs.existsSync('unpublish-report.txt')
+              ? fs.readFileSync('unpublish-report.txt', 'utf8').trim()
+              : 'The catalog removal could not be committed.';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `${marker}
+            ❌ **Automatic unpublish failed.**
+
+            \`\`\`text
+            ${report}
+            \`\`\`
+
+            The repository was not updated. Check the [workflow run](${runUrl}), then re-apply the \`approved\` label.`;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
+            );
+            const previous = comments.find(
+              c => c.user?.type === 'Bot' && c.body?.includes(marker)
+            );
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: previous.id, body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body
+              });
+            }
+            try {
+              await github.rest.issues.removeLabel({
+                owner, repo, issue_number, name: 'approved'
+              });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+      - name: Mark issue as unpublished
+        if: success()
+        uses: actions/github-script@v7
+        env:
+          PACK_NAME: ${{ steps.remove.outputs.name }}
+          PACK_VERSION: ${{ steps.remove.outputs.version }}
+          PACK_DISPLAY: ${{ steps.remove.outputs.pack_display }}
+          PACK_ID: ${{ steps.remove.outputs.pack_id }}
+          RELEASE_TAG: ${{ steps.remove.outputs.release_tag }}
+        with:
+          script: |
+            const marker = '<!-- aniki-unpublish-status -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const releaseLine = process.env.RELEASE_TAG
+              ? `\n\nThe previous GitHub Release (\`${process.env.RELEASE_TAG}\`) was kept as an archive.`
+              : '';
+
+            const body = `${marker}
+            ✅ **${process.env.PACK_DISPLAY} unpublished.**
+
+            **${process.env.PACK_NAME} v${process.env.PACK_VERSION}** (\`${process.env.PACK_ID}\`) has been removed from the Community Packs catalog and will no longer appear in Aniki Helper.${releaseLine}`;
+
+            try {
+              await github.rest.issues.getLabel({
+                owner, repo, name: 'unpublished'
+              });
+            } catch (error) {
+              if (error.status === 404) {
+                await github.rest.issues.createLabel({
+                  owner,
+                  repo,
+                  name: 'unpublished',
+                  color: '6A737D',
+                  description: 'Community Pack removed from the catalog'
+                });
+              } else {
+                throw error;
+              }
+            }
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
+            );
+            const previous = comments.find(
+              c => c.user?.type === 'Bot' && c.body?.includes(marker)
+            );
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: previous.id, body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body
+              });
+            }
+
+            await github.rest.issues.addLabels({
+              owner, repo, issue_number, labels: ['unpublished']
+            });
+
+            for (const label of ['approved', 'ready-for-review', 'validation-failed']) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner, repo, issue_number, name: label
+                });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+            }
+
+            await github.rest.issues.update({
+              owner, repo, issue_number, state: 'closed'
+            });

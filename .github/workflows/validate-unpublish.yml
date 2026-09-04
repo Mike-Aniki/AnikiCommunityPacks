@@ -1,0 +1,126 @@
+name: Validate Community Pack Unpublish Request
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate:
+    if: >-
+      contains(github.event.issue.labels.*.name, 'unpublish-request') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'unpublish-request')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate unpublish request
+        id: validate
+        continue-on-error: true
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          set -euo pipefail
+          python3 scripts/unpublish_pack.py             --check             --report unpublish-validation.txt
+
+      - name: Post validation result and update status labels
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          VALIDATION_OUTCOME: ${{ steps.validate.outcome }}
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- aniki-unpublish-validation -->';
+            const ok = process.env.VALIDATION_OUTCOME === 'success';
+            let report = 'Validation did not produce a report.';
+            if (fs.existsSync('unpublish-validation.txt')) {
+              report = fs.readFileSync('unpublish-validation.txt', 'utf8').trim();
+            }
+
+            const body = `${marker}
+            ${ok ? '✅ **Unpublish request is valid.**' : '❌ **Unpublish request validation failed.**'}
+
+            \`\`\`text
+            ${report}
+            \`\`\`
+
+            ${ok
+              ? 'The pack exists in the catalog. A maintainer must verify the requester and apply the `approved` label to remove it.'
+              : 'Fix the Pack ID or request details, then edit the issue to run validation again.'}`;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+
+            const labels = [
+              { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
+              { name: 'approved', color: '0E8A16', description: 'Maintainer approved this request' },
+              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic validation failed' },
+              { name: 'unpublished', color: '6A737D', description: 'Community Pack removed from the catalog' },
+            ];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: label.name });
+              } catch (error) {
+                if (error.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, ...label });
+                } else {
+                  throw error;
+                }
+              }
+            }
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
+            );
+            const previous = comments.find(
+              comment => comment.user?.type === 'Bot' && comment.body?.includes(marker)
+            );
+
+            if (previous) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: previous.id, body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body
+              });
+            }
+
+            if (ok) {
+              await github.rest.issues.addLabels({
+                owner, repo, issue_number, labels: ['ready-for-review']
+              });
+              for (const label of ['validation-failed']) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner, repo, issue_number, name: label
+                  });
+                } catch (error) {
+                  if (error.status !== 404) throw error;
+                }
+              }
+            } else {
+              await github.rest.issues.addLabels({
+                owner, repo, issue_number, labels: ['validation-failed']
+              });
+              for (const label of ['ready-for-review', 'approved']) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner, repo, issue_number, name: label
+                  });
+                } catch (error) {
+                  if (error.status !== 404) throw error;
+                }
+              }
+            }
+
+      - name: Reject invalid request
+        if: steps.validate.outcome != 'success'
+        run: exit 1

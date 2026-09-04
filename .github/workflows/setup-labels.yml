@@ -25,10 +25,12 @@ jobs:
               { name: 'login-pack-submission', color: '0052CC', description: 'Login Pack submission' },
               { name: 'sound-pack-submission', color: '0E8A16', description: 'Sound Pack submission' },
               { name: 'complete-pack-submission', color: 'D4C5F9', description: 'Complete Pack submission' },
+              { name: 'unpublish-request', color: 'BFDADC', description: 'Request to remove a Community Pack from the catalog' },
               { name: 'ready-for-review', color: 'FBCA04', description: 'Automatic validation passed; waiting for maintainer review' },
-              { name: 'approved', color: '0E8A16', description: 'Maintainer approved this pack for automatic publication' },
+              { name: 'approved', color: '0E8A16', description: 'Maintainer approved this request' },
               { name: 'published', color: '1D76DB', description: 'Published in the Aniki Community Packs catalog' },
-              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic Community Pack validation failed' },
+              { name: 'unpublished', color: '6A737D', description: 'Community Pack removed from the catalog' },
+              { name: 'validation-failed', color: 'D93F0B', description: 'Automatic validation failed' },
             ];
 
             for (const label of wanted) {

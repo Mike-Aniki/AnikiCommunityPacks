@@ -1,0 +1,39 @@
+name: Remove / unpublish Community Pack
+description: Request removal of one of your published Community Packs from the catalog.
+title: "[Unpublish] "
+labels:
+  - unpublish-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form if you want a published pack removed from the **Aniki Community Packs catalog**.
+
+        This is useful, for example, if you first published a standalone Visual Pack and later replaced it with a Complete Pack.
+
+        After approval, the pack disappears from the Community Packs catalog and Aniki Helper. Its old GitHub Release is kept as an archive so the removal can be recovered if necessary.
+  - type: input
+    id: pack-id
+    attributes:
+      label: Pack ID
+      description: "Enter the permanent ID of the exact pack you want to remove. Example: dishonored-3db37d23"
+      placeholder: my-pack-a1b2c3d4
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: Briefly explain why you want this pack removed.
+      placeholder: I published a Complete Pack that replaces this standalone Visual Pack.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I am the creator of this pack or I am authorized to request its removal.
+          required: true
+        - label: I understand that approval removes the pack from the Community catalog and Aniki Helper, while the existing GitHub Release is kept as an archive.
+          required: true

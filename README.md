@@ -55,6 +55,22 @@ Keep the original Aniki Pack Creator project after publishing a pack.
 
 To release an update, open that same project, increase its version (for example `1.0.0` → `1.1.0`), use **Share Community Pack** again and submit it as an update. Reusing the same project keeps the permanent pack ID, which lets Aniki Helper recognize the new version correctly.
 
+
+## Remove one of your published packs
+
+If you no longer want one of your packs to appear in the Community catalog, open a **Remove / unpublish Community Pack** issue.
+
+This is useful if, for example, you first published a standalone Visual Pack and later published a Complete Pack that replaces it.
+
+You only need the permanent **Pack ID** of the exact pack you want removed. The automatic check confirms that the Pack ID exists, then a maintainer reviews the request. After approval:
+
+- the pack is removed from `catalog.json`;
+- its preview is removed from the repository;
+- it disappears from the Community Packs browser in Aniki Helper;
+- the existing GitHub Release is kept as an archive for safety and recovery.
+
+The archived Release is not shown in the Community catalog and does not affect Aniki Helper.
+
 ## Community guidelines
 
 Please only submit packs you are allowed to share. Packs may be rejected or removed if they are broken, misleading, unsafe, incompatible with Aniki ReMake, or create a rights issue.

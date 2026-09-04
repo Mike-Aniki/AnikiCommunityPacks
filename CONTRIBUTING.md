@@ -29,3 +29,15 @@ If the automatic check succeeds, the issue receives **ready-for-review**. A main
 If approved, the maintainer applies **approved**. GitHub automatically creates the Release, stores the preview, updates the Community Packs catalog, marks the issue as **published**, and closes it.
 
 If validation fails, replace or fix the submitted ZIP / multipart files and edit the issue. The automatic check will run again.
+
+
+## Removing / unpublishing one of your packs
+
+If you want a published pack removed from the Community catalog, use the **Remove / unpublish Community Pack** issue form.
+
+Enter the permanent Pack ID for the exact pack you want removed and explain why. This is especially useful when a standalone pack has been replaced by a newer Complete Pack.
+
+The bot checks that the Pack ID currently exists and marks a valid request as **ready-for-review**. A maintainer must verify the requester before applying **approved**.
+
+After approval, GitHub automatically removes the pack from `catalog.json` and deletes its repository preview. The pack then disappears from Aniki Helper. Existing GitHub Releases are kept as archives so accidental removals can be recovered.
+

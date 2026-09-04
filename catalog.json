@@ -82,19 +82,6 @@
     },
     {
       "type": "visual",
-      "id": "dishonored-bac2ddfb",
-      "name": "Dishonored",
-      "author": "Electro79",
-      "version": "1.0.0",
-      "description": "A visual pack from the well known immersive sim franchise Dishonored",
-      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dishonored-bac2ddfb.jpg",
-      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dishonored-bac2ddfb-v1.0.0/dishonored-bac2ddfb-v1.0.0.zip",
-      "publishedAt": "2026-08-31",
-      "updatedAt": "2026-08-31",
-      "featured": false
-    },
-    {
-      "type": "visual",
       "id": "hatsune-miku-deep-sea-e64585fb",
       "name": "Hatsune Miku Deep Sea",
       "author": "Zonny",

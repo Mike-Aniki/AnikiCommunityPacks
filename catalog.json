@@ -55,6 +55,19 @@
       "featured": false
     },
     {
+      "type": "login",
+      "id": "onimusha-login-screen-ec6f2c39",
+      "name": "Onimusha Login Screen",
+      "author": "Luxas",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/onimusha-login-screen-ec6f2c39.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-onimusha-login-screen-ec6f2c39-v1.0.0/onimusha-login-screen-ec6f2c39-v1.0.0.zip",
+      "publishedAt": "2026-09-04",
+      "updatedAt": "2026-09-04",
+      "featured": false
+    },
+    {
       "type": "visual",
       "id": "dishonored-bac2ddfb",
       "name": "Dishonored",

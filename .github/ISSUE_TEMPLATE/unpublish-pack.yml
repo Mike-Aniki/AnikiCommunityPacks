@@ -16,7 +16,7 @@ body:
     id: pack-id
     attributes:
       label: Pack ID
-      description: "Enter the permanent ID of the exact pack you want to remove. Example: dishonored-3db37d23"
+      description: "Enter the permanent ID of the exact pack you want to remove. Example: my-pack-a1b2c3d4"
       placeholder: my-pack-a1b2c3d4
     validations:
       required: true

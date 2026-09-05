@@ -27,6 +27,7 @@ jobs:
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
+          SUBMITTER_LOGIN: ${{ github.event.issue.user.login }}
         run: |
           set -euo pipefail
           python3 scripts/resolve_submission_package.py \

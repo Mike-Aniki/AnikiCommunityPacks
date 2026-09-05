@@ -33,13 +33,26 @@
       "id": "mon-pack-complet-7ce53f65",
       "name": "Ghost in the shell",
       "author": "Mike Aniki",
-      "version": "1.0.0",
+      "owner": "Mike-Aniki",
+      "version": "1.0.1",
       "description": "A complete Ghost in the Shell-themed pack",
-      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65.png",
-      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-mon-pack-complet-7ce53f65-v1.0.0/mon-pack-complet-7ce53f65-v1.0.0.zip",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-mon-pack-complet-7ce53f65-v1.0.1/mon-pack-complet-7ce53f65-v1.0.1.zip",
       "publishedAt": "2026-09-03",
-      "updatedAt": "2026-09-03",
-      "featured": false
+      "updatedAt": "2026-09-05",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-7ce53f65/color.png"
+      },
+      "componentIds": {
+        "visual": "ghost-in-the-shell-7fd87cad",
+        "login": "ghost-in-the-shell-45421f8e",
+        "sound": "ghost-in-the-shell-dba99d3e",
+        "color": "ghost-in-the-shell-4529f391"
+      }
     },
     {
       "type": "login",

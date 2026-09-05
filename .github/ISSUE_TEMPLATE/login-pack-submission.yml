@@ -7,9 +7,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use **Share Community Pack** in Aniki Pack Creator, then attach the generated ZIP file(s) below.
+        *This is only the GitHub issue title. It is not the pack name shown in Aniki ReMake / Aniki Helper.*
 
-        **Issue title:** keep `[Login Pack]` and add the pack name, for example `[Login Pack] Persona 5 Login`.
+        Use **Share Community Pack** in Aniki Pack Creator, then attach the generated ZIP file(s) below.
 
         The **description and preview come directly from Aniki Pack Creator**. If the Creator splits the pack into several `.partXX-of-XX.zip` files, attach every part without renaming them.
   - type: input

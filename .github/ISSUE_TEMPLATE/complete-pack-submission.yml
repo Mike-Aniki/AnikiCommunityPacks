@@ -1,5 +1,5 @@
 name: Complete Pack submission
-description: Share a coordinated Complete Pack or publish an update to one of your existing Complete Packs.
+description: Share a new Complete Pack or update one you already published.
 title: "[Complete Pack] "
 labels:
   - complete-pack-submission
@@ -7,15 +7,18 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing your Complete Pack! Use **Share Community Pack** in Aniki Pack Creator and attach the prepared file(s) below. The preview image is embedded automatically in the pack ZIP by the Creator, so no separate image attachment is needed.
+        Use **Share Community Pack** in Aniki Pack Creator, then attach the generated ZIP file(s) below.
 
-        GitHub limits individual ZIP attachments to 25 MB. Complete Packs will often exceed this limit, so Aniki Pack Creator automatically splits large submissions into several `.partXX-of-XX.zip` files. **Attach every generated part and do not rename or modify them.**
+        **Issue title:** keep `[Complete Pack]` and add the pack name, for example `[Complete Pack] PlayStation 5 Complete Pack`.
 
-        GitHub will reconstruct the original Complete Pack and then validate every Visual, Login, Sound and Color Pack contained inside it before review.
+        The **description and preview come directly from Aniki Pack Creator**. If the Creator splits the pack into several `.partXX-of-XX.zip` files, attach every part without renaming them.
+
+        The packs inside a Complete Pack are checked automatically.
   - type: input
     id: pack-name
     attributes:
       label: Pack name
+      description: The name users will see in Aniki ReMake / Aniki Helper.
       placeholder: PlayStation 5 Complete Pack
     validations:
       required: true
@@ -23,7 +26,7 @@ body:
     id: author
     attributes:
       label: Author
-      description: Name displayed to users in the Community Packs browser.
+      description: The creator name shown to users in the Community Packs browser.
       placeholder: Mike Aniki
     validations:
       required: true
@@ -31,28 +34,23 @@ body:
     id: version
     attributes:
       label: Version
-      description: Use the exact version exported by Aniki Pack Creator.
+      description: Use the same version number shown in Aniki Pack Creator.
       placeholder: 1.0.0
     validations:
       required: true
   - type: textarea
-    id: description
-    attributes:
-      label: Description
-      description: Optional short description shown to users.
-      placeholder: A complete PlayStation 5-inspired setup for Aniki ReMake.
-  - type: textarea
     id: zip
     attributes:
       label: Complete Pack ZIP
-      description: Attach the ZIP prepared by Aniki Pack Creator. If the Creator generated multipart ZIPs, attach ALL `.partXX-of-XX.zip` files here.
-      placeholder: Attach the ZIP, or all generated multipart ZIPs, here.
+      description: Attach the ZIP created by Share Community Pack. If it was split, attach every generated part.
+      placeholder: Drag and drop the generated ZIP file(s) here.
     validations:
       required: true
   - type: dropdown
     id: submission-type
     attributes:
       label: Submission type
+      description: Choose New pack for the first publication, or Update for a pack already in the Community catalog.
       options:
         - New pack
         - Update to an existing pack
@@ -63,9 +61,9 @@ body:
     attributes:
       label: Confirmation
       options:
-        - label: I confirm the ZIP or multipart ZIPs were prepared directly with Aniki Pack Creator.
+        - label: I confirm the ZIP file(s) were prepared directly with Aniki Pack Creator.
           required: true
-        - label: I understand that updates must keep the permanent ID from the original Creator project.
+        - label: I understand that an update must keep the original Pack ID.
           required: true
         - label: I am responsible for the content I submit and have the right to share it.
           required: true

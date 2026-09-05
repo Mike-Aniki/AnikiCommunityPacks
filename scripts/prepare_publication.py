@@ -4,13 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import os
 import re
 import shutil
 import sys
 import urllib.parse
-import urllib.request
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,14 +30,7 @@ CATALOG_PATH = ROOT / "catalog.json"
 PREVIEWS_DIR = ROOT / "previews"
 PUBLICATION_DIR = ROOT / "publication"
 
-ALLOWED_PREVIEW_HOSTS = {
-    "github.com",
-    "raw.githubusercontent.com",
-    "objects.githubusercontent.com",
-    "user-attachments.githubusercontent.com",
-}
 MAX_PREVIEW_BYTES = 20 * 1024 * 1024
-URL_RE = re.compile(r"https://[^\s<>()\]]+", re.IGNORECASE)
 SEMVER = re.compile(
     r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)"
     r"(?:-([0-9A-Za-z.-]+))?(?:\+([0-9A-Za-z.-]+))?$"
@@ -73,51 +66,6 @@ def issue_section(issue_body: str, heading: str) -> str:
     return value
 
 
-def preview_url_from_issue(issue_body: str) -> str:
-    section = issue_section(issue_body, "Preview image")
-    if not section:
-        fail("No preview image was found in the 'Preview image' field.")
-
-    urls: list[str] = []
-    for raw_url in URL_RE.findall(section):
-        url = raw_url.rstrip(".,;:'\"")
-        if url not in urls:
-            urls.append(url)
-
-    if not urls:
-        fail("No preview image link was found in the 'Preview image' field.")
-    if len(urls) != 1:
-        fail(f"Exactly one preview image must be attached. Found {len(urls)} links.")
-
-    url = urls[0]
-    parsed = urllib.parse.urlparse(url)
-    if parsed.scheme != "https":
-        fail("The preview image link must use HTTPS.")
-    host = (parsed.hostname or "").lower()
-    if host not in ALLOWED_PREVIEW_HOSTS and not host.endswith(".githubusercontent.com"):
-        fail("Attach the preview directly to the GitHub issue instead of using an external host.")
-    return url
-
-
-def download_limited(url: str, destination: Path, max_bytes: int) -> None:
-    request = urllib.request.Request(url, headers={"User-Agent": "AnikiCommunityPacks-Publisher/2.0"})
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as output:
-            total = 0
-            while True:
-                chunk = response.read(1024 * 1024)
-                if not chunk:
-                    break
-                total += len(chunk)
-                if total > max_bytes:
-                    fail(f"The preview image is too large (maximum {max_bytes // (1024 * 1024)} MB).")
-                output.write(chunk)
-    except PublishError:
-        raise
-    except Exception as exc:
-        fail(f"Could not download the preview image: {exc}")
-
-
 def detect_preview_extension(path: Path) -> str:
     with path.open("rb") as stream:
         header = stream.read(16)
@@ -127,6 +75,70 @@ def detect_preview_extension(path: Path) -> str:
         return ".png"
     fail("The preview must be a real JPG or PNG image.")
     raise AssertionError("unreachable")
+
+
+def _find_preview_entry(archive: zipfile.ZipFile):
+    matches = [
+        entry
+        for entry in archive.infolist()
+        if entry.filename.casefold() in {"preview.jpg", "preview.png"}
+    ]
+    if len(matches) != 1:
+        fail("The validated pack must contain exactly one embedded preview image.")
+    return matches[0]
+
+
+def extract_embedded_preview(zip_path: Path, destination: Path) -> str:
+    try:
+        with zipfile.ZipFile(zip_path, "r") as archive:
+            entry = _find_preview_entry(archive)
+            if entry.file_size <= 0 or entry.file_size > MAX_PREVIEW_BYTES:
+                fail("The embedded preview image has an invalid size (maximum 20 MB).")
+            destination.write_bytes(archive.read(entry))
+    except PublishError:
+        raise
+    except Exception as exc:
+        fail(f"Could not extract the embedded preview image: {exc}")
+    return detect_preview_extension(destination)
+
+
+def extract_complete_child_previews(zip_path: Path, destination_dir: Path) -> dict[str, tuple[Path, str]]:
+    result: dict[str, tuple[Path, str]] = {}
+    child_entries = {
+        "visual": "packs/visual.zip",
+        "login": "packs/login.zip",
+        "sound": "packs/sound.zip",
+        "color": "packs/color.zip",
+    }
+    try:
+        with zipfile.ZipFile(zip_path, "r") as outer:
+            by_name = {entry.filename.casefold(): entry for entry in outer.infolist()}
+            for child_type, child_name in child_entries.items():
+                child_entry = by_name.get(child_name.casefold())
+                if child_entry is None:
+                    continue
+                child_bytes = outer.read(child_entry)
+                with zipfile.ZipFile(io.BytesIO(child_bytes), "r") as child:
+                    matches = [
+                        entry
+                        for entry in child.infolist()
+                        if entry.filename.casefold() in {"preview.jpg", "preview.png"}
+                    ]
+                    if not matches:
+                        continue
+                    if len(matches) != 1:
+                        fail(f"Nested {PACK_DISPLAY[child_type]} contains more than one preview image.")
+                    preview_entry = matches[0]
+                    if preview_entry.file_size <= 0 or preview_entry.file_size > MAX_PREVIEW_BYTES:
+                        fail(f"Nested {PACK_DISPLAY[child_type]} preview has an invalid size.")
+                    destination = destination_dir / f"{child_type}.preview"
+                    destination.write_bytes(child.read(preview_entry))
+                    result[child_type] = (destination, detect_preview_extension(destination))
+    except PublishError:
+        raise
+    except Exception as exc:
+        fail(f"Could not extract Complete Pack child previews: {exc}")
+    return result
 
 
 def read_manifest(zip_path: Path, pack_type: str) -> dict:
@@ -210,7 +222,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--type", choices=("auto",) + PACK_TYPES, default="auto")
     parser.add_argument("--zip", type=Path, help="Use a local ZIP instead of the issue attachment (testing).")
-    parser.add_argument("--preview", type=Path, help="Use a local preview instead of the issue attachment (testing).")
     parser.add_argument("--issue-body-file", type=Path, help="Read the issue body from a local file (testing).")
     parser.add_argument("--issue-body-env", default="ISSUE_BODY")
     parser.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", "Mike-Aniki/AnikiCommunityPacks"))
@@ -255,21 +266,17 @@ def main() -> int:
         if not author:
             author = safe_text(issue_section(issue_body, "Author"), 120, "Author")
         version = metadata["version"]
-        description = safe_text(manifest.get("description", ""), 300, "Description", allow_empty=True)
+        description = safe_text(manifest.get("description", ""), 160, "Description", allow_empty=True)
         if not description:
-            description = safe_text(issue_section(issue_body, "Description"), 300, "Description", allow_empty=True)
+            description = safe_text(issue_section(issue_body, "Description"), 160, "Description", allow_empty=True)
 
         temp_preview = PUBLICATION_DIR / "submitted-preview"
-        if args.preview:
-            if not args.preview.is_file():
-                fail(f"Preview not found: {args.preview}")
-            if args.preview.stat().st_size > MAX_PREVIEW_BYTES:
-                fail("The preview image is too large (maximum 20 MB).")
-            shutil.copy2(args.preview, temp_preview)
-        else:
-            preview_url = preview_url_from_issue(issue_body)
-            download_limited(preview_url, temp_preview, MAX_PREVIEW_BYTES)
-        preview_ext = detect_preview_extension(temp_preview)
+        preview_ext = extract_embedded_preview(source_zip, temp_preview)
+        child_previews = (
+            extract_complete_child_previews(source_zip, PUBLICATION_DIR)
+            if pack_type == "complete"
+            else {}
+        )
 
         catalog = load_catalog()
         packs = catalog["packs"]
@@ -312,6 +319,22 @@ def main() -> int:
                 old_path.unlink()
         shutil.copy2(temp_preview, preview_path)
 
+        component_preview_urls: dict[str, str] = {}
+        component_preview_dir = PREVIEWS_DIR / pack_id
+        if component_preview_dir.exists():
+            shutil.rmtree(component_preview_dir)
+        if child_previews:
+            component_preview_dir.mkdir(parents=True, exist_ok=True)
+            for child_type, (temp_child_preview, child_ext) in child_previews.items():
+                child_name = f"{child_type}{child_ext}"
+                child_path = component_preview_dir / child_name
+                shutil.copy2(temp_child_preview, child_path)
+                component_preview_urls[child_type] = (
+                    f"https://raw.githubusercontent.com/{args.repo}/"
+                    f"{urllib.parse.quote(args.branch, safe='-._~/')}/previews/"
+                    f"{urllib.parse.quote(pack_id, safe='-._~')}/{urllib.parse.quote(child_name, safe='-._~')}"
+                )
+
         encoded_tag = urllib.parse.quote(tag, safe="-._~")
         encoded_asset = urllib.parse.quote(asset_name, safe="-._~")
         download_url = f"https://github.com/{args.repo}/releases/download/{encoded_tag}/{encoded_asset}"
@@ -333,6 +356,8 @@ def main() -> int:
             "updatedAt": today,
             "featured": featured,
         }
+        if component_preview_urls:
+            entry["packPreviews"] = component_preview_urls
 
         if existing_index is None:
             packs.append(entry)

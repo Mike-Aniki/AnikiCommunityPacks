@@ -97,6 +97,12 @@ def preview_paths_for(pack_id: str, pack: dict) -> list[Path]:
         except Exception:
             pass
 
+    component_dir = PREVIEWS_DIR / pack_id
+    if component_dir.is_dir():
+        for child_path in component_dir.iterdir():
+            if child_path.is_file():
+                paths.add(child_path)
+
     return sorted(paths)
 
 
@@ -179,6 +185,9 @@ def main() -> int:
                     removed_previews.append(
                         str(preview_path.relative_to(ROOT)).replace("\\", "/")
                     )
+            component_preview_dir = PREVIEWS_DIR / pack_id
+            if component_preview_dir.is_dir() and not any(component_preview_dir.iterdir()):
+                component_preview_dir.rmdir()
 
         status = "UNPUBLISH READY" if args.check else "PACK UNPUBLISHED FROM CATALOG"
         lines = [

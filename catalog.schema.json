@@ -69,7 +69,7 @@
         },
         "description": {
           "type": "string",
-          "maxLength": 300
+          "maxLength": 160
         },
         "previewUrl": {
           "type": "string",
@@ -90,6 +90,28 @@
         "featured": {
           "type": "boolean",
           "default": false
+        },
+        "packPreviews": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "visual": {
+              "type": "string",
+              "format": "uri"
+            },
+            "color": {
+              "type": "string",
+              "format": "uri"
+            },
+            "login": {
+              "type": "string",
+              "format": "uri"
+            },
+            "sound": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
         }
       }
     }

@@ -8,7 +8,7 @@ Before submitting:
 - Increase the version for every update (`1.0.0` → `1.1.0`, for example).
 - Attach the prepared ZIP without changing anything inside it.
 - If the Creator generates several `.partXX-of-XX.zip` files, attach **all of them** without renaming or modifying them.
-- Attach one representative JPG or PNG preview image.
+- Choose the Community preview in Aniki Pack Creator before sharing. The Creator embeds it in the ZIP automatically; do not attach a separate preview image.
 - Choose **New pack** for a first release or **Update to an existing pack** for a newer version of an already published pack.
 
 ## Large packs

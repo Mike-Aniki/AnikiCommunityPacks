@@ -57,6 +57,8 @@ ALLOWED_DOWNLOAD_HOSTS = {
 }
 MAX_DOWNLOAD_BYTES = 250 * 1024 * 1024
 MAX_UNCOMPRESSED_BYTES = 500 * 1024 * 1024
+MAX_PREVIEW_BYTES = 20 * 1024 * 1024
+PREVIEW_ENTRY_NAMES = {"preview.jpg", "preview.png"}
 MAX_MANIFEST_BYTES = 128 * 1024
 MAX_COLOR_XAML_BYTES = 2 * 1024 * 1024
 MAX_LOGIN_VIDEO_BYTES = 50 * 1024 * 1024  # Creator requires strictly less than 50 MB.
@@ -275,7 +277,11 @@ def require_exact_files(files: dict[str, zipfile.ZipInfo], expected: set[str], p
     actual_folded = {name.casefold(): name for name in files}
     expected_folded = {name.casefold(): name for name in expected}
     missing = [expected_folded[key] for key in expected_folded.keys() - actual_folded.keys()]
-    extra = [actual_folded[key] for key in actual_folded.keys() - expected_folded.keys()]
+    extra = [
+        actual_folded[key]
+        for key in actual_folded.keys() - expected_folded.keys()
+        if key not in PREVIEW_ENTRY_NAMES
+    ]
     if missing:
         fail(f"{pack_name} is missing required file(s): " + ", ".join(sorted(missing)))
     if extra:
@@ -323,8 +329,8 @@ def common_manifest_metadata(manifest: dict, pack_type: str) -> dict[str, str]:
         fail(f"{manifest_name} author cannot exceed 120 characters.")
     if not SEMVER.fullmatch(version):
         fail(f"{manifest_name} contains an invalid semantic version.")
-    if len(description) > 300:
-        fail(f"{manifest_name} description cannot exceed 300 characters.")
+    if len(description) > 160:
+        fail(f"{manifest_name} description cannot exceed 160 characters.")
 
     return {
         "type": pack_type,
@@ -365,6 +371,45 @@ def jpeg_dimensions(stream) -> tuple[int, int]:
                 fail("Invalid JPEG size segment.")
             return int.from_bytes(data[3:5], "big"), int.from_bytes(data[1:3], "big")
         stream.seek(segment_length - 2, 1)
+
+
+def validate_embedded_preview(
+    archive: zipfile.ZipFile,
+    files: dict[str, zipfile.ZipInfo],
+    required: bool,
+) -> str | None:
+    matches = [
+        info
+        for name, info in files.items()
+        if name.casefold() in PREVIEW_ENTRY_NAMES
+    ]
+    if len(matches) > 1:
+        fail("The pack must contain only one preview image: preview.jpg or preview.png.")
+    if not matches:
+        if required:
+            fail("The pack is missing its embedded preview image (preview.jpg or preview.png). Export it again with Aniki Pack Creator.")
+        return None
+
+    entry = matches[0]
+    if entry.file_size <= 0 or entry.file_size > MAX_PREVIEW_BYTES:
+        fail("The embedded preview image has an invalid size (maximum 20 MB).")
+
+    data = archive.read(entry)
+    lower_name = entry.filename.casefold()
+    if lower_name == "preview.jpg":
+        if not data.startswith(b"\xff\xd8\xff"):
+            fail("preview.jpg is not a real JPEG image.")
+        jpeg_dimensions(io.BytesIO(data))
+    elif lower_name == "preview.png":
+        if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+            fail("preview.png is not a real PNG image.")
+        if len(data) < 24 or data[12:16] != b"IHDR":
+            fail("preview.png is missing a valid PNG IHDR header.")
+        width = int.from_bytes(data[16:20], "big")
+        height = int.from_bytes(data[20:24], "big")
+        if width <= 0 or height <= 0:
+            fail("preview.png has invalid dimensions.")
+    return entry.filename
 
 
 def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) -> dict[str, str]:
@@ -629,6 +674,8 @@ def validate_complete(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo
         "packs/login.zip",
         "packs/sound.zip",
         "packs/color.zip",
+        "preview.jpg",
+        "preview.png",
     }
     actual = set(files)
     extra = [name for name in actual if name.casefold() not in {item.casefold() for item in allowed}]
@@ -668,7 +715,7 @@ def validate_complete(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo
         child_bytes = archive.read(entry)
         if len(child_bytes) > MAX_DOWNLOAD_BYTES:
             fail(f"Nested {PACK_DISPLAY[child_type]} ZIP is too large.")
-        child_meta = validate_zip_stream(io.BytesIO(child_bytes), child_type)
+        child_meta = validate_zip_stream(io.BytesIO(child_bytes), child_type, require_preview=False)
         for field in ("id", "name", "version"):
             declared_value = str(declaration.get(field, "")).strip()
             if declared_value != child_meta[field]:
@@ -691,11 +738,15 @@ VALIDATORS = {
 }
 
 
-def validate_zip_stream(stream, pack_type: str) -> dict[str, str]:
+def validate_zip_stream(stream, pack_type: str, require_preview: bool = True) -> dict[str, str]:
     try:
         with zipfile.ZipFile(stream, "r") as archive:
             files = archive_files(archive)
-            return VALIDATORS[pack_type](archive, files)
+            preview_name = validate_embedded_preview(archive, files, required=require_preview)
+            metadata = VALIDATORS[pack_type](archive, files)
+            if preview_name:
+                metadata["preview"] = preview_name
+            return metadata
     except ValidationError:
         raise
     except zipfile.BadZipFile as exc:

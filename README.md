@@ -29,7 +29,7 @@ When submitting a pack:
 1. Click **Share Community Pack** in Aniki Pack Creator.
 2. Choose where the prepared Community upload file(s) should be created.
 3. Open the matching submission form.
-4. Attach the prepared ZIP file(s) and the requested preview image.
+4. Attach the ZIP file(s) prepared by Aniki Pack Creator. The preview is already embedded in the ZIP, so no separate image is required.
 5. Wait for the automatic check and community review.
 
 ### Large packs and multipart uploads

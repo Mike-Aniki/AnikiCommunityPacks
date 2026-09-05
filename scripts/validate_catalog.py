@@ -90,6 +90,20 @@ def main() -> None:
             if not valid_url(str(pack[key])):
                 fail(f"{prefix}.{key} must be an http(s) URL")
 
+        pack_previews = pack.get("packPreviews")
+        if pack_previews is not None:
+            if pack_type != "complete":
+                fail(f"{prefix}.packPreviews is only valid for Complete Packs")
+            if not isinstance(pack_previews, dict):
+                fail(f"{prefix}.packPreviews must be an object")
+            allowed_preview_types = {"visual", "color", "login", "sound"}
+            extra_preview_types = set(pack_previews) - allowed_preview_types
+            if extra_preview_types:
+                fail(f"{prefix}.packPreviews contains unsupported keys: {', '.join(sorted(extra_preview_types))}")
+            for child_type, child_url in pack_previews.items():
+                if not valid_url(str(child_url)):
+                    fail(f"{prefix}.packPreviews.{child_type} must be an http(s) URL")
+
         for key in ("publishedAt", "updatedAt"):
             if not valid_date(str(pack[key])):
                 fail(f"{prefix}.{key} must use YYYY-MM-DD")

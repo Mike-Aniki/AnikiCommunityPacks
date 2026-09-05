@@ -22,6 +22,9 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
 
+ROOT = Path(__file__).resolve().parents[1]
+CATALOG_PATH = ROOT / "catalog.json"
+
 PACK_TYPES = ("visual", "color", "login", "sound", "complete")
 PACK_LABELS = {pack_type: f"{pack_type}-pack-submission" for pack_type in PACK_TYPES}
 PACK_DISPLAY = {
@@ -694,6 +697,7 @@ def validate_complete(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo
         fail("completepack.json must contain a packs object.")
 
     children: list[str] = []
+    component_ids: dict[str, str] = {}
     child_map = {
         "visual": "packs/visual.zip",
         "login": "packs/login.zip",
@@ -724,7 +728,9 @@ def validate_complete(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo
         if declared_kind and declared_kind != child_type:
             fail(f"completepack.json {child_type}.kind must be '{child_type}'.")
         children.append(child_type)
+        component_ids[child_type] = child_meta["id"]
 
+    metadata["componentIds"] = component_ids
     metadata["details"] = "Nested packs validated: " + ", ".join(PACK_DISPLAY[item] for item in children)
     return metadata
 
@@ -765,6 +771,83 @@ def validate_zip(zip_path: Path, pack_type: str) -> dict[str, str]:
         return validate_zip_stream(stream, pack_type)
 
 
+
+def _catalog_id_claims(packs: list[dict]) -> dict[str, tuple[dict, str]]:
+    claims: dict[str, tuple[dict, str]] = {}
+    for pack in packs:
+        if not isinstance(pack, dict):
+            continue
+        root_id = str(pack.get("id", "")).strip()
+        if root_id:
+            claims[root_id] = (pack, "root")
+        component_ids = pack.get("componentIds")
+        if isinstance(component_ids, dict):
+            for component_type, component_id in component_ids.items():
+                value = str(component_id or "").strip()
+                if value:
+                    claims[value] = (pack, str(component_type or "component"))
+    return claims
+
+
+def validate_catalog_ownership(metadata: dict, submitter: str) -> str:
+    submitter = str(submitter or "").strip()
+    if not submitter:
+        return "Ownership: skipped outside GitHub (no submitter login provided)"
+
+    try:
+        catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:
+        fail(f"Could not read catalog.json for ownership validation: {exc}")
+
+    packs = catalog.get("packs") if isinstance(catalog, dict) else None
+    if not isinstance(packs, list):
+        fail("catalog.json has an invalid structure for ownership validation.")
+
+    pack_id = str(metadata.get("id", "")).strip()
+    component_ids = metadata.get("componentIds")
+    component_ids = component_ids if isinstance(component_ids, dict) else {}
+    claims = _catalog_id_claims(packs)
+    root_claim = claims.get(pack_id)
+
+    if root_claim is not None and root_claim[1] != "root":
+        parent = root_claim[0]
+        fail(
+            f"Pack ID '{pack_id}' is already used by the {root_claim[1]} component of "
+            f"'{parent.get('name', parent.get('id', 'another Complete Pack'))}'."
+        )
+
+    existing = root_claim[0] if root_claim is not None else None
+    owner = str(existing.get("owner", "")).strip() if existing else ""
+    if owner and owner.casefold() != submitter.casefold():
+        fail(
+            f"Pack ID '{pack_id}' belongs to GitHub user @{owner}. "
+            f"Only that account can submit an update for this pack."
+        )
+
+    for component_type, component_id in component_ids.items():
+        child_id = str(component_id or "").strip()
+        if not child_id:
+            continue
+        claim = claims.get(child_id)
+        if claim is None:
+            continue
+        claimed_pack, claimed_slot = claim
+        same_complete = existing is not None and claimed_pack is existing and claimed_slot != "root"
+        if not same_complete:
+            fail(
+                f"Nested {PACK_DISPLAY.get(str(component_type), str(component_type))} Pack ID '{child_id}' "
+                f"is already used by another published pack."
+            )
+
+    if existing is None:
+        return f"Ownership: new Pack ID and included component IDs will belong to @{submitter}"
+    if owner:
+        return f"Ownership: verified for @{owner}"
+    return (
+        f"Ownership: legacy Pack ID has no stored owner yet; if this update is approved, "
+        f"it and its included component IDs will be bound to @{submitter}"
+    )
+
 def write_report(path: Path, lines: list[str]) -> None:
     path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
@@ -774,6 +857,7 @@ def main() -> int:
     parser.add_argument("--type", choices=("auto",) + PACK_TYPES, default="auto")
     parser.add_argument("--zip", type=Path, help="Validate a local ZIP instead of a GitHub issue attachment.")
     parser.add_argument("--issue-body-env", default="ISSUE_BODY", help="Environment variable containing the GitHub issue body.")
+    parser.add_argument("--submitter", default=os.environ.get("SUBMITTER_LOGIN", ""))
     parser.add_argument("--report", type=Path, default=Path("submission-validation.txt"))
     args = parser.parse_args()
 
@@ -792,6 +876,8 @@ def main() -> int:
                 download(url, zip_path)
                 metadata = validate_zip(zip_path, pack_type)
 
+        ownership = validate_catalog_ownership(metadata, args.submitter)
+
         report = [
             "VALIDATION PASSED",
             f"Type: {PACK_DISPLAY[pack_type]}",
@@ -800,6 +886,7 @@ def main() -> int:
             f"Name: {metadata['name']}",
             f"Author: {metadata['author']}",
             f"Version: {metadata['version']}",
+            ownership,
             f"Content: {metadata.get('details', 'validated')}",
         ]
         write_report(args.report, report)

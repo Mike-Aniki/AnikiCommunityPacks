@@ -193,6 +193,54 @@ def load_catalog() -> dict:
     return data
 
 
+def catalog_id_claims(packs: list[dict]) -> dict[str, tuple[dict, str]]:
+    claims: dict[str, tuple[dict, str]] = {}
+    for pack in packs:
+        if not isinstance(pack, dict):
+            continue
+        root_id = str(pack.get("id", "")).strip()
+        if root_id:
+            claims[root_id] = (pack, "root")
+        component_ids = pack.get("componentIds")
+        if isinstance(component_ids, dict):
+            for component_type, component_id in component_ids.items():
+                value = str(component_id or "").strip()
+                if value:
+                    claims[value] = (pack, str(component_type or "component"))
+    return claims
+
+
+def validate_component_id_claims(
+    packs: list[dict],
+    pack_id: str,
+    component_ids: dict[str, str],
+    existing: dict | None,
+) -> None:
+    claims = catalog_id_claims(packs)
+    root_claim = claims.get(pack_id)
+    if root_claim is not None and root_claim[1] != "root":
+        parent = root_claim[0]
+        fail(
+            f"Pack ID '{pack_id}' is already used by the {root_claim[1]} component of "
+            f"'{parent.get('name', parent.get('id', 'another Complete Pack'))}'."
+        )
+
+    for component_type, component_id in component_ids.items():
+        child_id = str(component_id or "").strip()
+        if not child_id:
+            continue
+        claim = claims.get(child_id)
+        if claim is None:
+            continue
+        claimed_pack, claimed_slot = claim
+        same_complete = existing is not None and claimed_pack is existing and claimed_slot != "root"
+        if not same_complete:
+            fail(
+                f"Nested {PACK_DISPLAY.get(component_type, component_type)} Pack ID '{child_id}' "
+                f"is already used by another published pack."
+            )
+
+
 def safe_text(value: object, max_length: int, field: str, allow_empty: bool = False) -> str:
     text = str(value or "").strip()
     if not allow_empty and not text:
@@ -227,6 +275,7 @@ def main() -> int:
     parser.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", "Mike-Aniki/AnikiCommunityPacks"))
     parser.add_argument("--branch", default=os.environ.get("DEFAULT_BRANCH", "main"))
     parser.add_argument("--issue-number", default=os.environ.get("ISSUE_NUMBER", "0"))
+    parser.add_argument("--submitter", default=os.environ.get("SUBMITTER_LOGIN", ""))
     parser.add_argument("--report", type=Path, default=ROOT / "publication-report.txt")
     args = parser.parse_args()
 
@@ -245,6 +294,10 @@ def main() -> int:
         if submission_type not in {"New pack", "Update to an existing pack"}:
             fail("Submission type must be 'New pack' or 'Update to an existing pack'.")
 
+        submitter = str(args.submitter or "").strip()
+        if not submitter:
+            fail("The GitHub submitter login is missing, so pack ownership cannot be verified.")
+
         PUBLICATION_DIR.mkdir(parents=True, exist_ok=True)
 
         if args.zip:
@@ -261,6 +314,12 @@ def main() -> int:
 
         manifest = read_manifest(source_zip, pack_type)
         pack_id = metadata["id"]
+        raw_component_ids = metadata.get("componentIds", {})
+        component_ids = {
+            str(kind): str(value).strip()
+            for kind, value in raw_component_ids.items()
+            if str(value).strip()
+        } if isinstance(raw_component_ids, dict) else {}
         name = safe_text(metadata["name"], 120, "Pack name")
         author = safe_text(manifest.get("author", ""), 120, "Author", allow_empty=True)
         if not author:
@@ -281,6 +340,8 @@ def main() -> int:
         catalog = load_catalog()
         packs = catalog["packs"]
         existing_index = next((i for i, pack in enumerate(packs) if pack.get("id") == pack_id), None)
+        existing = packs[existing_index] if existing_index is not None else None
+        validate_component_id_claims(packs, pack_id, component_ids, existing)
         today = datetime.now(timezone.utc).date().isoformat()
 
         if existing_index is None:
@@ -288,15 +349,25 @@ def main() -> int:
                 fail(f"Pack ID '{pack_id}' is not in the catalog, so this submission must be marked as 'New pack'.")
             published_at = today
             featured = False
+            owner = submitter
             mode = "new"
             previous_version = ""
         else:
             if submission_type != "Update to an existing pack":
                 fail(f"Pack ID '{pack_id}' already exists in the catalog, so this submission must be marked as an update.")
-            existing = packs[existing_index]
+            assert existing is not None
             existing_type = str(existing.get("type", "visual")).strip().lower()
             if existing_type != pack_type:
                 fail(f"Pack ID '{pack_id}' is already published as a {PACK_DISPLAY.get(existing_type, existing_type)} and cannot change type.")
+            existing_owner = str(existing.get("owner", "")).strip()
+            if existing_owner and existing_owner.casefold() != submitter.casefold():
+                fail(
+                    f"Pack ID '{pack_id}' belongs to GitHub user @{existing_owner}. "
+                    f"Only that account can publish an update for this pack."
+                )
+            # Legacy catalog entries published before ownership tracking have no owner yet.
+            # The first maintainer-approved update binds the Pack ID to that issue author.
+            owner = existing_owner or submitter
             previous_version = str(existing.get("version", ""))
             if compare_semver(version, previous_version) <= 0:
                 fail(f"Submitted version {version} must be newer than published version {previous_version}.")
@@ -348,6 +419,7 @@ def main() -> int:
             "id": pack_id,
             "name": name,
             "author": author,
+            "owner": owner,
             "version": version,
             "description": description,
             "previewUrl": preview_url,
@@ -358,6 +430,8 @@ def main() -> int:
         }
         if component_preview_urls:
             entry["packPreviews"] = component_preview_urls
+        if component_ids:
+            entry["componentIds"] = component_ids
 
         if existing_index is None:
             packs.append(entry)
@@ -392,6 +466,7 @@ def main() -> int:
             "pack_id": pack_id,
             "name": name,
             "author": author,
+            "owner": owner,
             "version": version,
             "previous_version": previous_version,
             "tag": tag,
@@ -413,6 +488,7 @@ def main() -> int:
             f"ID: {pack_id}",
             f"Name: {name}",
             f"Author: {author}",
+            f"GitHub owner: @{owner}",
             f"Version: {version}",
         ]
         if previous_version:
@@ -428,6 +504,7 @@ def main() -> int:
                 "pack_id": pack_id,
                 "name": name,
                 "author": author,
+                "owner": owner,
                 "version": version,
                 "mode": mode,
                 "tag": tag,

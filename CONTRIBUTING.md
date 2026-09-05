@@ -41,3 +41,7 @@ The bot checks that the Pack ID currently exists and marks a valid request as **
 
 After approval, GitHub automatically removes the pack from `catalog.json` and deletes its repository preview. The pack then disappears from Aniki Helper. Existing GitHub Releases are kept as archives so accidental removals can be recovered.
 
+
+## Pack ID ownership
+
+Keep the same project / Pack ID when updating your own pack. An existing Pack ID can only be updated by its stored GitHub owner. Complete Packs also reserve the Pack IDs of their included Visual, Login, Sound, and Color packs, preventing those ZIPs from being republished as someone else's pack. Older catalog entries created before ownership tracking are assigned to the issue author on their first maintainer-approved update.

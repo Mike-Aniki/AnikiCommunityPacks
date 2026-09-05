@@ -83,8 +83,12 @@ def main() -> None:
 
         if not str(pack["name"]).strip():
             fail(f"{prefix}.name cannot be empty")
-        if len(str(pack["description"])) > 160:
-            fail(f"{prefix}.description cannot exceed 160 characters")
+
+        # Legacy catalog entries may contain descriptions longer than the current
+        # 160-character submission limit. New submissions/updates are still
+        # enforced by validate_submission.py and prepare_publication.py.
+        # Do not reject the whole catalog solely because an older entry predates
+        # the current description limit.
 
         for key in ("previewUrl", "downloadUrl"):
             if not valid_url(str(pack[key])):

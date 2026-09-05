@@ -83,8 +83,8 @@ def main() -> None:
 
         if not str(pack["name"]).strip():
             fail(f"{prefix}.name cannot be empty")
-        if len(str(pack["description"])) > 300:
-            fail(f"{prefix}.description cannot exceed 300 characters")
+        if len(str(pack["description"])) > 160:
+            fail(f"{prefix}.description cannot exceed 160 characters")
 
         for key in ("previewUrl", "downloadUrl"):
             if not valid_url(str(pack[key])):

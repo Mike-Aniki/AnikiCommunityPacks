@@ -326,8 +326,6 @@ def main() -> int:
             author = safe_text(issue_section(issue_body, "Author"), 120, "Author")
         version = metadata["version"]
         description = safe_text(manifest.get("description", ""), 160, "Description", allow_empty=True)
-        if not description:
-            description = safe_text(issue_section(issue_body, "Description"), 160, "Description", allow_empty=True)
 
         temp_preview = PUBLICATION_DIR / "submitted-preview"
         preview_ext = extract_embedded_preview(source_zip, temp_preview)

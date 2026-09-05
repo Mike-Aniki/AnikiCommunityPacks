@@ -7,13 +7,25 @@
       "id": "aniki-fantasia-ed3ca12f",
       "name": "Aniki ReFantasia",
       "author": "Ammz",
-      "version": "1.0.0",
-      "description": "A complete reimagining of Aniki ReMake with dreamlike visuals and a vivid crimson, azure and gold aesthetic. UI-centric typography gives each view its own identity, while custom sounds, atmospheric music and an animated login bring it all to life.",
-      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f.jpg",
-      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-aniki-fantasia-ed3ca12f-v1.0.0/aniki-fantasia-ed3ca12f-v1.0.0.zip",
+      "owner": "BeastAmmz",
+      "version": "1.0.1",
+      "description": "A complete reimagining of Aniki ReMake. A familiar experience transformed into something dreamlike, atmospheric and perhaps a little unexpected.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-aniki-fantasia-ed3ca12f-v1.0.1/aniki-fantasia-ed3ca12f-v1.0.1.zip",
       "publishedAt": "2026-09-05",
       "updatedAt": "2026-09-05",
-      "featured": false
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/login.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/color.png"
+      },
+      "componentIds": {
+        "visual": "gilded-dreamscape-a28a9bae",
+        "login": "aniki-reveria-aa90f738",
+        "sound": "midnight-reverie-a7b3bd1e",
+        "color": "rose-fantazure-d4afd3f7"
+      }
     },
     {
       "type": "complete",

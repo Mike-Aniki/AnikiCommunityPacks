@@ -104,6 +104,7 @@ SOUND_SLOTS = {
     "login-music": ("audio/LoginOST.mp3", "music", "mp3"),
     "hub-music": ("audio/HubOST.mp3", "music", "mp3"),
     "secondary-views-music": ("audio/SecondaryViewsOST.mp3", "music", "mp3"),
+    "screensaver-music": ("audio/ScreenSaverOST.mp3", "music", "mp3"),
 }
 SOUND_TARGET_TO_KEY = {target.casefold(): key for key, (target, _, _) in SOUND_SLOTS.items()}
 

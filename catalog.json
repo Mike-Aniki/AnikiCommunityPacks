@@ -121,6 +121,20 @@
     },
     {
       "type": "visual",
+      "id": "final-fantasy-x-2-680a604e",
+      "name": "Final Fantasy X-2",
+      "author": "CrashSpyro",
+      "owner": "CrashSpyro",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-680a604e.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-final-fantasy-x-2-680a604e-v1.0.0/final-fantasy-x-2-680a604e-v1.0.0.zip",
+      "publishedAt": "2026-09-06",
+      "updatedAt": "2026-09-06",
+      "featured": false
+    },
+    {
+      "type": "visual",
       "id": "hatsune-miku-deep-sea-e64585fb",
       "name": "Hatsune Miku Deep Sea",
       "author": "Zonny",

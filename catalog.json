@@ -8,16 +8,17 @@
       "name": "Aniki ReFantasia",
       "author": "Ammz",
       "owner": "BeastAmmz",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "A complete reimagining of Aniki ReMake. A familiar experience transformed into something dreamlike, atmospheric and perhaps a little unexpected.",
       "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f.png",
-      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-aniki-fantasia-ed3ca12f-v1.0.1/aniki-fantasia-ed3ca12f-v1.0.1.zip",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-aniki-fantasia-ed3ca12f-v1.0.2/aniki-fantasia-ed3ca12f-v1.0.2.zip",
       "publishedAt": "2026-09-05",
-      "updatedAt": "2026-09-05",
+      "updatedAt": "2026-09-06",
       "featured": false,
       "packPreviews": {
         "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/visual.jpg",
         "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/sound.png",
         "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/aniki-fantasia-ed3ca12f/color.png"
       },
       "componentIds": {

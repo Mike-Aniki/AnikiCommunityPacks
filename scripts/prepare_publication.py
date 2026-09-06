@@ -193,51 +193,131 @@ def load_catalog() -> dict:
     return data
 
 
-def catalog_id_claims(packs: list[dict]) -> dict[str, tuple[dict, str]]:
-    claims: dict[str, tuple[dict, str]] = {}
+def catalog_id_claims(packs: list[dict]) -> dict[str, list[tuple[dict, str]]]:
+    claims: dict[str, list[tuple[dict, str]]] = {}
+
+    def add_claim(pack_id: str, pack: dict, slot: str) -> None:
+        claims.setdefault(pack_id, []).append((pack, slot))
+
     for pack in packs:
         if not isinstance(pack, dict):
             continue
+
         root_id = str(pack.get("id", "")).strip()
         if root_id:
-            claims[root_id] = (pack, "root")
+            add_claim(root_id, pack, "root")
+
         component_ids = pack.get("componentIds")
         if isinstance(component_ids, dict):
             for component_type, component_id in component_ids.items():
                 value = str(component_id or "").strip()
                 if value:
-                    claims[value] = (pack, str(component_type or "component"))
+                    add_claim(value, pack, str(component_type or "component").strip().lower())
+
     return claims
 
 
 def validate_component_id_claims(
     packs: list[dict],
     pack_id: str,
+    pack_type: str,
     component_ids: dict[str, str],
     existing: dict | None,
+    submitter: str,
 ) -> None:
     claims = catalog_id_claims(packs)
-    root_claim = claims.get(pack_id)
-    if root_claim is not None and root_claim[1] != "root":
-        parent = root_claim[0]
-        fail(
-            f"Pack ID '{pack_id}' is already used by the {root_claim[1]} component of "
-            f"'{parent.get('name', parent.get('id', 'another Complete Pack'))}'."
-        )
+    submitter_folded = str(submitter or "").strip().casefold()
+
+    pack_claims = claims.get(pack_id, [])
+    root_claims = [claim for claim in pack_claims if claim[1] == "root"]
+    component_claims = [claim for claim in pack_claims if claim[1] != "root"]
+
+    if len(root_claims) > 1:
+        fail(f"Pack ID '{pack_id}' is used by more than one published root pack.")
+
+    existing_owner = str(existing.get("owner", "")).strip() if existing else ""
+
+    # A standalone pack may share its ID with a component of one Complete Pack,
+    # but only when the type and GitHub owner match.
+    for parent, slot in component_claims:
+        parent_owner = str(parent.get("owner", "")).strip()
+        parent_name = str(parent.get("name", parent.get("id", "another Complete Pack")))
+
+        if pack_type == "complete" or slot != pack_type:
+            fail(
+                f"Pack ID '{pack_id}' is already used by the {slot} component of "
+                f"'{parent_name}'."
+            )
+
+        if parent_owner:
+            if parent_owner.casefold() != submitter_folded:
+                fail(
+                    f"Pack ID '{pack_id}' is already used by the {slot} component of "
+                    f"'{parent_name}', owned by GitHub user @{parent_owner}."
+                )
+        elif not existing_owner or existing_owner.casefold() != submitter_folded:
+            fail(
+                f"Pack ID '{pack_id}' is already used by the {slot} component of "
+                f"'{parent_name}', but that Complete Pack has no stored GitHub owner."
+            )
 
     for component_type, component_id in component_ids.items():
+        child_type = str(component_type).strip().lower()
         child_id = str(component_id or "").strip()
         if not child_id:
             continue
-        claim = claims.get(child_id)
-        if claim is None:
-            continue
-        claimed_pack, claimed_slot = claim
-        same_complete = existing is not None and claimed_pack is existing and claimed_slot != "root"
-        if not same_complete:
+
+        child_claims = claims.get(child_id, [])
+        same_complete_component = any(
+            existing is not None
+            and claimed_pack is existing
+            and claimed_slot == child_type
+            for claimed_pack, claimed_slot in child_claims
+        )
+
+        for claimed_pack, claimed_slot in child_claims:
+            # Updating the same Complete Pack with the same component is valid.
+            if (
+                existing is not None
+                and claimed_pack is existing
+                and claimed_slot == child_type
+            ):
+                continue
+
+            # Reusing an already-published standalone pack inside a Complete Pack
+            # is valid only for the same GitHub owner and the same pack type.
+            if claimed_slot == "root":
+                claimed_type = str(claimed_pack.get("type", "")).strip().lower()
+                claimed_owner = str(claimed_pack.get("owner", "")).strip()
+
+                if claimed_type != child_type:
+                    fail(
+                        f"Nested {PACK_DISPLAY.get(child_type, child_type)} ID '{child_id}' "
+                        f"is already published as {PACK_DISPLAY.get(claimed_type, claimed_type or 'another pack type')}."
+                    )
+
+                if claimed_owner:
+                    if claimed_owner.casefold() != submitter_folded:
+                        fail(
+                            f"Nested {PACK_DISPLAY.get(child_type, child_type)} ID '{child_id}' "
+                            f"belongs to GitHub user @{claimed_owner}. "
+                            f"Only that account can reuse it in a Complete Pack."
+                        )
+                elif not same_complete_component:
+                    fail(
+                        f"Nested {PACK_DISPLAY.get(child_type, child_type)} ID '{child_id}' "
+                        f"is already published as a standalone pack, but it has no stored GitHub owner."
+                    )
+
+                continue
+
+            # The same component ID cannot be claimed by a second Complete Pack.
+            parent_name = str(
+                claimed_pack.get("name", claimed_pack.get("id", "another Complete Pack"))
+            )
             fail(
-                f"Nested {PACK_DISPLAY.get(component_type, component_type)} Pack ID '{child_id}' "
-                f"is already used by another published pack."
+                f"Nested {PACK_DISPLAY.get(child_type, child_type)} ID '{child_id}' "
+                f"is already used by the {claimed_slot} component of '{parent_name}'."
             )
 
 
@@ -339,7 +419,7 @@ def main() -> int:
         packs = catalog["packs"]
         existing_index = next((i for i, pack in enumerate(packs) if pack.get("id") == pack_id), None)
         existing = packs[existing_index] if existing_index is not None else None
-        validate_component_id_claims(packs, pack_id, component_ids, existing)
+        validate_component_id_claims(packs, pack_id, pack_type, component_ids, existing, submitter)
         today = datetime.now(timezone.utc).date().isoformat()
 
         if existing_index is None:

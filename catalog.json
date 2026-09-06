@@ -74,6 +74,25 @@
       }
     },
     {
+      "type": "complete",
+      "id": "hatsune-miku-deep-sea-girl-complete-pack-d623b77b",
+      "name": "Hatsune Miku Deep Sea Girl Complete Pack",
+      "author": "Zonny",
+      "owner": "TheZonny",
+      "version": "1.0.0",
+      "description": "The complete pack for my Deep See Girl Aniki theme!",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/hatsune-miku-deep-sea-girl-complete-pack-d623b77b.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-hatsune-miku-deep-sea-girl-complete-pack-d623b77b-v1.0.0/hatsune-miku-deep-sea-girl-complete-pack-d623b77b-v1.0.0.zip",
+      "publishedAt": "2026-09-06",
+      "updatedAt": "2026-09-06",
+      "featured": false,
+      "componentIds": {
+        "visual": "hatsune-miku-deep-sea-girl-84940de5",
+        "login": "hatsune-miku-deep-sea-login-screen-0808b1f8",
+        "color": "deepsea-color-pack-2f63d713"
+      }
+    },
+    {
       "type": "login",
       "id": "blood-of-dawnwalker-2d152efe",
       "name": "Blood of Dawnwalker",

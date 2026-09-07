@@ -201,6 +201,20 @@
     },
     {
       "type": "visual",
+      "id": "paris-saint-germain-visual-pack-7ce08a36",
+      "name": "Paris Saint Germain Visual Pack",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A visual pack based on Paris Saint-Germain",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-visual-pack-7ce08a36.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-paris-saint-germain-visual-pack-7ce08a36-v1.0.0/paris-saint-germain-visual-pack-7ce08a36-v1.0.0.zip",
+      "publishedAt": "2026-09-07",
+      "updatedAt": "2026-09-07",
+      "featured": false
+    },
+    {
+      "type": "visual",
       "id": "project-reignition",
       "name": "Project Reignition",
       "author": "Ammz",

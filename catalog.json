@@ -3,6 +3,20 @@
   "formatVersion": 1,
   "packs": [
     {
+      "type": "color",
+      "id": "paris-saint-germain-42772a0a",
+      "name": "Paris Saint Germain Theme Color",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A color pack based on Paris Saint-Germain colors",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-42772a0a.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-paris-saint-germain-42772a0a-v1.0.0/paris-saint-germain-42772a0a-v1.0.0.zip",
+      "publishedAt": "2026-09-07",
+      "updatedAt": "2026-09-07",
+      "featured": false
+    },
+    {
       "type": "complete",
       "id": "aniki-fantasia-ed3ca12f",
       "name": "Aniki ReFantasia",

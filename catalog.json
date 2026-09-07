@@ -107,6 +107,30 @@
       }
     },
     {
+      "type": "complete",
+      "id": "paris-saint-germain-3c6119fe",
+      "name": "Paris Saint Germain",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "Complete Pack Based on Paris Saint-Germain",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-3c6119fe.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-paris-saint-germain-3c6119fe-v1.0.0/paris-saint-germain-3c6119fe-v1.0.0.zip",
+      "publishedAt": "2026-09-07",
+      "updatedAt": "2026-09-07",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-3c6119fe/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-3c6119fe/login.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/paris-saint-germain-3c6119fe/color.png"
+      },
+      "componentIds": {
+        "visual": "paris-saint-germain-visual-pack-7ce08a36",
+        "login": "paris-saint-germain-login-4b002f24",
+        "color": "paris-saint-germain-42772a0a"
+      }
+    },
+    {
       "type": "login",
       "id": "blood-of-dawnwalker-2d152efe",
       "name": "Blood of Dawnwalker",

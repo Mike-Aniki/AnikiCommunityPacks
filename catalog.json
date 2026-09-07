@@ -187,6 +187,20 @@
     },
     {
       "type": "visual",
+      "id": "mass-effect-custom-pack-bad941ce",
+      "name": "Mass Effect Custom Pack",
+      "author": "Huddini",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "Mass Effect Compendium Pack v1.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mass-effect-custom-pack-bad941ce.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-mass-effect-custom-pack-bad941ce-v1.0.0/mass-effect-custom-pack-bad941ce-v1.0.0.zip",
+      "publishedAt": "2026-09-07",
+      "updatedAt": "2026-09-07",
+      "featured": false
+    },
+    {
+      "type": "visual",
       "id": "project-reignition",
       "name": "Project Reignition",
       "author": "Ammz",

@@ -158,6 +158,20 @@
     },
     {
       "type": "login",
+      "id": "lies-of-p-8a99c1c7",
+      "name": "Lies Of P",
+      "author": "LUTHXR",
+      "owner": "chiuangel19-create",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/lies-of-p-8a99c1c7.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-lies-of-p-8a99c1c7-v1.0.0/lies-of-p-8a99c1c7-v1.0.0.zip",
+      "publishedAt": "2026-09-08",
+      "updatedAt": "2026-09-08",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "onimusha-login-screen-ec6f2c39",
       "name": "Onimusha Login Screen",
       "author": "Luxas",

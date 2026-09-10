@@ -63,6 +63,30 @@
     },
     {
       "type": "complete",
+      "id": "mon-pack-complet-56f070f1",
+      "name": "Five night at Freddy",
+      "author": "Lcm213",
+      "owner": "loucianbidault-jpg",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-56f070f1.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-mon-pack-complet-56f070f1-v1.0.0/mon-pack-complet-56f070f1-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-56f070f1/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-56f070f1/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/mon-pack-complet-56f070f1/sound.jpg"
+      },
+      "componentIds": {
+        "visual": "five-night-at-freddy-s-804fa46c",
+        "login": "mon-pack-login-04a0e852",
+        "sound": "fnaf-sound-47979bb5"
+      }
+    },
+    {
+      "type": "complete",
       "id": "mon-pack-complet-7ce53f65",
       "name": "Ghost in the shell",
       "author": "Mike Aniki",

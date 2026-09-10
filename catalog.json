@@ -93,6 +93,29 @@
     },
     {
       "type": "complete",
+      "id": "bioshock-rapture-68fff96d",
+      "name": "Bioshock Rapture",
+      "author": "Lcm213",
+      "owner": "loucianbidault-jpg",
+      "version": "1.0.0",
+      "description": "Pour les grand fan de bioshock 1.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-bioshock-rapture-68fff96d-v1.0.0/bioshock-rapture-68fff96d-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false,
+      "packPreviews": {
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d/sound.jpg"
+      },
+      "componentIds": {
+        "visual": "bioshock-visual-pack-0e8466d2",
+        "login": "bioshock-pack-login-e4530f4d",
+        "sound": "bioshock-sound-pack-3cb948a2"
+      }
+    },
+    {
+      "type": "complete",
       "id": "dishonored-3db37d23",
       "name": "Dishonored",
       "author": "Electro79",
@@ -202,6 +225,22 @@
         "login": "paris-saint-germain-login-4b002f24",
         "color": "paris-saint-germain-42772a0a"
       }
+    },
+    {
+      "type": "login",
+      "id": "bioshock-pack-login-e4530f4d",
+      "name": "Bioshock Pack Login",
+      "author": "Lcm213",
+      "owner": "loucianbidault-jpg",
+      "version": "1.0.0",
+      "description": "Bioshock Trailler.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-bioshock-rapture-68fff96d-v1.0.0/bioshock-pack-login-e4530f4d-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false,
+      "parentCompletePackId": "bioshock-rapture-68fff96d",
+      "generatedFromCompletePack": true
     },
     {
       "type": "login",
@@ -381,6 +420,22 @@
     },
     {
       "type": "sound",
+      "id": "bioshock-sound-pack-3cb948a2",
+      "name": "Bioshock Sound Pack",
+      "author": "Lcm213",
+      "owner": "loucianbidault-jpg",
+      "version": "1.0.0",
+      "description": "Music Bioshock",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-bioshock-rapture-68fff96d-v1.0.0/bioshock-sound-pack-3cb948a2-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false,
+      "parentCompletePackId": "bioshock-rapture-68fff96d",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "dishonored-ambient-music-0dce225a",
       "name": "Dishonored Ambient Music",
       "author": "Electro79",
@@ -456,6 +511,22 @@
       "publishedAt": "2026-09-04",
       "updatedAt": "2026-09-09",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "bioshock-visual-pack-0e8466d2",
+      "name": "Bioshock Visual Pack",
+      "author": "Lcm213",
+      "owner": "loucianbidault-jpg",
+      "version": "1.0.0",
+      "description": "Bioshock 1, Bienvenu  a rapture.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/bioshock-rapture-68fff96d.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-bioshock-rapture-68fff96d-v1.0.0/bioshock-visual-pack-0e8466d2-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false,
+      "parentCompletePackId": "bioshock-rapture-68fff96d",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

@@ -1,0 +1,83 @@
+name: Backfill Complete Pack Components
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aniki-community-pack-publication
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest catalog
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Refresh default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: git pull --ff-only origin "$DEFAULT_BRANCH"
+
+      - name: Prepare legacy Complete Pack components
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python3 scripts/backfill_complete_components.py \
+            --repo "$REPO" \
+            --report backfill-report.txt \
+            --manifest backfill-upload-manifest.json
+
+      - name: Validate migrated catalog
+        run: python3 scripts/validate_catalog.py
+
+      - name: Upload component ZIPs to existing Complete Pack releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          upload_count="$(python3 -c 'import json; print(len(json.load(open("backfill-upload-manifest.json", encoding="utf-8"))["uploads"]))')"
+          echo "Uploading $upload_count component asset(s)."
+
+          python3 - <<'PY' > backfill-upload-lines.txt
+          import json
+          data = json.load(open("backfill-upload-manifest.json", encoding="utf-8"))
+          for item in data.get("uploads", []):
+              print(f"{item['tag']}\t{item['path']}")
+          PY
+
+          while IFS=$'\t' read -r tag asset_path; do
+            [ -n "$tag" ] || continue
+            [ -f "$asset_path" ] || { echo "Missing asset: $asset_path" >&2; exit 1; }
+            gh release upload "$tag" "$asset_path" --repo "$REPO" --clobber
+          done < backfill-upload-lines.txt
+
+      - name: Commit migrated catalog
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- catalog.json
+          if git diff --cached --quiet; then
+            echo "No catalog migration was needed."
+            exit 0
+          fi
+          git commit -m "Expose Complete Pack components individually"
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+
+      - name: Print migration report
+        if: always()
+        run: |
+          if [ -f backfill-report.txt ]; then
+            cat backfill-report.txt
+          fi

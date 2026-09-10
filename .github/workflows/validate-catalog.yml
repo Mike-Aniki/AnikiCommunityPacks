@@ -6,12 +6,24 @@ on:
       - 'catalog.json'
       - 'catalog.schema.json'
       - 'scripts/validate_catalog.py'
+      - 'scripts/complete_components.py'
+      - 'scripts/backfill_complete_components.py'
+      - 'scripts/prepare_publication.py'
+      - 'scripts/unpublish_pack.py'
+      - '.github/workflows/publish-approved.yml'
+      - '.github/workflows/backfill-complete-components.yml'
       - '.github/workflows/validate-catalog.yml'
   pull_request:
     paths:
       - 'catalog.json'
       - 'catalog.schema.json'
       - 'scripts/validate_catalog.py'
+      - 'scripts/complete_components.py'
+      - 'scripts/backfill_complete_components.py'
+      - 'scripts/prepare_publication.py'
+      - 'scripts/unpublish_pack.py'
+      - '.github/workflows/publish-approved.yml'
+      - '.github/workflows/backfill-complete-components.yml'
       - '.github/workflows/validate-catalog.yml'
 
 permissions:
@@ -25,8 +37,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check validator syntax
-        run: python3 -m py_compile scripts/validate_catalog.py
+      - name: Check publication script syntax
+        run: >-
+          python3 -m py_compile
+          scripts/validate_catalog.py
+          scripts/complete_components.py
+          scripts/backfill_complete_components.py
+          scripts/prepare_publication.py
+          scripts/unpublish_pack.py
 
       - name: Validate catalog
         run: python3 scripts/validate_catalog.py

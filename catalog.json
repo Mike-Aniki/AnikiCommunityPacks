@@ -158,6 +158,20 @@
     },
     {
       "type": "login",
+      "id": "dead-space-2008-962bea46",
+      "name": "Dead Space 2008",
+      "author": "KMoshiro",
+      "owner": "KrisMoshiro",
+      "version": "1.0.0",
+      "description": "Login background from the classic 2008 Dead Space wallpaper, credits and thanks to the creator of the original YouTube video, LoveLiveWallpaper",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dead-space-2008-962bea46.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dead-space-2008-962bea46-v1.0.0/dead-space-2008-962bea46-v1.0.0.zip",
+      "publishedAt": "2026-09-10",
+      "updatedAt": "2026-09-10",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "lies-of-p-8a99c1c7",
       "name": "Lies Of P",
       "author": "LUTHXR",

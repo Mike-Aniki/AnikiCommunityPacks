@@ -15,6 +15,13 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+from complete_components import (
+    CompleteComponentError,
+    extract_complete_components,
+    sort_catalog_packs,
+    upsert_complete_components,
+)
+
 from validate_submission import (
     PACK_DISPLAY,
     PACK_TYPES,
@@ -414,6 +421,11 @@ def main() -> int:
             if pack_type == "complete"
             else {}
         )
+        complete_components = (
+            extract_complete_components(source_zip, PUBLICATION_DIR / "components")
+            if pack_type == "complete"
+            else {}
+        )
 
         catalog = load_catalog()
         packs = catalog["packs"]
@@ -511,17 +523,30 @@ def main() -> int:
         if component_ids:
             entry["componentIds"] = component_ids
 
+        # If an auto-exposed Complete Pack component later receives its own
+        # standalone submission, keep the relationship but make the standalone
+        # publication the source of truth from now on.
+        if pack_type != "complete" and existing is not None:
+            parent_complete_id = str(existing.get("parentCompletePackId", "")).strip()
+            if parent_complete_id:
+                entry["parentCompletePackId"] = parent_complete_id
+
         if existing_index is None:
             packs.append(entry)
         else:
             packs[existing_index] = entry
-        packs.sort(
-            key=lambda pack: (
-                str(pack.get("type", "visual")).casefold(),
-                str(pack.get("name", "")).casefold(),
-                str(pack.get("id", "")).casefold(),
+
+        if pack_type == "complete":
+            upsert_complete_components(
+                packs=packs,
+                parent_entry=entry,
+                components=complete_components,
+                repo=args.repo,
+                release_tag=tag,
+                preview_urls=component_preview_urls,
             )
-        )
+
+        sort_catalog_packs(packs)
         CATALOG_PATH.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
         release_notes = [
@@ -572,6 +597,9 @@ def main() -> int:
         if previous_version:
             report.append(f"Previous version: {previous_version}")
         report.extend([f"Release tag: {tag}", f"Preview: previews/{preview_name}"])
+        if pack_type == "complete":
+            report.append(f"Individual components exposed: {len(complete_components)}")
+            report.append(f"Component release assets: {len(complete_components)}")
         write_report(args.report, report)
         print("\n".join(report))
 
@@ -595,7 +623,7 @@ def main() -> int:
         )
         return 0
 
-    except (PublishError, ValidationError) as exc:
+    except (PublishError, ValidationError, CompleteComponentError) as exc:
         report = ["PUBLICATION BLOCKED", str(exc)]
         write_report(args.report, report)
         print("\n".join(report), file=sys.stderr)

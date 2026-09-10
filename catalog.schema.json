@@ -69,6 +69,16 @@
           "maxLength": 100,
           "pattern": "^[A-Za-z0-9-]+$"
         },
+        "parentCompletePackId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "generatedFromCompletePack": {
+          "type": "boolean",
+          "default": false
+        },
         "componentIds": {
           "type": "object",
           "additionalProperties": false,

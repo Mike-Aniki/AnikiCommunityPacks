@@ -57,6 +57,7 @@ def main() -> None:
         fail("packs must be an array")
 
     seen_ids: set[str] = set()
+    pack_by_id: dict[str, dict] = {}
     for index, pack in enumerate(packs):
         prefix = f"packs[{index}]"
         if not isinstance(pack, dict):
@@ -76,6 +77,7 @@ def main() -> None:
         if pack_id in seen_ids:
             fail(f"duplicate pack id: {pack_id}")
         seen_ids.add(pack_id)
+        pack_by_id[pack_id] = pack
 
         version = str(pack["version"])
         if not SEMVER.fullmatch(version):
@@ -93,6 +95,33 @@ def main() -> None:
         for key in ("previewUrl", "downloadUrl"):
             if not valid_url(str(pack[key])):
                 fail(f"{prefix}.{key} must be an http(s) URL")
+
+
+        component_ids = pack.get("componentIds")
+        if component_ids is not None:
+            if pack_type != "complete":
+                fail(f"{prefix}.componentIds is only valid for Complete Packs")
+            if not isinstance(component_ids, dict):
+                fail(f"{prefix}.componentIds must be an object")
+            allowed_component_types = {"visual", "color", "login", "sound"}
+            extra_component_types = set(component_ids) - allowed_component_types
+            if extra_component_types:
+                fail(f"{prefix}.componentIds contains unsupported keys: {', '.join(sorted(extra_component_types))}")
+            for child_type, child_id in component_ids.items():
+                if not PACK_ID.fullmatch(str(child_id)):
+                    fail(f"{prefix}.componentIds.{child_type} contains an invalid Pack ID")
+
+        parent_complete_id = str(pack.get("parentCompletePackId", "")).strip()
+        generated_from_complete = pack.get("generatedFromCompletePack")
+        if parent_complete_id:
+            if pack_type == "complete":
+                fail(f"{prefix}.parentCompletePackId is not valid on a Complete Pack")
+            if not PACK_ID.fullmatch(parent_complete_id):
+                fail(f"{prefix}.parentCompletePackId contains an invalid Pack ID")
+        if generated_from_complete is not None and not isinstance(generated_from_complete, bool):
+            fail(f"{prefix}.generatedFromCompletePack must be a boolean")
+        if generated_from_complete is True and not parent_complete_id:
+            fail(f"{prefix}.generatedFromCompletePack requires parentCompletePackId")
 
         pack_previews = pack.get("packPreviews")
         if pack_previews is not None:
@@ -114,6 +143,27 @@ def main() -> None:
 
         if date.fromisoformat(str(pack["updatedAt"])) < date.fromisoformat(str(pack["publishedAt"])):
             fail(f"{prefix}.updatedAt cannot be earlier than publishedAt")
+
+    # Validate child -> Complete Pack relationships after every root Pack ID is known.
+    for index, pack in enumerate(packs):
+        parent_complete_id = str(pack.get("parentCompletePackId", "")).strip()
+        if not parent_complete_id:
+            continue
+
+        prefix = f"packs[{index}]"
+        parent = pack_by_id.get(parent_complete_id)
+        if parent is None:
+            fail(f"{prefix}.parentCompletePackId references missing pack '{parent_complete_id}'")
+        if str(parent.get("type", "")).strip().lower() != "complete":
+            fail(f"{prefix}.parentCompletePackId must reference a Complete Pack")
+
+        pack_type = str(pack.get("type", "")).strip().lower()
+        component_ids = parent.get("componentIds")
+        if not isinstance(component_ids, dict) or str(component_ids.get(pack_type, "")).strip() != str(pack.get("id", "")).strip():
+            fail(
+                f"{prefix} is linked to Complete Pack '{parent_complete_id}', but that Complete Pack "
+                f"does not reference it as its {pack_type} component"
+            )
 
     print(f"Catalog OK: {len(packs)} pack(s), {len(seen_ids)} unique ID(s).")
 

@@ -172,7 +172,21 @@ def main() -> int:
         release_tag = release_tag_from_download_url(download_url)
 
         removed_previews: list[str] = []
+        detached_components: list[str] = []
         if args.apply:
+            # Complete Packs are presets/bundles. Their individually exposed child
+            # packs stay published when the parent Complete Pack is removed; only
+            # the relationship badge/source tracking is detached.
+            if pack_type == "complete":
+                for child_pack in catalog["packs"]:
+                    if str(child_pack.get("parentCompletePackId", "")).strip() != pack_id:
+                        continue
+                    child_id = str(child_pack.get("id", "")).strip()
+                    child_pack.pop("parentCompletePackId", None)
+                    child_pack.pop("generatedFromCompletePack", None)
+                    if child_id:
+                        detached_components.append(child_id)
+
             del catalog["packs"][index]
             CATALOG_PATH.write_text(
                 json.dumps(catalog, indent=2, ensure_ascii=False) + "\n",
@@ -206,6 +220,10 @@ def main() -> int:
                 lines.append(f"Removed preview: {', '.join(removed_previews)}")
             else:
                 lines.append("Removed preview: none found")
+            if detached_components:
+                lines.append(
+                    "Individual components kept published: " + ", ".join(detached_components)
+                )
             lines.append("Existing GitHub Release: kept as archive")
 
         write_report(args.report, lines)

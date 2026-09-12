@@ -83,14 +83,18 @@ EXPECTED_VISUAL_IMAGES = {
     "Login.jpg": (857, 238),
 }
 
+# Current Sound Pack slots exported by Aniki Pack Creator.
+# Keep this list aligned with Models/SoundPackSoundDefinition.cs in the Creator.
 SOUND_SLOTS = {
     "navigation": ("audio/navigation.wav", "sound", "wav"),
     "activation": ("audio/activation.wav", "sound", "wav"),
-    "change-display": ("audio/ChangeDisplay.wav", "sound", "wav"),
+    "open-panel": ("audio/OpenPanel.wav", "sound", "wav"),
+    "open-additional-view": ("audio/OpenAdditionalView.wav", "sound", "wav"),
+    "close-additional-view": ("audio/CloseAdditionalView.wav", "sound", "wav"),
     "enter-game-details": ("audio/EnterGameDetails.wav", "sound", "wav"),
     "exit-game-details": ("audio/ExitGameDetails.wav", "sound", "wav"),
+    "home-hub-open": ("audio/HomeHubOpen.wav", "sound", "wav"),
     "home-hub-close": ("audio/HomeHubClose.wav", "sound", "wav"),
-    "open-additional-view": ("audio/OpenAdditionalView.wav", "sound", "wav"),
     "notification": ("audio/Noti.wav", "sound", "wav"),
     "session-summary": ("audio/SessionSummary.wav", "sound", "wav"),
     "warning": ("audio/Warning.wav", "sound", "wav"),
@@ -106,7 +110,17 @@ SOUND_SLOTS = {
     "secondary-views-music": ("audio/SecondaryViewsOST.mp3", "music", "mp3"),
     "screensaver-music": ("audio/ScreenSaverOST.mp3", "music", "mp3"),
 }
-SOUND_TARGET_TO_KEY = {target.casefold(): key for key, (target, _, _) in SOUND_SLOTS.items()}
+
+# Accepted only for backward compatibility with Sound Packs exported by older
+# Creator versions. ChangeDisplay.wav is no longer a current Aniki sound slot.
+LEGACY_SOUND_SLOTS = {
+    "change-display": ("audio/ChangeDisplay.wav", "sound", "wav"),
+}
+
+SUPPORTED_SOUND_SLOTS = {**SOUND_SLOTS, **LEGACY_SOUND_SLOTS}
+SOUND_TARGET_TO_KEY = {
+    target.casefold(): key for key, (target, _, _) in SUPPORTED_SOUND_SLOTS.items()
+}
 
 PRESENTATION_NS = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 XAML_NS = "http://schemas.microsoft.com/winfx/2006/xaml"
@@ -631,6 +645,8 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
     sounds = manifest.get("sounds")
     if not isinstance(sounds, list) or not sounds:
         fail("soundpack.json must contain at least one audio item.")
+    # Current packs have 23 slots. Older packs may use the legacy
+    # change-display slot, but a manifest may never exceed the current slot count.
     if len(sounds) > len(SOUND_SLOTS):
         fail(f"soundpack.json cannot contain more than {len(SOUND_SLOTS)} audio items.")
 
@@ -644,9 +660,9 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
         target = str(item.get("target", "")).strip().replace("\\", "/")
         kind = str(item.get("kind", "")).strip().lower()
         fmt = str(item.get("format", "")).strip().lower()
-        if key not in SOUND_SLOTS:
+        if key not in SUPPORTED_SOUND_SLOTS:
             fail(f"soundpack.json contains an unsupported audio key: {key or '(empty)'}")
-        expected_target, expected_kind, expected_format = SOUND_SLOTS[key]
+        expected_target, expected_kind, expected_format = SUPPORTED_SOUND_SLOTS[key]
         if target.casefold() != expected_target.casefold():
             fail(f"Audio key '{key}' must target '{expected_target}'.")
         if kind != expected_kind or fmt != expected_format:
@@ -659,7 +675,7 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
 
     require_exact_files(files, expected_files, "Sound Pack")
     for key in seen_keys:
-        target, _, fmt = SOUND_SLOTS[key]
+        target, _, fmt = SUPPORTED_SOUND_SLOTS[key]
         entry = find_entry(files, target)
         assert entry is not None
         data = archive.read(entry)
@@ -667,7 +683,11 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
             validate_wav(data, target)
         else:
             validate_mp3(data, target)
-    metadata["details"] = f"{len(seen_keys)}/{len(SOUND_SLOTS)} optional audio slots included"
+    legacy_count = sum(1 for key in seen_keys if key in LEGACY_SOUND_SLOTS)
+    current_count = len(seen_keys) - legacy_count
+    metadata["details"] = f"{current_count}/{len(SOUND_SLOTS)} current optional audio slots included"
+    if legacy_count:
+        metadata["details"] += f" (+{legacy_count} legacy slot accepted)"
     return metadata
 
 

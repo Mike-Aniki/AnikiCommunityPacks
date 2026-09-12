@@ -88,6 +88,7 @@ EXPECTED_VISUAL_IMAGES = {
 SOUND_SLOTS = {
     "navigation": ("audio/navigation.wav", "sound", "wav"),
     "activation": ("audio/activation.wav", "sound", "wav"),
+    "login-confirm": ("audio/LoginConfirm.wav", "sound", "wav"),
     "open-panel": ("audio/OpenPanel.wav", "sound", "wav"),
     "open-additional-view": ("audio/OpenAdditionalView.wav", "sound", "wav"),
     "close-additional-view": ("audio/CloseAdditionalView.wav", "sound", "wav"),
@@ -645,7 +646,7 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
     sounds = manifest.get("sounds")
     if not isinstance(sounds, list) or not sounds:
         fail("soundpack.json must contain at least one audio item.")
-    # Current packs have 23 slots. Older packs may use the legacy
+    # Current packs have 24 slots. Older packs may use the legacy
     # change-display slot, but a manifest may never exceed the current slot count.
     if len(sounds) > len(SOUND_SLOTS):
         fail(f"soundpack.json cannot contain more than {len(SOUND_SLOTS)} audio items.")

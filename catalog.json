@@ -364,6 +364,20 @@
     },
     {
       "type": "login",
+      "id": "hatsune-miku-login-66831f19",
+      "name": "Hatsune Miku Login",
+      "author": "LUTHXR",
+      "owner": "chiuangel19-create",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/hatsune-miku-login-66831f19.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-hatsune-miku-login-66831f19-v1.0.0/hatsune-miku-login-66831f19-v1.0.0.zip",
+      "publishedAt": "2026-09-12",
+      "updatedAt": "2026-09-12",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "lies-of-p-8a99c1c7",
       "name": "Lies Of P",
       "author": "LUTHXR",

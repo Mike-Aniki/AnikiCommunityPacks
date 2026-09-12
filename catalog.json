@@ -528,6 +528,20 @@
     },
     {
       "type": "sound",
+      "id": "ps-vita-sound-f44e90d5",
+      "name": "PS Vita Sound",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "Pack Sound of PS Vita",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/ps-vita-sound-f44e90d5.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-ps-vita-sound-f44e90d5-v1.0.0/ps-vita-sound-f44e90d5-v1.0.0.zip",
+      "publishedAt": "2026-09-12",
+      "updatedAt": "2026-09-12",
+      "featured": false
+    },
+    {
+      "type": "sound",
       "id": "ps5-sound-pack-dbb6a658",
       "name": "PS5 Sound Pack",
       "author": "Luxas",

@@ -4,6 +4,22 @@
   "packs": [
     {
       "type": "color",
+      "id": "deep-mako-fc656ad0",
+      "name": "Deep Mako",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A Shinra-inspired palette of deep corporate tones, Mako teal and luminous cyan accents.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sector-0-the-shinra-building-8fffac45-v1.0.0/deep-mako-fc656ad0-v1.0.0.zip",
+      "publishedAt": "2026-09-13",
+      "updatedAt": "2026-09-13",
+      "featured": false,
+      "parentCompletePackId": "sector-0-the-shinra-building-8fffac45",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "deepsea-color-pack-2f63d713",
       "name": "DeepSea Color Pack",
       "author": "Zonny",
@@ -225,6 +241,48 @@
         "login": "paris-saint-germain-login-4b002f24",
         "color": "paris-saint-germain-42772a0a"
       }
+    },
+    {
+      "type": "complete",
+      "id": "sector-0-the-shinra-building-8fffac45",
+      "name": "Sector 0 – The Shinra Building",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Transform ReMake into Shinra HQ, combining its towering environments, Mako-infused interface and iconic music into one complete corporate experience.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sector-0-the-shinra-building-8fffac45-v1.0.0/sector-0-the-shinra-building-8fffac45-v1.0.0.zip",
+      "publishedAt": "2026-09-13",
+      "updatedAt": "2026-09-13",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/visual.png",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/sound.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/color.jpg"
+      },
+      "componentIds": {
+        "visual": "sector-0-the-shinra-building-7fe7acc8",
+        "login": "approaching-sector-0-41cae9f6",
+        "sound": "midgar-after-hours-87ff050d",
+        "color": "deep-mako-fc656ad0"
+      }
+    },
+    {
+      "type": "login",
+      "id": "approaching-sector-0-41cae9f6",
+      "name": "Approaching Sector 0",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Stand before Shinra HQ, where towering industry and corporate power loom overhead as your ascent through the building begins.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sector-0-the-shinra-building-8fffac45-v1.0.0/approaching-sector-0-41cae9f6-v1.0.0.zip",
+      "publishedAt": "2026-09-13",
+      "updatedAt": "2026-09-13",
+      "featured": false,
+      "parentCompletePackId": "sector-0-the-shinra-building-8fffac45",
+      "generatedFromCompletePack": true
     },
     {
       "type": "login",
@@ -512,6 +570,22 @@
     },
     {
       "type": "sound",
+      "id": "midgar-after-hours-87ff050d",
+      "name": "Midgar After Hours",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Ascend Shinra HQ through a curated soundscape of tension, corporate grandeur and unsettling calm. Stay a while; a certain voice may find you.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sector-0-the-shinra-building-8fffac45-v1.0.0/midgar-after-hours-87ff050d-v1.0.0.zip",
+      "publishedAt": "2026-09-13",
+      "updatedAt": "2026-09-13",
+      "featured": false,
+      "parentCompletePackId": "sector-0-the-shinra-building-8fffac45",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "midnight-reverie-a7b3bd1e",
       "name": "Midnight Reverie",
       "author": "Ammz",
@@ -730,6 +804,22 @@
       "publishedAt": "2026-08-29",
       "updatedAt": "2026-08-29",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "sector-0-the-shinra-building-7fe7acc8",
+      "name": "Within Shinra HQ",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Step into Shinra HQ and ascend its floors, as ReMake mirrors its hierarchy—from grand public spaces to prestigious and restricted upper levels",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sector-0-the-shinra-building-8fffac45/visual.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sector-0-the-shinra-building-8fffac45-v1.0.0/sector-0-the-shinra-building-7fe7acc8-v1.0.0.zip",
+      "publishedAt": "2026-09-13",
+      "updatedAt": "2026-09-13",
+      "featured": false,
+      "parentCompletePackId": "sector-0-the-shinra-building-8fffac45",
+      "generatedFromCompletePack": true
     }
   ]
 }

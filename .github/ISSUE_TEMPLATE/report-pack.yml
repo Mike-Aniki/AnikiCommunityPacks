@@ -1,0 +1,74 @@
+name: Report a Community Pack
+description: Report serious inappropriate content in a Community Pack.
+title: "[Report] "
+labels:
+  - pack-report
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Report a Community Pack
+
+        Use this form **only for serious content moderation issues**, such as pornographic/sexual content, racist or hateful content, extremely violent or shocking content, stolen content, intentionally misleading content, or other seriously inappropriate content.
+
+        **Do not use reports for quality issues** such as low-resolution images, poor image/audio quality, personal preferences, missing assets, or other minor problems.
+
+        You do **not** need the Pack ID. Please provide the exact pack name and type shown in Aniki Helper so the maintainer can identify it.
+
+        Reports do not remove packs automatically. A maintainer will review the report before taking action.
+
+  - type: input
+    id: pack-name
+    attributes:
+      label: Pack name
+      description: Enter the pack name exactly as it appears in Aniki Helper.
+      placeholder: Example Pack Name
+    validations:
+      required: true
+
+  - type: dropdown
+    id: pack-type
+    attributes:
+      label: Pack type
+      description: Select the category where the pack appears.
+      options:
+        - Visual Pack
+        - Login Pack
+        - Sound Pack
+        - Color Pack
+        - Complete Pack
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Reason
+      description: Select the serious moderation issue that best matches this report.
+      options:
+        - Pornographic / Sexual content
+        - Racist / Hateful content
+        - Violent / Shocking content
+        - Stolen / Misleading content
+        - Other serious inappropriate content
+    validations:
+      required: true
+
+  - type: textarea
+    id: explanation
+    attributes:
+      label: Explanation
+      description: Explain why this content should be reviewed. Add links or screenshots if they help.
+      placeholder: Please describe the inappropriate content clearly.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I understand that reports are only for serious inappropriate content and not for low-resolution images, poor quality, personal preferences, missing assets, or other minor issues.
+          required: true
+        - label: I am submitting this report in good faith and understand that a maintainer will review it before any action is taken.
+          required: true

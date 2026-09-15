@@ -1,8 +1,14 @@
-name: Publish Approved Community Pack
+name: Publish Community Pack
 
 on:
   issues:
     types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Submission issue number to publish after automatic validation"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -14,14 +20,76 @@ concurrency:
 jobs:
   publish:
     if: >-
-      github.event.label.name == 'approved' &&
-      (contains(github.event.issue.labels.*.name, 'visual-pack-submission') ||
-       contains(github.event.issue.labels.*.name, 'color-pack-submission') ||
-       contains(github.event.issue.labels.*.name, 'login-pack-submission') ||
-       contains(github.event.issue.labels.*.name, 'sound-pack-submission') ||
-       contains(github.event.issue.labels.*.name, 'complete-pack-submission'))
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issues' &&
+       github.event.label.name == 'approved' &&
+       (contains(github.event.issue.labels.*.name, 'visual-pack-submission') ||
+        contains(github.event.issue.labels.*.name, 'color-pack-submission') ||
+        contains(github.event.issue.labels.*.name, 'login-pack-submission') ||
+        contains(github.event.issue.labels.*.name, 'sound-pack-submission') ||
+        contains(github.event.issue.labels.*.name, 'complete-pack-submission')))
     runs-on: ubuntu-latest
     steps:
+      - name: Resolve submission issue
+        id: issue
+        uses: actions/github-script@v7
+        env:
+          REQUESTED_ISSUE_NUMBER: ${{ inputs.issue_number || '' }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            let issue = context.payload.issue;
+
+            if (context.eventName === 'workflow_dispatch') {
+              const issueNumber = Number(process.env.REQUESTED_ISSUE_NUMBER);
+              if (!Number.isInteger(issueNumber) || issueNumber <= 0) {
+                core.setFailed('A valid submission issue number is required.');
+                return;
+              }
+              const response = await github.rest.issues.get({
+                owner, repo, issue_number: issueNumber
+              });
+              issue = response.data;
+            }
+
+            if (!issue) {
+              core.setFailed('Could not resolve the submission issue.');
+              return;
+            }
+
+            const labels = (issue.labels || []).map(label =>
+              typeof label === 'string' ? label : label.name
+            );
+            const packLabels = [
+              'visual-pack-submission',
+              'color-pack-submission',
+              'login-pack-submission',
+              'sound-pack-submission',
+              'complete-pack-submission',
+            ];
+            const matching = packLabels.filter(label => labels.includes(label));
+
+            if (matching.length !== 1) {
+              core.setFailed('The issue must contain exactly one Community Pack submission type label.');
+              return;
+            }
+            if (!labels.includes('approved')) {
+              core.setFailed('The submission is not approved. Automatic validation must pass before publication.');
+              return;
+            }
+            if (labels.includes('published')) {
+              core.setFailed('This submission is already published.');
+              return;
+            }
+            if (issue.state !== 'open') {
+              core.setFailed('The submission issue is closed.');
+              return;
+            }
+
+            core.setOutput('issue_body', issue.body || '');
+            core.setOutput('issue_labels', JSON.stringify(labels));
+            core.setOutput('submitter_login', issue.user?.login || '');
+            core.setOutput('issue_number', String(issue.number));
       - name: Checkout latest catalog
         uses: actions/checkout@v4
         with:
@@ -36,10 +104,10 @@ jobs:
         id: prepare
         continue-on-error: true
         env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
-          ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name) }}
-          SUBMITTER_LOGIN: ${{ github.event.issue.user.login }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ steps.issue.outputs.issue_body }}
+          ISSUE_LABELS: ${{ steps.issue.outputs.issue_labels }}
+          SUBMITTER_LOGIN: ${{ steps.issue.outputs.submitter_login }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue_number }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           set -euo pipefail
@@ -52,6 +120,8 @@ jobs:
       - name: Stop if publication checks failed
         if: steps.prepare.outcome != 'success'
         uses: actions/github-script@v7
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue_number }}
         with:
           script: |
             const fs = require('fs');
@@ -59,9 +129,9 @@ jobs:
             const report = fs.existsSync('publication-report.txt')
               ? fs.readFileSync('publication-report.txt', 'utf8').trim()
               : 'Publication checks failed before a report could be generated.';
-            const body = `${marker}\n❌ **Publication blocked.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nFix the submission, then remove and re-apply the \`approved\` label.`;
+            const body = `${marker}\n❌ **Publication blocked.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nFix the submission, then edit the issue to run automatic validation and publication again.`;
             const { owner, repo } = context.repo;
-            const issue_number = context.issue.number;
+            const issue_number = Number(process.env.ISSUE_NUMBER);
             const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
             const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
             if (previous) {
@@ -135,6 +205,8 @@ jobs:
       - name: Report publication failure
         if: failure() && steps.prepare.outcome == 'success' && steps.publish_commit.outcome != 'success'
         uses: actions/github-script@v7
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue_number }}
         with:
           script: |
             const fs = require('fs');
@@ -143,9 +215,9 @@ jobs:
               ? fs.readFileSync('publication-report.txt', 'utf8').trim()
               : 'The automated publication failed after the submission passed its initial checks.';
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const body = `${marker}\n❌ **Automatic publication failed.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nThe Release was not kept if the repository update failed. Check the [workflow run](${runUrl}), fix the problem, then re-apply the \`approved\` label.`;
+            const body = `${marker}\n❌ **Automatic publication failed.**\n\n\`\`\`text\n${report}\n\`\`\`\n\nThe Release was not kept if the repository update failed. Check the [workflow run](${runUrl}), fix the problem, then edit the issue to retry automatic validation and publication.`;
             const { owner, repo } = context.repo;
-            const issue_number = context.issue.number;
+            const issue_number = Number(process.env.ISSUE_NUMBER);
             const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number, per_page: 100 });
             const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
             if (previous) {
@@ -166,11 +238,12 @@ jobs:
           PACK_VERSION: ${{ steps.prepare.outputs.version }}
           PACK_DISPLAY: ${{ steps.prepare.outputs.pack_display }}
           TAG: ${{ steps.prepare.outputs.tag }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue_number }}
         with:
           script: |
             const marker = '<!-- aniki-publication-status -->';
             const { owner, repo } = context.repo;
-            const issue_number = context.issue.number;
+            const issue_number = Number(process.env.ISSUE_NUMBER);
             const releaseUrl = `https://github.com/${owner}/${repo}/releases/tag/${encodeURIComponent(process.env.TAG)}`;
             const body = `${marker}\n✅ **${process.env.PACK_DISPLAY} published.**\n\n**${process.env.PACK_NAME} v${process.env.PACK_VERSION}** is now in the Community Packs catalog.\n\n[Open the GitHub Release](${releaseUrl})`;
             try {

@@ -1,0 +1,110 @@
+name: Remove Community Pack (Admin)
+
+on:
+  workflow_dispatch:
+    inputs:
+      pack_name:
+        description: "Exact pack name shown in the Community catalog"
+        required: true
+        type: string
+      pack_type:
+        description: "Pack type"
+        required: true
+        type: choice
+        options:
+          - visual
+          - login
+          - sound
+          - color
+          - complete
+      reason:
+        description: "Reason for removal (stored in the workflow summary and commit message)"
+        required: true
+        type: string
+      confirmation:
+        description: "Type DELETE to confirm"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aniki-community-pack-publication
+  cancel-in-progress: false
+
+jobs:
+  remove:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [ "$CONFIRMATION" != "DELETE" ]; then
+            echo "Removal cancelled: confirmation must be exactly DELETE." >&2
+            exit 1
+          fi
+
+      - name: Checkout latest catalog
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Refresh default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: git pull --ff-only origin "$DEFAULT_BRANCH"
+
+      - name: Remove pack from catalog
+        id: remove
+        env:
+          PACK_NAME: ${{ inputs.pack_name }}
+          PACK_TYPE: ${{ inputs.pack_type }}
+          REMOVE_REASON: ${{ inputs.reason }}
+        run: |
+          set -euo pipefail
+          python3 scripts/unpublish_pack.py \
+            --apply \
+            --pack-name "$PACK_NAME" \
+            --pack-type "$PACK_TYPE" \
+            --reason "$REMOVE_REASON" \
+            --report remove-pack-report.txt
+
+      - name: Validate catalog after removal
+        run: python3 scripts/validate_catalog.py
+
+      - name: Commit removal
+        env:
+          PACK_NAME: ${{ steps.remove.outputs.name }}
+          PACK_ID: ${{ steps.remove.outputs.pack_id }}
+          PACK_TYPE: ${{ steps.remove.outputs.pack_type }}
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- catalog.json previews/; then
+            echo "No catalog or preview changes were produced." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalog.json previews/
+          git commit -m "Remove ${PACK_TYPE} pack: ${PACK_NAME} (${PACK_ID})"
+          git push origin "${{ github.event.repository.default_branch }}"
+
+      - name: Write removal summary
+        if: always()
+        run: |
+          {
+            echo "## Community Pack removal"
+            echo
+            if [ -f remove-pack-report.txt ]; then
+              echo '```text'
+              cat remove-pack-report.txt
+              echo '```'
+            else
+              echo "No removal report was produced."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

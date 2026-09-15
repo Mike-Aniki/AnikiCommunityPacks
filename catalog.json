@@ -52,6 +52,22 @@
     },
     {
       "type": "color",
+      "id": "initial-d-manga-colors-05814abb",
+      "name": "Initial D Manga Colors",
+      "author": "AndersonGR86",
+      "owner": "ElAndersonGT",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-initial-d-manga-complete-pack-5bc70279-v1.0.0/initial-d-manga-colors-05814abb-v1.0.0.zip",
+      "publishedAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "featured": false,
+      "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "paris-saint-germain-42772a0a",
       "name": "Paris Saint Germain Theme Color",
       "author": "Mike Aniki",
@@ -216,6 +232,32 @@
         "visual": "hatsune-miku-deep-sea-girl-84940de5",
         "login": "hatsune-miku-deep-sea-login-screen-0808b1f8",
         "color": "deepsea-color-pack-2f63d713"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "initial-d-manga-complete-pack-5bc70279",
+      "name": "Initial D Manga Complete Pack",
+      "author": "AndrsonGR86",
+      "owner": "ElAndersonGT",
+      "version": "1.0.0",
+      "description": "Initial D theme with manga panels in the backgrounds, Sounds from the anime & Arcade game Initial D Stage ZeroLive & a Live Wallpaper for the Login",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-initial-d-manga-complete-pack-5bc70279-v1.0.0/initial-d-manga-complete-pack-5bc70279-v1.0.0.zip",
+      "publishedAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/color.jpg"
+      },
+      "componentIds": {
+        "visual": "initial-d-manga-pack-a5c3f478",
+        "login": "initial-d-racing-in-the-rain-login-screen-33b086ff",
+        "sound": "initial-d-soundpack-342a3024",
+        "color": "initial-d-manga-colors-05814abb"
       }
     },
     {
@@ -436,6 +478,22 @@
     },
     {
       "type": "login",
+      "id": "initial-d-racing-in-the-rain-login-screen-33b086ff",
+      "name": "Initial D Racing In The Rain Login Screen",
+      "author": "AndrsonGR86",
+      "owner": "ElAndersonGT",
+      "version": "1.0.0",
+      "description": "Live Wallpaper from \"Walls For You\" in YouTube",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-initial-d-manga-complete-pack-5bc70279-v1.0.0/initial-d-racing-in-the-rain-login-screen-33b086ff-v1.0.0.zip",
+      "publishedAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "featured": false,
+      "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "lies-of-p-8a99c1c7",
       "name": "Lies Of P",
       "author": "LUTHXR",
@@ -566,6 +624,22 @@
       "updatedAt": "2026-09-05",
       "featured": false,
       "parentCompletePackId": "mon-pack-complet-7ce53f65",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
+      "id": "initial-d-soundpack-342a3024",
+      "name": "Initial D SoundPack",
+      "author": "AndrsonGR86",
+      "owner": "ElAndersonGT",
+      "version": "1.0.0",
+      "description": "Sound Pack with sound files from anime & Arcade Initial D Stage Zero",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-initial-d-manga-complete-pack-5bc70279-v1.0.0/initial-d-soundpack-342a3024-v1.0.0.zip",
+      "publishedAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "featured": false,
+      "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
       "generatedFromCompletePack": true
     },
     {
@@ -736,6 +810,22 @@
       "updatedAt": "2026-09-06",
       "featured": false,
       "parentCompletePackId": "hatsune-miku-deep-sea-girl-complete-pack-d623b77b"
+    },
+    {
+      "type": "visual",
+      "id": "initial-d-manga-pack-a5c3f478",
+      "name": "Initial D Manga Pack",
+      "author": "AndrsonGR86",
+      "owner": "ElAndersonGT",
+      "version": "1.0.0",
+      "description": "Visual Pack with Initial D Manga Wallpapers",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/initial-d-manga-complete-pack-5bc70279/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-initial-d-manga-complete-pack-5bc70279-v1.0.0/initial-d-manga-pack-a5c3f478-v1.0.0.zip",
+      "publishedAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "featured": false,
+      "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

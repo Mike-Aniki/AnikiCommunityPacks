@@ -350,6 +350,16 @@ def common_manifest_metadata(manifest: dict, pack_type: str) -> dict[str, str]:
         fail(f"{manifest_name} contains an invalid semantic version.")
     if len(description) > 160:
         fail(f"{manifest_name} description cannot exceed 160 characters.")
+    if any(ord(ch) < 32 and ch not in "\t\r\n" for ch in description):
+    invalid = [
+        f"U+{ord(ch):04X}"
+        for ch in description
+        if ord(ch) < 32 and ch not in "\t\r\n"
+    ]
+    fail(
+        f"{manifest_name} description contains unsupported control characters: "
+        + ", ".join(invalid)
+    )
 
     return {
         "type": pack_type,

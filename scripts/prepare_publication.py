@@ -334,7 +334,7 @@ def safe_text(value: object, max_length: int, field: str, allow_empty: bool = Fa
         fail(f"{field} cannot be empty.")
     if len(text) > max_length:
         fail(f"{field} cannot exceed {max_length} characters.")
-    if any(ord(ch) < 32 and ch not in "\t" for ch in text):
+    if any(ord(ch) < 32 and ch not in "\t\r\n" for ch in text):
         fail(f"{field} contains unsupported control characters.")
     return text
 

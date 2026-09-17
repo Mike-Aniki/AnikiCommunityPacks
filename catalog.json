@@ -4,6 +4,22 @@
   "packs": [
     {
       "type": "color",
+      "id": "dark-souls-iii-ash-ember-9893873d",
+      "name": "Dark Souls III – Ash & Ember",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A dark, ash-covered color palette inspired by Dark Souls III, blending deep charcoal tones with warm ember gold for a haunting atmosphere.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/color.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0/dark-souls-iii-ash-ember-9893873d-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false,
+      "parentCompletePackId": "dark-souls-iii-legacy-of-lothric-a8982681",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "deep-mako-fc656ad0",
       "name": "Deep Mako",
       "author": "Ammz",
@@ -144,6 +160,32 @@
         "visual": "bioshock-visual-pack-0e8466d2",
         "login": "bioshock-pack-login-e4530f4d",
         "sound": "bioshock-sound-pack-3cb948a2"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "dark-souls-iii-legacy-of-lothric-a8982681",
+      "name": "Dark Souls III – Legacy of Lothric",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A complete Dark Souls III pack featuring visuals, sounds, colors and a login background inspired by Lothric’s dark world.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0/dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/color.png"
+      },
+      "componentIds": {
+        "visual": "dark-souls-iii-ashes-of-lothric-5fcb32ef",
+        "login": "dark-souls-iii-moonlit-irithyll-f6414ca8",
+        "sound": "dark-souls-iii-sound-58e9aed3",
+        "color": "dark-souls-iii-ash-ember-9893873d"
       }
     },
     {
@@ -370,6 +412,22 @@
     },
     {
       "type": "login",
+      "id": "dark-souls-iii-moonlit-irithyll-f6414ca8",
+      "name": "Dark Souls III – Moonlit Irithyll",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A Dark Souls III login background inspired by Irithyll, with its cold moonlight, snowy atmosphere, and haunting beauty.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0/dark-souls-iii-moonlit-irithyll-f6414ca8-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false,
+      "parentCompletePackId": "dark-souls-iii-legacy-of-lothric-a8982681",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "dead-space-2008-962bea46",
       "name": "Dead Space 2008",
       "author": "KMoshiro",
@@ -580,6 +638,22 @@
     },
     {
       "type": "sound",
+      "id": "dark-souls-iii-sound-58e9aed3",
+      "name": "Dark Souls III – Echoes of Lothric",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "Bring the dark atmosphere of Dark Souls III to Aniki with iconic menu sounds and music inspired by its haunting, unforgettable world.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0/dark-souls-iii-sound-58e9aed3-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false,
+      "parentCompletePackId": "dark-souls-iii-legacy-of-lothric-a8982681",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "dishonored-ambient-music-0dce225a",
       "name": "Dishonored Ambient Music",
       "author": "Electro79",
@@ -744,6 +818,22 @@
       "updatedAt": "2026-09-10",
       "featured": false,
       "parentCompletePackId": "bioshock-rapture-68fff96d",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "visual",
+      "id": "dark-souls-iii-ashes-of-lothric-5fcb32ef",
+      "name": "Dark Souls III – Ashes of Lothric",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A Dark Souls III visual pack inspired by Lothric’s ruined kingdom, fading flames, and ash-covered landscapes.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dark-souls-iii-legacy-of-lothric-a8982681/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dark-souls-iii-legacy-of-lothric-a8982681-v1.0.0/dark-souls-iii-ashes-of-lothric-5fcb32ef-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false,
+      "parentCompletePackId": "dark-souls-iii-legacy-of-lothric-a8982681",
       "generatedFromCompletePack": true
     },
     {

@@ -690,6 +690,20 @@
     },
     {
       "type": "sound",
+      "id": "switch-2-sound-pack-899e562a",
+      "name": "Nintendo Switch 2",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A sound pack featuring the Switch 2 UI sounds and music from Mii Maker on the 3DS and Wii U",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/switch-2-sound-pack-899e562a.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-switch-2-sound-pack-899e562a-v1.0.0/switch-2-sound-pack-899e562a-v1.0.0.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false
+    },
+    {
+      "type": "sound",
       "id": "ps-vita-sound-f44e90d5",
       "name": "PS Vita Sound",
       "author": "Mike Aniki",

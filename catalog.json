@@ -432,6 +432,20 @@
     },
     {
       "type": "login",
+      "id": "fnaf-sister-location-f83b0e39",
+      "name": "FNaF Sister Location",
+      "author": "Littlehero360",
+      "owner": "Littlehero360",
+      "version": "1.0.1",
+      "description": "FNaFSL's main menu screen withput text\r\n\r\nfrom: https://www.youtube.com/watch?v=575GSWfGFLk&list=LL&index=5",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/fnaf-sister-location-f83b0e39.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-fnaf-sister-location-f83b0e39-v1.0.1/fnaf-sister-location-f83b0e39-v1.0.1.zip",
+      "publishedAt": "2026-09-17",
+      "updatedAt": "2026-09-17",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "ghost-in-the-shell-45421f8e",
       "name": "Ghost in the shell",
       "author": "Mike Aniki",

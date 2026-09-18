@@ -395,6 +395,28 @@
       }
     },
     {
+      "type": "complete",
+      "id": "the-last-of-us-complete-pack-f9d62189",
+      "name": "The Last of Us Complete Pack",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A The Last of Us pack for Aniki ReMake featuring iconic characters and locations, complete with matching visuals and an atmospheric login screen.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-last-of-us-complete-pack-f9d62189.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-last-of-us-complete-pack-f9d62189-v1.0.0/the-last-of-us-complete-pack-f9d62189-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-last-of-us-complete-pack-f9d62189/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-last-of-us-complete-pack-f9d62189/login.jpg"
+      },
+      "componentIds": {
+        "visual": "the-last-of-us-visual-pack-b527d651",
+        "login": "the-last-of-us-login-screen-678a4eb3"
+      }
+    },
+    {
       "type": "login",
       "id": "approaching-sector-0-41cae9f6",
       "name": "Approaching Sector 0",
@@ -677,6 +699,22 @@
       "publishedAt": "2026-09-09",
       "updatedAt": "2026-09-09",
       "featured": false
+    },
+    {
+      "type": "login",
+      "id": "the-last-of-us-login-screen-678a4eb3",
+      "name": "The Last of Us Login Screen",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "An atmospheric The Last of Us login screen featuring a quiet, overgrown interior illuminated by the warm glow of the setting sun.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-last-of-us-complete-pack-f9d62189/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-last-of-us-complete-pack-f9d62189-v1.0.0/the-last-of-us-login-screen-678a4eb3-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "the-last-of-us-complete-pack-f9d62189",
+      "generatedFromCompletePack": true
     },
     {
       "type": "sound",
@@ -1102,6 +1140,22 @@
       "publishedAt": "2026-08-29",
       "updatedAt": "2026-08-29",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "the-last-of-us-visual-pack-b527d651",
+      "name": "The Last of Us Visual Pack",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A The Last of Us visual pack featuring iconic characters, locations and post-apocalyptic imagery from the games.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-last-of-us-complete-pack-f9d62189/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-last-of-us-complete-pack-f9d62189-v1.0.0/the-last-of-us-visual-pack-b527d651-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "the-last-of-us-complete-pack-f9d62189",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

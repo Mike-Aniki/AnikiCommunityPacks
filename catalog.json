@@ -99,6 +99,22 @@
     },
     {
       "type": "color",
+      "id": "ps2-color-pack-3dddd4ed",
+      "name": "PlayStation 2 Theme Color",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Recreates the classic PS2 interface with deep blacks, luminous blues, cool whites and its distinctive yellow highlights.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-playstation-2-complete-pack-1dede1ff-v1.0.0/ps2-color-pack-3dddd4ed-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "playstation-2-complete-pack-1dede1ff",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "rose-fantazure-d4afd3f7",
       "name": "Rose Fantazure",
       "author": "Ammz",
@@ -324,6 +340,32 @@
         "visual": "paris-saint-germain-visual-pack-7ce08a36",
         "login": "paris-saint-germain-login-4b002f24",
         "color": "paris-saint-germain-42772a0a"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "playstation-2-complete-pack-1dede1ff",
+      "name": "PlayStation 2 Complete Pack",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "The complete PS2 experience for Aniki ReMake, combining faithful visuals, colours, system sounds and the classic PlayStation 2 login screen",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-playstation-2-complete-pack-1dede1ff-v1.0.0/playstation-2-complete-pack-1dede1ff-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/color.jpg"
+      },
+      "componentIds": {
+        "visual": "playstation-2-visuals-4f728ad8",
+        "login": "playstation-2-login-screen-154c8a31",
+        "sound": "playstation-2-system-sounds-5087f2ca",
+        "color": "ps2-color-pack-3dddd4ed"
       }
     },
     {
@@ -608,6 +650,22 @@
     },
     {
       "type": "login",
+      "id": "playstation-2-login-screen-154c8a31",
+      "name": "PlayStation 2 Login Screen",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A nostalgic PS2 login experience featuring the iconic Browser ambience and drifting lights of the original system.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-playstation-2-complete-pack-1dede1ff-v1.0.0/playstation-2-login-screen-154c8a31-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "playstation-2-complete-pack-1dede1ff",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "red-dead-redemption-2-9caf7639",
       "name": "Red Dead Redemption 2",
       "author": "Littlehero360",
@@ -775,6 +833,22 @@
       "publishedAt": "2026-09-17",
       "updatedAt": "2026-09-17",
       "featured": false
+    },
+    {
+      "type": "sound",
+      "id": "playstation-2-system-sounds-5087f2ca",
+      "name": "PlayStation 2 System Sounds",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Authentic PS2 system sounds and ambient music, bringing the original console experience to Aniki ReMake.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-playstation-2-complete-pack-1dede1ff-v1.0.0/playstation-2-system-sounds-5087f2ca-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "playstation-2-complete-pack-1dede1ff",
+      "generatedFromCompletePack": true
     },
     {
       "type": "sound",
@@ -986,6 +1060,22 @@
       "updatedAt": "2026-09-07",
       "featured": false,
       "parentCompletePackId": "paris-saint-germain-3c6119fe"
+    },
+    {
+      "type": "visual",
+      "id": "playstation-2-visuals-4f728ad8",
+      "name": "PlayStation 2 Visual Backgrounds",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A PS2 visual pack with improved backgrounds and imagery, more faithful to the original console than Orbital Legacy. Both remain available—choose your preference",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/playstation-2-complete-pack-1dede1ff/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-playstation-2-complete-pack-1dede1ff-v1.0.0/playstation-2-visuals-4f728ad8-v1.0.0.zip",
+      "publishedAt": "2026-09-18",
+      "updatedAt": "2026-09-18",
+      "featured": false,
+      "parentCompletePackId": "playstation-2-complete-pack-1dede1ff",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

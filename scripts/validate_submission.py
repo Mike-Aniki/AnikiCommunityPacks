@@ -83,6 +83,13 @@ EXPECTED_VISUAL_IMAGES = {
     "Login.jpg": (857, 238),
 }
 
+# Optional Visual Pack assets introduced by newer Creator versions.
+# They are accepted and validated when present, but are not required so that
+# legacy Visual Packs remain valid for Community submissions.
+OPTIONAL_VISUAL_IMAGES = {
+    "HomeProfileCard.jpg": (1300, 300),
+}
+
 # Current Sound Pack slots exported by Aniki Pack Creator.
 # Keep this list aligned with Models/SoundPackSoundDefinition.cs in the Creator.
 SOUND_SLOTS = {
@@ -292,13 +299,20 @@ def find_entry(files: dict[str, zipfile.ZipInfo], expected: str) -> zipfile.ZipI
     return next((info for name, info in files.items() if name.casefold() == target), None)
 
 
-def require_exact_files(files: dict[str, zipfile.ZipInfo], expected: set[str], pack_name: str) -> None:
+def require_exact_files(
+    files: dict[str, zipfile.ZipInfo],
+    expected: set[str],
+    pack_name: str,
+    optional: set[str] | None = None,
+) -> None:
     actual_folded = {name.casefold(): name for name in files}
     expected_folded = {name.casefold(): name for name in expected}
+    optional_folded = {name.casefold(): name for name in (optional or set())}
+    allowed_folded = set(expected_folded) | set(optional_folded)
     missing = [expected_folded[key] for key in expected_folded.keys() - actual_folded.keys()]
     extra = [
         actual_folded[key]
-        for key in actual_folded.keys() - expected_folded.keys()
+        for key in actual_folded.keys() - allowed_folded
         if key not in PREVIEW_ENTRY_NAMES
     ]
     if missing:
@@ -443,7 +457,9 @@ def validate_embedded_preview(
 
 def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) -> dict[str, str]:
     expected = set(EXPECTED_VISUAL_IMAGES) | {"visualpack.json"}
-    require_exact_files(files, expected, "Visual Pack")
+    optional = set(OPTIONAL_VISUAL_IMAGES)
+    require_exact_files(files, expected, "Visual Pack", optional=optional)
+
     for file_name, expected_size in EXPECTED_VISUAL_IMAGES.items():
         entry = find_entry(files, file_name)
         assert entry is not None
@@ -454,9 +470,26 @@ def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo])
                 f"{file_name} has invalid dimensions: {actual_size[0]}x{actual_size[1]} "
                 f"(expected {expected_size[0]}x{expected_size[1]})."
             )
+
+    optional_found: list[str] = []
+    for file_name, expected_size in OPTIONAL_VISUAL_IMAGES.items():
+        entry = find_entry(files, file_name)
+        if entry is None:
+            continue
+        with archive.open(entry, "r") as stream:
+            actual_size = jpeg_dimensions(stream)
+        if actual_size != expected_size:
+            fail(
+                f"{file_name} has invalid dimensions: {actual_size[0]}x{actual_size[1]} "
+                f"(expected {expected_size[0]}x{expected_size[1]})."
+            )
+        optional_found.append(file_name)
+
     manifest = read_json_manifest(archive, files, "visualpack.json")
     metadata = common_manifest_metadata(manifest, "visual")
     metadata["details"] = "14/14 required images"
+    if optional_found:
+        metadata["details"] += " + optional " + ", ".join(optional_found)
     return metadata
 
 

@@ -87,7 +87,9 @@ EXPECTED_VISUAL_IMAGES = {
 # They are accepted and validated when present, but are not required so that
 # legacy Visual Packs remain valid for Community submissions.
 OPTIONAL_VISUAL_IMAGES = {
-    "HomeProfileCard.jpg": (1300, 300),
+    # 984x300 is the current canonical size. 1300x300 remains accepted for
+    # packs exported by the already-published Creator version that used it.
+    "HomeProfileCard.jpg": ((984, 300), (1300, 300)),
 }
 
 # Current Sound Pack slots exported by Aniki Pack Creator.
@@ -472,16 +474,17 @@ def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo])
             )
 
     optional_found: list[str] = []
-    for file_name, expected_size in OPTIONAL_VISUAL_IMAGES.items():
+    for file_name, allowed_sizes in OPTIONAL_VISUAL_IMAGES.items():
         entry = find_entry(files, file_name)
         if entry is None:
             continue
         with archive.open(entry, "r") as stream:
             actual_size = jpeg_dimensions(stream)
-        if actual_size != expected_size:
+        if actual_size not in allowed_sizes:
+            expected_text = " or ".join(f"{width}x{height}" for width, height in allowed_sizes)
             fail(
                 f"{file_name} has invalid dimensions: {actual_size[0]}x{actual_size[1]} "
-                f"(expected {expected_size[0]}x{expected_size[1]})."
+                f"(expected {expected_text})."
             )
         optional_found.append(file_name)
 

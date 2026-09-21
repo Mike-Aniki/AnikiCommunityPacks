@@ -518,6 +518,20 @@
     },
     {
       "type": "login",
+      "id": "control-resonant-3-ee26f8f5",
+      "name": "Control Resonant (3)",
+      "author": "Luxas",
+      "owner": "LuxasXIV",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/control-resonant-3-ee26f8f5.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-control-resonant-3-ee26f8f5-v1.0.0/control-resonant-3-ee26f8f5-v1.0.0.zip",
+      "publishedAt": "2026-09-21",
+      "updatedAt": "2026-09-21",
+      "featured": false
+    },
+    {
+      "type": "login",
       "id": "control-resonant-v1-2cab1947",
       "name": "Control Resonant v1",
       "author": "Luxas",

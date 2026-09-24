@@ -146,6 +146,22 @@
       "generatedFromCompletePack": true
     },
     {
+      "type": "color",
+      "id": "xbox-reimagined-theme-color-8053977b",
+      "name": "XBOX Reimagined – Theme Color",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A modern take on the original Xbox palette, combining its dark UI foundations with the luminous greens of the new Xbox logo.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0/xbox-reimagined-theme-color-8053977b-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false,
+      "parentCompletePackId": "xbox-reimagined-complete-pack-d9fe1c5e",
+      "generatedFromCompletePack": true
+    },
+    {
       "type": "complete",
       "id": "aniki-fantasia-ed3ca12f",
       "name": "Aniki ReFantasia",
@@ -442,6 +458,32 @@
       "componentIds": {
         "visual": "the-last-of-us-visual-pack-b527d651",
         "login": "the-last-of-us-login-screen-678a4eb3"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "xbox-reimagined-complete-pack-d9fe1c5e",
+      "name": "XBOX Reimagined – Complete Pack",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A complete modern reimagining of the original XBOX experience, combining its iconic legacy with Xbox's new visual identity and direction.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0/xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/sound.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/color.jpg"
+      },
+      "componentIds": {
+        "visual": "xbox-reimagined-visuals-7b5ed7b3",
+        "login": "xbox-series-x-s-login-screen-eaf3ea8b",
+        "sound": "xbox-reimagined-system-sounds-d01715a5",
+        "color": "xbox-reimagined-theme-color-8053977b"
       }
     },
     {
@@ -787,6 +829,22 @@
       "generatedFromCompletePack": true
     },
     {
+      "type": "login",
+      "id": "xbox-series-x-s-login-screen-eaf3ea8b",
+      "name": "Xbox Series X|S – Login Screen",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A perfectly looped version of the new Xbox Series X|S startup animation.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0/xbox-series-x-s-login-screen-eaf3ea8b-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false,
+      "parentCompletePackId": "xbox-reimagined-complete-pack-d9fe1c5e",
+      "generatedFromCompletePack": true
+    },
+    {
       "type": "sound",
       "id": "bioshock-sound-pack-3cb948a2",
       "name": "Bioshock Sound Pack",
@@ -985,6 +1043,22 @@
       "publishedAt": "2026-09-04",
       "updatedAt": "2026-09-12",
       "featured": false
+    },
+    {
+      "type": "sound",
+      "id": "xbox-reimagined-system-sounds-d01715a5",
+      "name": "XBOX Reimagined – System Sounds",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A modern reimagining of the original Xbox soundscape, blending its iconic identity with the refined system audio of Xbox Series X|S.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0/xbox-reimagined-system-sounds-d01715a5-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false,
+      "parentCompletePackId": "xbox-reimagined-complete-pack-d9fe1c5e",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",
@@ -1241,6 +1315,22 @@
       "updatedAt": "2026-09-13",
       "featured": false,
       "parentCompletePackId": "sector-0-the-shinra-building-8fffac45",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "visual",
+      "id": "xbox-reimagined-visuals-7b5ed7b3",
+      "name": "XBOX Reimagined – Visuals",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A modern reimagining of the original XBOX dashboard, blending its iconic identity with the new XBOX logo and evolving art direction.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-reimagined-complete-pack-d9fe1c5e/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-reimagined-complete-pack-d9fe1c5e-v1.0.0/xbox-reimagined-visuals-7b5ed7b3-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false,
+      "parentCompletePackId": "xbox-reimagined-complete-pack-d9fe1c5e",
       "generatedFromCompletePack": true
     }
   ]

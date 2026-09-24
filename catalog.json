@@ -1075,6 +1075,20 @@
       "generatedFromCompletePack": true
     },
     {
+      "type": "sound",
+      "id": "xbox-series-x-s-system-sounds-c04a5b98",
+      "name": "Xbox Series X|S – System Sounds",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A faithful recreation of the Xbox Series X|S sound experience, bringing its authentic system sounds and interface audio to Aniki ReMake.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/xbox-series-x-s-system-sounds-c04a5b98.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-xbox-series-x-s-system-sounds-c04a5b98-v1.0.0/xbox-series-x-s-system-sounds-c04a5b98-v1.0.0.zip",
+      "publishedAt": "2026-09-24",
+      "updatedAt": "2026-09-24",
+      "featured": false
+    },
+    {
       "type": "visual",
       "id": "bioshock-visual-pack-0e8466d2",
       "name": "Bioshock Visual Pack",

@@ -264,6 +264,30 @@
     },
     {
       "type": "complete",
+      "id": "final-fantasy-x-2-07e92e93",
+      "name": "Final Fantasy X-2",
+      "author": "CrashSpyro",
+      "owner": "CrashSpyro",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-final-fantasy-x-2-07e92e93-v1.0.0/final-fantasy-x-2-07e92e93-v1.0.0.zip",
+      "publishedAt": "2026-09-26",
+      "updatedAt": "2026-09-26",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93/sound.jpg"
+      },
+      "componentIds": {
+        "visual": "final-fantasy-x-2-680a604e",
+        "login": "yrp-in-position-21719387",
+        "sound": "final-fantasy-x-2-8e703099"
+      }
+    },
+    {
+      "type": "complete",
       "id": "mon-pack-complet-56f070f1",
       "name": "Five night at Freddy",
       "author": "Lcm213",
@@ -845,6 +869,22 @@
       "generatedFromCompletePack": true
     },
     {
+      "type": "login",
+      "id": "yrp-in-position-21719387",
+      "name": "YRP in Position",
+      "author": "CrashSpyro",
+      "owner": "CrashSpyro",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-final-fantasy-x-2-07e92e93-v1.0.0/yrp-in-position-21719387-v1.0.0.zip",
+      "publishedAt": "2026-09-26",
+      "updatedAt": "2026-09-26",
+      "featured": false,
+      "parentCompletePackId": "final-fantasy-x-2-07e92e93",
+      "generatedFromCompletePack": true
+    },
+    {
       "type": "sound",
       "id": "bioshock-sound-pack-3cb948a2",
       "name": "Bioshock Sound Pack",
@@ -905,6 +945,22 @@
       "publishedAt": "2026-09-11",
       "updatedAt": "2026-09-17",
       "featured": false
+    },
+    {
+      "type": "sound",
+      "id": "final-fantasy-x-2-8e703099",
+      "name": "Final Fantasy X-2",
+      "author": "CrashSpyro",
+      "owner": "CrashSpyro",
+      "version": "1.0.1",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/final-fantasy-x-2-07e92e93/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-final-fantasy-x-2-07e92e93-v1.0.0/final-fantasy-x-2-8e703099-v1.0.1.zip",
+      "publishedAt": "2026-09-26",
+      "updatedAt": "2026-09-26",
+      "featured": false,
+      "parentCompletePackId": "final-fantasy-x-2-07e92e93",
+      "generatedFromCompletePack": true
     },
     {
       "type": "sound",
@@ -1148,7 +1204,8 @@
       "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-final-fantasy-x-2-680a604e-v1.0.0/final-fantasy-x-2-680a604e-v1.0.0.zip",
       "publishedAt": "2026-09-06",
       "updatedAt": "2026-09-06",
-      "featured": false
+      "featured": false,
+      "parentCompletePackId": "final-fantasy-x-2-07e92e93"
     },
     {
       "type": "visual",

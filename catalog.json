@@ -163,6 +163,22 @@
     },
     {
       "type": "color",
+      "id": "the-blood-of-dawnwalker-theme-color-09d88bc1",
+      "name": "The Blood of Dawnwalker Theme color",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "A dark blood-red and parchment color palette inspired by The Blood of Dawnwalker.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/color.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-blood-of-dawnwalker-dc8b2f97-v1.0.0/the-blood-of-dawnwalker-theme-color-09d88bc1-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "the-blood-of-dawnwalker-dc8b2f97",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "xbox-reimagined-theme-color-8053977b",
       "name": "XBOX Reimagined – Theme Color",
       "author": "Ammz",
@@ -502,6 +518,32 @@
         "login": "approaching-sector-0-41cae9f6",
         "sound": "midgar-after-hours-87ff050d",
         "color": "deep-mako-fc656ad0"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "the-blood-of-dawnwalker-dc8b2f97",
+      "name": "The Blood of Dawnwalker",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "The Blood of Dawnwalker Complete Pack combining matching visuals, colors, UI sounds, in-game music, and a login screen inspired by the game’s main menu.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-blood-of-dawnwalker-dc8b2f97-v1.0.0/the-blood-of-dawnwalker-dc8b2f97-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/color.png"
+      },
+      "componentIds": {
+        "visual": "the-blood-of-dawnwalker-fbbd4fd9",
+        "login": "the-blood-of-dawnwalker-22b3e8f9",
+        "sound": "the-blood-of-dawnwalker-sound-pack-03556674",
+        "color": "the-blood-of-dawnwalker-theme-color-09d88bc1"
       }
     },
     {
@@ -896,6 +938,22 @@
     },
     {
       "type": "login",
+      "id": "the-blood-of-dawnwalker-22b3e8f9",
+      "name": "The Blood of Dawnwalker Main Menu",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "The Blood of Dawnwalker Login Pack based on the game’s main menu screen.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-blood-of-dawnwalker-dc8b2f97-v1.0.0/the-blood-of-dawnwalker-22b3e8f9-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "the-blood-of-dawnwalker-dc8b2f97",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "the-last-of-us-login-screen-678a4eb3",
       "name": "The Last of Us Login Screen",
       "author": "Ammz",
@@ -1190,6 +1248,22 @@
     },
     {
       "type": "sound",
+      "id": "the-blood-of-dawnwalker-sound-pack-03556674",
+      "name": "The Blood of Dawnwalker Sound Pack",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "The Blood of Dawnwalker Sound Pack featuring UI sound effects from the game, along with selected in-game music for the login screen and other Aniki views.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-blood-of-dawnwalker-dc8b2f97-v1.0.0/the-blood-of-dawnwalker-sound-pack-03556674-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "the-blood-of-dawnwalker-dc8b2f97",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "xbox-reimagined-system-sounds-d01715a5",
       "name": "XBOX Reimagined – System Sounds",
       "author": "Ammz",
@@ -1459,6 +1533,22 @@
       "publishedAt": "2026-08-29",
       "updatedAt": "2026-08-29",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "the-blood-of-dawnwalker-fbbd4fd9",
+      "name": "The Blood of Dawnwalker",
+      "author": "Mike Aniki",
+      "owner": "Mike-Aniki",
+      "version": "1.0.0",
+      "description": "The Blood of Dawnwalker Visual Pack featuring a mix of the game’s loading screens and main character artwork.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/the-blood-of-dawnwalker-dc8b2f97/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-the-blood-of-dawnwalker-dc8b2f97-v1.0.0/the-blood-of-dawnwalker-fbbd4fd9-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "the-blood-of-dawnwalker-dc8b2f97",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

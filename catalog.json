@@ -68,6 +68,22 @@
     },
     {
       "type": "color",
+      "id": "pusheen-theme-color-old-08eeeb78",
+      "name": "Honey Pastel – Theme Color",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Soft pink and warm cream accents meet charcoal and brown surfaces for a cozy Pusheen-inspired interface.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pusheen-complete-pack-c2dc7e1a-v1.0.0/pusheen-theme-color-old-08eeeb78-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "pusheen-complete-pack-c2dc7e1a",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "initial-d-manga-colors-05814abb",
       "name": "Initial D Manga Colors",
       "author": "AndersonGR86",
@@ -434,6 +450,32 @@
         "login": "playstation-2-login-screen-154c8a31",
         "sound": "playstation-2-system-sounds-5087f2ca",
         "color": "ps2-color-pack-3dddd4ed"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "pusheen-complete-pack-c2dc7e1a",
+      "name": "Pusheen – Complete Pack",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A cozy Pusheen makeover for Aniki ReMake with themed visuals, colors, sounds, music, and an animated login screen—because my sister asked lol.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pusheen-complete-pack-c2dc7e1a-v1.0.0/pusheen-complete-pack-c2dc7e1a-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/sound.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/color.jpg"
+      },
+      "componentIds": {
+        "visual": "pusheen-visuals-1968a435",
+        "login": "pusheen-login-screen-74d4a575",
+        "sound": "pusheen-system-sounds-a2881137",
+        "color": "pusheen-theme-color-old-08eeeb78"
       }
     },
     {
@@ -838,6 +880,22 @@
     },
     {
       "type": "login",
+      "id": "pusheen-login-screen-74d4a575",
+      "name": "Sunset Catnap – Login Screen",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "A looping animated wallpaper of a Pusheen-inspired cat sleeping on a train seat as warm sunset light fills the carriage.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pusheen-complete-pack-c2dc7e1a-v1.0.0/pusheen-login-screen-74d4a575-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "pusheen-complete-pack-c2dc7e1a",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "the-last-of-us-login-screen-678a4eb3",
       "name": "The Last of Us Login Screen",
       "author": "Ammz",
@@ -1116,6 +1174,22 @@
     },
     {
       "type": "sound",
+      "id": "pusheen-system-sounds-a2881137",
+      "name": "Sweet Whimsy – System Sounds",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Playful Animal Crossing UI sounds and four custom-made ambient tracks bringing a gentle, cheerful feel to the Aniki ReMake interface.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pusheen-complete-pack-c2dc7e1a-v1.0.0/pusheen-system-sounds-a2881137-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "pusheen-complete-pack-c2dc7e1a",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "xbox-reimagined-system-sounds-d01715a5",
       "name": "XBOX Reimagined – System Sounds",
       "author": "Ammz",
@@ -1356,6 +1430,22 @@
       "publishedAt": "2026-08-30",
       "updatedAt": "2026-08-30",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "pusheen-visuals-1968a435",
+      "name": "Pusheen – Background Visuals",
+      "author": "Ammz",
+      "owner": "BeastAmmz",
+      "version": "1.0.0",
+      "description": "Pusheen-themed backgrounds bring cute characters and cozy scenes to Aniki ReMake's menus and views.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pusheen-complete-pack-c2dc7e1a/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pusheen-complete-pack-c2dc7e1a-v1.0.0/pusheen-visuals-1968a435-v1.0.0.zip",
+      "publishedAt": "2026-09-27",
+      "updatedAt": "2026-09-27",
+      "featured": false,
+      "parentCompletePackId": "pusheen-complete-pack-c2dc7e1a",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

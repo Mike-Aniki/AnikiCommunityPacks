@@ -115,6 +115,22 @@
     },
     {
       "type": "color",
+      "id": "pixel-rem-5c3a39a1",
+      "name": "Pixel REM",
+      "author": "CEFA86",
+      "owner": "lenovok8note26-prog",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/color.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pixel-rem-7d02f341-v1.0.0/pixel-rem-5c3a39a1-v1.0.0.zip",
+      "publishedAt": "2026-09-28",
+      "updatedAt": "2026-09-28",
+      "featured": false,
+      "parentCompletePackId": "pixel-rem-7d02f341",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "ps2-color-pack-3dddd4ed",
       "name": "PlayStation 2 Theme Color",
       "author": "Ammz",
@@ -440,6 +456,32 @@
         "visual": "paris-saint-germain-visual-pack-7ce08a36",
         "login": "paris-saint-germain-login-4b002f24",
         "color": "paris-saint-germain-42772a0a"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "pixel-rem-7d02f341",
+      "name": "Pixel REM",
+      "author": "CEFA86",
+      "owner": "lenovok8note26-prog",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pixel-rem-7d02f341-v1.0.0/pixel-rem-7d02f341-v1.0.0.zip",
+      "publishedAt": "2026-09-28",
+      "updatedAt": "2026-09-28",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/visual.png",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/sound.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/color.png"
+      },
+      "componentIds": {
+        "visual": "pixel-rem-f8eab4c0",
+        "login": "pixel-rem-5988cc96",
+        "sound": "pixel-rem-551a55e2",
+        "color": "pixel-rem-5c3a39a1"
       }
     },
     {
@@ -892,6 +934,22 @@
     },
     {
       "type": "login",
+      "id": "pixel-rem-5988cc96",
+      "name": "Pixel REM",
+      "author": "CEFA86",
+      "owner": "lenovok8note26-prog",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pixel-rem-7d02f341-v1.0.0/pixel-rem-5988cc96-v1.0.0.zip",
+      "publishedAt": "2026-09-28",
+      "updatedAt": "2026-09-28",
+      "featured": false,
+      "parentCompletePackId": "pixel-rem-7d02f341",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "playstation-2-login-screen-154c8a31",
       "name": "PlayStation 2 Login Screen",
       "author": "Ammz",
@@ -1188,6 +1246,22 @@
     },
     {
       "type": "sound",
+      "id": "pixel-rem-551a55e2",
+      "name": "Pixel REM",
+      "author": "CEFA86",
+      "owner": "lenovok8note26-prog",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pixel-rem-7d02f341-v1.0.0/pixel-rem-551a55e2-v1.0.0.zip",
+      "publishedAt": "2026-09-28",
+      "updatedAt": "2026-09-28",
+      "featured": false,
+      "parentCompletePackId": "pixel-rem-7d02f341",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "playstation-2-system-sounds-5087f2ca",
       "name": "PlayStation 2 System Sounds",
       "author": "Ammz",
@@ -1475,6 +1549,22 @@
       "updatedAt": "2026-09-07",
       "featured": false,
       "parentCompletePackId": "paris-saint-germain-3c6119fe"
+    },
+    {
+      "type": "visual",
+      "id": "pixel-rem-f8eab4c0",
+      "name": "Pixel REM",
+      "author": "CEFA86",
+      "owner": "lenovok8note26-prog",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/pixel-rem-7d02f341/visual.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-pixel-rem-7d02f341-v1.0.0/pixel-rem-f8eab4c0-v1.0.0.zip",
+      "publishedAt": "2026-09-28",
+      "updatedAt": "2026-09-28",
+      "featured": false,
+      "parentCompletePackId": "pixel-rem-7d02f341",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

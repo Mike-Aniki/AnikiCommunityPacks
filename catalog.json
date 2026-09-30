@@ -100,6 +100,22 @@
     },
     {
       "type": "color",
+      "id": "iris-colors-9ba53eca",
+      "name": "Iris colors",
+      "author": "Meepmeep189",
+      "owner": "Meepmeep189",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/color.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sega-iris-theme-a88201b4-v1.0.0/iris-colors-9ba53eca-v1.0.0.zip",
+      "publishedAt": "2026-09-30",
+      "updatedAt": "2026-09-30",
+      "featured": false,
+      "parentCompletePackId": "sega-iris-theme-a88201b4",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "paris-saint-germain-42772a0a",
       "name": "Paris Saint Germain Theme Color",
       "author": "Mike Aniki",
@@ -564,6 +580,32 @@
     },
     {
       "type": "complete",
+      "id": "sega-iris-theme-a88201b4",
+      "name": "Sega Iris Theme",
+      "author": "Meepmeep189",
+      "owner": "Meepmeep189",
+      "version": "1.0.0",
+      "description": "A theme based on what I thought a modern Sega console might look like.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sega-iris-theme-a88201b4-v1.0.0/sega-iris-theme-a88201b4-v1.0.0.zip",
+      "publishedAt": "2026-09-30",
+      "updatedAt": "2026-09-30",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/visual.png",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/login.png",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/sound.png",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/color.png"
+      },
+      "componentIds": {
+        "visual": "iris-92fc8ac0",
+        "login": "iris-login-646efcd5",
+        "sound": "iris-sounds-6a46f730",
+        "color": "iris-colors-9ba53eca"
+      }
+    },
+    {
+      "type": "complete",
       "id": "the-blood-of-dawnwalker-dc8b2f97",
       "name": "The Blood of Dawnwalker",
       "author": "Mike Aniki",
@@ -892,6 +934,22 @@
     },
     {
       "type": "login",
+      "id": "iris-login-646efcd5",
+      "name": "Iris Login",
+      "author": "Meepmeep189",
+      "owner": "Meepmeep189",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/login.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sega-iris-theme-a88201b4-v1.0.0/iris-login-646efcd5-v1.0.0.zip",
+      "publishedAt": "2026-09-30",
+      "updatedAt": "2026-09-30",
+      "featured": false,
+      "parentCompletePackId": "sega-iris-theme-a88201b4",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "lies-of-p-8a99c1c7",
       "name": "Lies Of P",
       "author": "LUTHXR",
@@ -1182,6 +1240,22 @@
       "updatedAt": "2026-09-15",
       "featured": false,
       "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
+      "id": "iris-sounds-6a46f730",
+      "name": "Iris Sounds",
+      "author": "Meepmeep189",
+      "owner": "Meepmeep189",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sega-iris-theme-a88201b4-v1.0.0/iris-sounds-6a46f730-v1.0.0.zip",
+      "publishedAt": "2026-09-30",
+      "updatedAt": "2026-09-30",
+      "featured": false,
+      "parentCompletePackId": "sega-iris-theme-a88201b4",
       "generatedFromCompletePack": true
     },
     {
@@ -1506,6 +1580,22 @@
       "updatedAt": "2026-09-15",
       "featured": false,
       "parentCompletePackId": "initial-d-manga-complete-pack-5bc70279",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "visual",
+      "id": "iris-92fc8ac0",
+      "name": "Iris",
+      "author": "Meepmeep189",
+      "owner": "Meepmeep189",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/sega-iris-theme-a88201b4/visual.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-sega-iris-theme-a88201b4-v1.0.0/iris-92fc8ac0-v1.0.0.zip",
+      "publishedAt": "2026-09-30",
+      "updatedAt": "2026-09-30",
+      "featured": false,
+      "parentCompletePackId": "sega-iris-theme-a88201b4",
       "generatedFromCompletePack": true
     },
     {

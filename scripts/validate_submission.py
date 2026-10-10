@@ -87,9 +87,8 @@ EXPECTED_VISUAL_IMAGES = {
 # They are accepted and validated when present, but are not required so that
 # legacy Visual Packs remain valid for Community submissions.
 OPTIONAL_VISUAL_IMAGES = {
-    # 984x300 is the current canonical size. 1300x300 remains accepted for
-    # packs exported by the already-published Creator version that used it.
-    "HomeProfileCard.jpg": ((984, 300), (1300, 300)),
+    # 1100x300 is canonical. Preserve older 984x300 and 1300x300 packs.
+    "HomeProfileCard.jpg": ((1100, 300), (984, 300), (1300, 300)),
 }
 
 # Current Sound Pack slots exported by Aniki Pack Creator.

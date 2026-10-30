@@ -243,6 +243,30 @@
     },
     {
       "type": "complete",
+      "id": "alchpc-b48c146c",
+      "name": "AlchPC",
+      "author": "Alch",
+      "owner": "antlopcha-lang",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-alchpc-b48c146c-v1.0.0/alchpc-b48c146c-v1.0.0.zip",
+      "publishedAt": "2026-10-30",
+      "updatedAt": "2026-10-30",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/visual.png",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/sound.png"
+      },
+      "componentIds": {
+        "visual": "alchgaming-68658de9",
+        "login": "alchgaming-998f869c",
+        "sound": "alchgaming-abc82db4"
+      }
+    },
+    {
+      "type": "complete",
       "id": "aniki-fantasia-ed3ca12f",
       "name": "Aniki ReFantasia",
       "author": "Ammz",
@@ -722,6 +746,22 @@
     },
     {
       "type": "login",
+      "id": "alchgaming-998f869c",
+      "name": "AlchGaming",
+      "author": "Alch",
+      "owner": "antlopcha-lang",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-alchpc-b48c146c-v1.0.0/alchgaming-998f869c-v1.0.0.zip",
+      "publishedAt": "2026-10-30",
+      "updatedAt": "2026-10-30",
+      "featured": false,
+      "parentCompletePackId": "alchpc-b48c146c",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "approaching-sector-0-41cae9f6",
       "name": "Approaching Sector 0",
       "author": "Ammz",
@@ -1176,6 +1216,22 @@
     },
     {
       "type": "sound",
+      "id": "alchgaming-abc82db4",
+      "name": "AlchGaming",
+      "author": "Alch",
+      "owner": "antlopcha-lang",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/sound.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-alchpc-b48c146c-v1.0.0/alchgaming-abc82db4-v1.0.0.zip",
+      "publishedAt": "2026-10-30",
+      "updatedAt": "2026-10-30",
+      "featured": false,
+      "parentCompletePackId": "alchpc-b48c146c",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "bioshock-sound-pack-3cb948a2",
       "name": "Bioshock Sound Pack",
       "author": "Lcm213",
@@ -1513,6 +1569,22 @@
       "publishedAt": "2026-09-24",
       "updatedAt": "2026-09-24",
       "featured": false
+    },
+    {
+      "type": "visual",
+      "id": "alchgaming-68658de9",
+      "name": "AlchGaming",
+      "author": "Alch",
+      "owner": "antlopcha-lang",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/alchpc-b48c146c/visual.png",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-alchpc-b48c146c-v1.0.0/alchgaming-68658de9-v1.0.0.zip",
+      "publishedAt": "2026-10-30",
+      "updatedAt": "2026-10-30",
+      "featured": false,
+      "parentCompletePackId": "alchpc-b48c146c",
+      "generatedFromCompletePack": true
     },
     {
       "type": "visual",

@@ -75,8 +75,7 @@ EXPECTED_VISUAL_IMAGES = {
     "MediaView.jpg": (1920, 1080),
     "StoreView.jpg": (1920, 1080),
     "MainMenu.jpg": (531, 986),
-    "SettingsBackground.jpg": (487, 1080),
-    "FrameSettingsBackground.jpg": (1247, 900),
+    "FrameSettingsBackground.jpg": (1920, 1080),
     "MessageBox.jpg": (830, 429),
     "GameMenu.jpg": (470, 655),
     "ItemMenu.jpg": (503, 818),
@@ -84,12 +83,13 @@ EXPECTED_VISUAL_IMAGES = {
 }
 
 # Preserve original login dimensions used by Creator 1.x.
-LEGACY_VISUAL_IMAGE_SIZES = {"Login.jpg": {(857, 238)}}
+LEGACY_VISUAL_IMAGE_SIZES = {"Login.jpg": {(857, 238)}, "FrameSettingsBackground.jpg": {(1247, 900)}}
 
 # Optional Visual Pack assets introduced by newer Creator versions.
 # They are accepted and validated when present, but are not required so that
 # legacy Visual Packs remain valid for Community submissions.
 OPTIONAL_VISUAL_IMAGES = {
+    "SettingsBackground.jpg": ((487, 1080),),
     # 1100x300 is canonical. Preserve older 984x300 and 1300x300 packs.
     "HomeProfileCard.jpg": ((1100, 300), (984, 300), (1300, 300)),
 }
@@ -495,7 +495,7 @@ def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo])
 
     manifest = read_json_manifest(archive, files, "visualpack.json")
     metadata = common_manifest_metadata(manifest, "visual")
-    metadata["details"] = "14/14 required images"
+    metadata["details"] = f"{len(EXPECTED_VISUAL_IMAGES)}/{len(EXPECTED_VISUAL_IMAGES)} required images"
     if optional_found:
         metadata["details"] += " + optional " + ", ".join(optional_found)
     return metadata

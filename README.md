@@ -89,3 +89,5 @@ Visual submissions accept the current Login.jpg size of **550 × 200** and the l
 Color submissions accept both the original 15 master colors and the additional Creator 2.0 colors: badges, active buttons, outgoing messages and cinematic overlay. Expert colors and gradients are validated inside colors.xaml. The same checks apply to components in Complete Packs.
 
 Sound submissions accept the new change-page slot at audio/ChangePage.wav. The legacy home-hub-open and home-hub-close slots remain valid for existing packs.
+
+Settings backgrounds: new visual packs contain one fullscreen FrameSettingsBackground.jpg (1920 x 1080). The legacy 1247 x 900 image and optional SettingsBackground.jpg side image (487 x 1080) remain accepted. Complete Pack components use the same compatibility rules.

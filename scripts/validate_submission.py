@@ -97,6 +97,7 @@ OPTIONAL_VISUAL_IMAGES = {
 # Current Sound Pack slots exported by Aniki Pack Creator.
 # Keep this list aligned with Models/SoundPackSoundDefinition.cs in the Creator.
 SOUND_SLOTS = {
+    "change-page": ("audio/ChangePage.wav", "sound", "wav"),
     "navigation": ("audio/navigation.wav", "sound", "wav"),
     "activation": ("audio/activation.wav", "sound", "wav"),
     "login-confirm": ("audio/LoginConfirm.wav", "sound", "wav"),
@@ -105,8 +106,6 @@ SOUND_SLOTS = {
     "close-additional-view": ("audio/CloseAdditionalView.wav", "sound", "wav"),
     "enter-game-details": ("audio/EnterGameDetails.wav", "sound", "wav"),
     "exit-game-details": ("audio/ExitGameDetails.wav", "sound", "wav"),
-    "home-hub-open": ("audio/HomeHubOpen.wav", "sound", "wav"),
-    "home-hub-close": ("audio/HomeHubClose.wav", "sound", "wav"),
     "notification": ("audio/Noti.wav", "sound", "wav"),
     "session-summary": ("audio/SessionSummary.wav", "sound", "wav"),
     "warning": ("audio/Warning.wav", "sound", "wav"),
@@ -126,6 +125,8 @@ SOUND_SLOTS = {
 # Accepted only for backward compatibility with Sound Packs exported by older
 # Creator versions. ChangeDisplay.wav is no longer a current Aniki sound slot.
 LEGACY_SOUND_SLOTS = {
+    "home-hub-open": ("audio/HomeHubOpen.wav", "sound", "wav"),
+    "home-hub-close": ("audio/HomeHubClose.wav", "sound", "wav"),
     "change-display": ("audio/ChangeDisplay.wav", "sound", "wav"),
 }
 
@@ -697,10 +698,10 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
     sounds = manifest.get("sounds")
     if not isinstance(sounds, list) or not sounds:
         fail("soundpack.json must contain at least one audio item.")
-    # Current packs have 24 slots. Older packs may use the legacy
-    # change-display slot, but a manifest may never exceed the current slot count.
-    if len(sounds) > len(SOUND_SLOTS):
-        fail(f"soundpack.json cannot contain more than {len(SOUND_SLOTS)} audio items.")
+    # Legacy hub cues and ChangeDisplay remain valid alongside current slots.
+    # Keep old complete audio packs valid when the current slot count changes.
+    if len(sounds) > len(SUPPORTED_SOUND_SLOTS):
+        fail(f"soundpack.json cannot contain more than {len(SUPPORTED_SOUND_SLOTS)} audio items.")
 
     expected_files = {"soundpack.json"}
     seen_keys: set[str] = set()

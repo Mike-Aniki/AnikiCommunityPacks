@@ -87,3 +87,5 @@ Automatic validation checks the package itself, but publication still requires a
 Visual submissions accept the current Login.jpg size of **550 × 200** and the legacy **857 × 238** size. HomeProfileCard.jpg remains optional (1100 × 300; legacy 984 × 300 and 1300 × 300 also supported).
 
 Color submissions accept both the original 15 master colors and the additional Creator 2.0 colors: badges, active buttons, outgoing messages and cinematic overlay. Expert colors and gradients are validated inside colors.xaml. The same checks apply to components in Complete Packs.
+
+Sound submissions accept the new change-page slot at audio/ChangePage.wav. The legacy home-hub-open and home-hub-close slots remain valid for existing packs.

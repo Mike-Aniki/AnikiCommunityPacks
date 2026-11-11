@@ -80,8 +80,11 @@ EXPECTED_VISUAL_IMAGES = {
     "MessageBox.jpg": (830, 429),
     "GameMenu.jpg": (470, 655),
     "ItemMenu.jpg": (503, 818),
-    "Login.jpg": (857, 238),
+    "Login.jpg": (550, 200),
 }
+
+# Preserve original login dimensions used by Creator 1.x.
+LEGACY_VISUAL_IMAGE_SIZES = {"Login.jpg": {(857, 238)}}
 
 # Optional Visual Pack assets introduced by newer Creator versions.
 # They are accepted and validated when present, but are not required so that
@@ -94,6 +97,7 @@ OPTIONAL_VISUAL_IMAGES = {
 # Current Sound Pack slots exported by Aniki Pack Creator.
 # Keep this list aligned with Models/SoundPackSoundDefinition.cs in the Creator.
 SOUND_SLOTS = {
+    "change-page": ("audio/ChangePage.wav", "sound", "wav"),
     "navigation": ("audio/navigation.wav", "sound", "wav"),
     "activation": ("audio/activation.wav", "sound", "wav"),
     "login-confirm": ("audio/LoginConfirm.wav", "sound", "wav"),
@@ -102,8 +106,6 @@ SOUND_SLOTS = {
     "close-additional-view": ("audio/CloseAdditionalView.wav", "sound", "wav"),
     "enter-game-details": ("audio/EnterGameDetails.wav", "sound", "wav"),
     "exit-game-details": ("audio/ExitGameDetails.wav", "sound", "wav"),
-    "home-hub-open": ("audio/HomeHubOpen.wav", "sound", "wav"),
-    "home-hub-close": ("audio/HomeHubClose.wav", "sound", "wav"),
     "notification": ("audio/Noti.wav", "sound", "wav"),
     "session-summary": ("audio/SessionSummary.wav", "sound", "wav"),
     "warning": ("audio/Warning.wav", "sound", "wav"),
@@ -123,6 +125,8 @@ SOUND_SLOTS = {
 # Accepted only for backward compatibility with Sound Packs exported by older
 # Creator versions. ChangeDisplay.wav is no longer a current Aniki sound slot.
 LEGACY_SOUND_SLOTS = {
+    "home-hub-open": ("audio/HomeHubOpen.wav", "sound", "wav"),
+    "home-hub-close": ("audio/HomeHubClose.wav", "sound", "wav"),
     "change-display": ("audio/ChangeDisplay.wav", "sound", "wav"),
 }
 
@@ -163,6 +167,8 @@ MASTER_COLOR_KEYS = {
     "secondaryText",
     "highlightText",
 }
+OPTIONAL_MASTER_COLOR_KEYS = {"badges", "activeButtons", "outgoingMessages", "cinematicOverlay"}
+
 COLOR_VALUE = re.compile(r"^#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?$")
 
 
@@ -466,7 +472,7 @@ def validate_visual(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo])
         assert entry is not None
         with archive.open(entry, "r") as stream:
             actual_size = jpeg_dimensions(stream)
-        if actual_size != expected_size:
+        if actual_size != expected_size and actual_size not in LEGACY_VISUAL_IMAGE_SIZES.get(file_name, set()):
             fail(
                 f"{file_name} has invalid dimensions: {actual_size[0]}x{actual_size[1]} "
                 f"(expected {expected_size[0]}x{expected_size[1]})."
@@ -565,15 +571,16 @@ def validate_color(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
     if str(manifest.get("resource", "")).strip().casefold() != "colors.xaml":
         fail("colorpack.json resource must be colors.xaml.")
     master_colors = manifest.get("masterColors")
-    if not isinstance(master_colors, dict) or set(master_colors) != MASTER_COLOR_KEYS:
-        fail("colorpack.json must contain exactly the 15 expected master colors.")
-    for key in MASTER_COLOR_KEYS:
+    if (not isinstance(master_colors, dict) or not MASTER_COLOR_KEYS.issubset(master_colors)
+            or not set(master_colors).issubset(MASTER_COLOR_KEYS | OPTIONAL_MASTER_COLOR_KEYS)):
+        fail("colorpack.json must contain the 15 legacy master colors and only supported optional Creator 2.0 colors.")
+    for key in master_colors:
         if not COLOR_VALUE.fullmatch(str(master_colors.get(key, "")).strip()):
             fail(f"colorpack.json contains an invalid master color: {key}")
     colors_entry = find_entry(files, "colors.xaml")
     assert colors_entry is not None
     validate_color_xaml(archive.read(colors_entry))
-    metadata["details"] = "15 master colors + validated colors.xaml"
+    metadata["details"] = f"{len(master_colors)} master colors + validated colors.xaml"
     return metadata
 
 
@@ -691,10 +698,10 @@ def validate_sound(archive: zipfile.ZipFile, files: dict[str, zipfile.ZipInfo]) 
     sounds = manifest.get("sounds")
     if not isinstance(sounds, list) or not sounds:
         fail("soundpack.json must contain at least one audio item.")
-    # Current packs have 24 slots. Older packs may use the legacy
-    # change-display slot, but a manifest may never exceed the current slot count.
-    if len(sounds) > len(SOUND_SLOTS):
-        fail(f"soundpack.json cannot contain more than {len(SOUND_SLOTS)} audio items.")
+    # Legacy hub cues and ChangeDisplay remain valid alongside current slots.
+    # Keep old complete audio packs valid when the current slot count changes.
+    if len(sounds) > len(SUPPORTED_SOUND_SLOTS):
+        fail(f"soundpack.json cannot contain more than {len(SUPPORTED_SOUND_SLOTS)} audio items.")
 
     expected_files = {"soundpack.json"}
     seen_keys: set[str] = set()

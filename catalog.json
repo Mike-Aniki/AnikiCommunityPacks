@@ -100,6 +100,22 @@
     },
     {
       "type": "color",
+      "id": "the-bellic-color-pack-eafea203",
+      "name": "Grand Theft Auto IV Colors Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-liberty-city-theme-pack-abbef353-v1.0.0/the-bellic-color-pack-eafea203-v1.0.0.zip",
+      "publishedAt": "2026-11-25",
+      "updatedAt": "2026-11-25",
+      "featured": false,
+      "parentCompletePackId": "liberty-city-theme-pack-abbef353",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "pusheen-theme-color-old-08eeeb78",
       "name": "Honey Pastel – Theme Color",
       "author": "Ammz",
@@ -556,6 +572,32 @@
         "login": "initial-d-racing-in-the-rain-login-screen-33b086ff",
         "sound": "initial-d-soundpack-342a3024",
         "color": "initial-d-manga-colors-05814abb"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "liberty-city-theme-pack-abbef353",
+      "name": "Liberty City Theme Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "Experience your game library through the gritty, minimalist aesthetic of Grand Theft Auto IV.",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-liberty-city-theme-pack-abbef353-v1.0.0/liberty-city-theme-pack-abbef353-v1.0.0.zip",
+      "publishedAt": "2026-11-25",
+      "updatedAt": "2026-11-25",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/color.jpg"
+      },
+      "componentIds": {
+        "visual": "the-bellic-theme-5fbc8997",
+        "login": "gta-iv-login-ead38131",
+        "sound": "the-bellic-sounds-pack-703d98c4",
+        "color": "the-bellic-color-pack-eafea203"
       }
     },
     {
@@ -1040,6 +1082,22 @@
       "updatedAt": "2026-09-05",
       "featured": false,
       "parentCompletePackId": "mon-pack-complet-7ce53f65",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
+      "id": "gta-iv-login-ead38131",
+      "name": "GTA IV Login",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-liberty-city-theme-pack-abbef353-v1.0.0/gta-iv-login-ead38131-v1.0.0.zip",
+      "publishedAt": "2026-11-25",
+      "updatedAt": "2026-11-25",
+      "featured": false,
+      "parentCompletePackId": "liberty-city-theme-pack-abbef353",
       "generatedFromCompletePack": true
     },
     {
@@ -1600,6 +1658,22 @@
     },
     {
       "type": "sound",
+      "id": "the-bellic-sounds-pack-703d98c4",
+      "name": "The Bellic Sounds Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-liberty-city-theme-pack-abbef353-v1.0.0/the-bellic-sounds-pack-703d98c4-v1.0.0.zip",
+      "publishedAt": "2026-11-25",
+      "updatedAt": "2026-11-25",
+      "featured": false,
+      "parentCompletePackId": "liberty-city-theme-pack-abbef353",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "the-blood-of-dawnwalker-sound-pack-03556674",
       "name": "The Blood of Dawnwalker Sound Pack",
       "author": "Mike Aniki",
@@ -1801,6 +1875,22 @@
       "updatedAt": "2026-09-06",
       "featured": false,
       "parentCompletePackId": "aniki-fantasia-ed3ca12f",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "visual",
+      "id": "the-bellic-theme-5fbc8997",
+      "name": "Grand Theft Auto IV Visual Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/liberty-city-theme-pack-abbef353/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-liberty-city-theme-pack-abbef353-v1.0.0/the-bellic-theme-5fbc8997-v1.0.0.zip",
+      "publishedAt": "2026-11-25",
+      "updatedAt": "2026-11-25",
+      "featured": false,
+      "parentCompletePackId": "liberty-city-theme-pack-abbef353",
       "generatedFromCompletePack": true
     },
     {

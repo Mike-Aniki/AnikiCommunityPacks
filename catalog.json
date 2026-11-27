@@ -243,6 +243,22 @@
     },
     {
       "type": "color",
+      "id": "skyrim-color-pack-de09f55c",
+      "name": "Skyrim Color Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/color.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dragonborn-theme-pack-f45294dd-v1.0.0/skyrim-color-pack-de09f55c-v1.0.0.zip",
+      "publishedAt": "2026-11-27",
+      "updatedAt": "2026-11-27",
+      "featured": false,
+      "parentCompletePackId": "dragonborn-theme-pack-f45294dd",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "color",
       "id": "the-blood-of-dawnwalker-theme-color-09d88bc1",
       "name": "The Blood of Dawnwalker Theme color",
       "author": "Mike Aniki",
@@ -422,6 +438,32 @@
         "login": "dishonored-bee9799b",
         "sound": "dishonored-ambient-music-0dce225a",
         "color": "sinister-lavanda-dishonored-0d181680"
+      }
+    },
+    {
+      "type": "complete",
+      "id": "dragonborn-theme-pack-f45294dd",
+      "name": "Dragonborn Theme Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "Step into Tamriel every time you open your game library. \r\nFus Ro Dah your way through your backlog!!!",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dragonborn-theme-pack-f45294dd-v1.0.0/dragonborn-theme-pack-f45294dd-v1.0.0.zip",
+      "publishedAt": "2026-11-27",
+      "updatedAt": "2026-11-27",
+      "featured": false,
+      "packPreviews": {
+        "visual": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/visual.jpg",
+        "login": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/login.jpg",
+        "sound": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/sound.jpg",
+        "color": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/color.jpg"
+      },
+      "componentIds": {
+        "visual": "skyrim-visuals-pack-0a0a14be",
+        "login": "skyrim-login-adc8a234",
+        "sound": "skyrim-sound-pack-a824aaf8",
+        "color": "skyrim-color-pack-de09f55c"
       }
     },
     {
@@ -1252,6 +1294,22 @@
     },
     {
       "type": "login",
+      "id": "skyrim-login-adc8a234",
+      "name": "Skyrim Login",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/login.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dragonborn-theme-pack-f45294dd-v1.0.0/skyrim-login-adc8a234-v1.0.0.zip",
+      "publishedAt": "2026-11-27",
+      "updatedAt": "2026-11-27",
+      "featured": false,
+      "parentCompletePackId": "dragonborn-theme-pack-f45294dd",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "login",
       "id": "pusheen-login-screen-74d4a575",
       "name": "Sunset Catnap – Login Screen",
       "author": "Ammz",
@@ -1658,6 +1716,22 @@
     },
     {
       "type": "sound",
+      "id": "skyrim-sound-pack-a824aaf8",
+      "name": "Skyrim Sound Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/sound.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dragonborn-theme-pack-f45294dd-v1.0.0/skyrim-sound-pack-a824aaf8-v1.0.0.zip",
+      "publishedAt": "2026-11-27",
+      "updatedAt": "2026-11-27",
+      "featured": false,
+      "parentCompletePackId": "dragonborn-theme-pack-f45294dd",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "sound",
       "id": "pusheen-system-sounds-a2881137",
       "name": "Sweet Whimsy – System Sounds",
       "author": "Ammz",
@@ -2041,6 +2115,22 @@
       "updatedAt": "2026-09-27",
       "featured": false,
       "parentCompletePackId": "pusheen-complete-pack-c2dc7e1a",
+      "generatedFromCompletePack": true
+    },
+    {
+      "type": "visual",
+      "id": "skyrim-visuals-pack-0a0a14be",
+      "name": "Skyrim Visuals Pack",
+      "author": "Hechmanic",
+      "owner": "hechmanic",
+      "version": "1.0.0",
+      "description": "",
+      "previewUrl": "https://raw.githubusercontent.com/Mike-Aniki/AnikiCommunityPacks/main/previews/dragonborn-theme-pack-f45294dd/visual.jpg",
+      "downloadUrl": "https://github.com/Mike-Aniki/AnikiCommunityPacks/releases/download/pack-dragonborn-theme-pack-f45294dd-v1.0.0/skyrim-visuals-pack-0a0a14be-v1.0.0.zip",
+      "publishedAt": "2026-11-27",
+      "updatedAt": "2026-11-27",
+      "featured": false,
+      "parentCompletePackId": "dragonborn-theme-pack-f45294dd",
       "generatedFromCompletePack": true
     },
     {
